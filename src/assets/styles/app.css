@@ -1,0 +1,15 @@
+/* .slick-arrow {
+  background-color: gray !important;
+} */
+
+.slick-prev {
+  margin-left: 30px;
+}
+
+.slick-next {
+  margin-right: 30px;
+}
+
+.slick-slider {
+  padding: 15px 30px !important;
+}
