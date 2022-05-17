@@ -14,9 +14,31 @@ import moment from 'moment';
 var moment1 = moment().format();
 var moment2 = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
 var moment3 = moment().format("ddd, hA");
+import { useLocation } from 'react-router-dom';
+
 
 
 export const TimeComponent = () => {
+
+    let dateArray = [];
+
+    const location = useLocation();
+
+    const { services } = location?.state ? location.state : "";
+
+    console.log('array from first component', services);
+
+
+    var a = moment();
+
+    var b = moment(a).add(2, 'month').format('MM:DD:YYYY');
+    while (a.format('MM:DD:YYYY') < b) {
+        dateArray.push(a.format("YYYY MMM DD dddd"));
+        a.add(1, 'day');
+    }
+
+
+
     const [showCalendar, setShowCalendar] = useState("");
     const handleChange = (date) => {
         setShowCalendar(date);
