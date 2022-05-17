@@ -8,11 +8,31 @@ import 'react-time-picker/dist/TimePicker.css';
 import TimePicker from 'react-bootstrap-time-picker';
 import img from "../../assets/images/clocks.png"
 import service from "../../assets/images/service.webp"
-
-
+import { useLocation } from 'react-router-dom';
+import moment from 'moment'
 
 
 export const TimeComponent = () => {
+
+    let dateArray = [];
+
+    const location = useLocation();
+
+    const { services } = location?.state ? location.state : "";
+
+    console.log('array from first component', services);
+
+
+    var a = moment();
+
+    var b = moment(a).add(2, 'month').format('MM:DD:YYYY');
+    while (a.format('MM:DD:YYYY') < b) {
+        dateArray.push(a.format("YYYY MMM DD dddd"));
+        a.add(1, 'day');
+    }
+
+
+
     const [showCalendar, setShowCalendar] = useState("");
     const handleChange = (date) => {
         setShowCalendar(date);

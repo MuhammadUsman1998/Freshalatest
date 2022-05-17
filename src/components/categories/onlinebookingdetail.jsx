@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
 import "../../assets/styles/app.css";
 
+let arrayOfSelectedServices = [];
 // import ReactLoading from 'react-loading';
 var settings = {
     infinite: true,
@@ -70,9 +71,24 @@ export const OnlineBookingDetail = () => {
         }
 
     };
-    console.log(selectedServices);
-    const handleChange = (e) => {
+
+    // const handleChange = (e) => {
+    //     setShowButton(!showButton)
+    // }
+
+    const handleChange = (e, selected_service_data) => {
+        if (e.target.name === 'checkbox' && arrayOfSelectedServices.includes(selected_service_data)) {
+            const newList = arrayOfSelectedServices.filter((item) => item !== selected_service_data)
+
+            arrayOfSelectedServices = newList
+            console.log(arrayOfSelectedServices);
+            // console.log('new list of array', arrayOfSelectedServices)
+        } else {
+            arrayOfSelectedServices.push(selected_service_data)
+            console.log('selected service array', arrayOfSelectedServices)
+        }
         setShowButton(!showButton)
+
     }
 
     const salonTitle =
@@ -118,7 +134,7 @@ export const OnlineBookingDetail = () => {
                                                             : "text-black"
                                                         }`}
                                                 >
-                                                    {console.log(cat1?._id)}
+
                                                     {cat1?.categoryTitle}
                                                 </h1>
                                             </div>
@@ -160,16 +176,19 @@ export const OnlineBookingDetail = () => {
                                                         className='sm:w-full cursor-pointer '
                                                         ref={myRef}
                                                     >
-                                                        {item?.allServices?.map((service) => (
+                                                        {item?.allServices?.map((service, index) => (
                                                             <div ref={myRef}>
                                                                 <label>
                                                                     <div className='flex cursor-pointer'>
                                                                         <input
-                                                                            className='w-6 h-6 mt-1 '
+                                                                            name='checkbox'
+                                                                            id={index}
+                                                                            className='w-6 h-6 mt-1'
                                                                             type='checkbox'
                                                                             onClick={(e) => clickButton(e, service?._id)}
-                                                                            onChange={(e) => handleChange(e)}
+                                                                            onChange={(e) => handleChange(e, service)}
                                                                         />
+
                                                                         <p className='text-xl font-bold pl-6 '>
                                                                             {service?.serviceTitle}
                                                                         </p>
@@ -200,7 +219,7 @@ export const OnlineBookingDetail = () => {
 
                     {selectedServices.some((item) => item.checked === true) && <div className=' bg-white shadow-md '>
                         <div className='flex justify-end mr-36 mt-3  pt-6 h-24 '>
-                            <Link to='/timeComponent'>
+                            <Link to='/timeComponent' state={{ services: arrayOfSelectedServices }} >
                                 <button
                                     className='bg-slate-900 w-32 h-12 shadow-lg rounded-lg
                      text-white hover:bg-slate-500 font-bold'
