@@ -13,6 +13,7 @@ var settings = {
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 3,
+    color: "black",
 };
 
 const useMountEffect = (fun) => useEffect(fun, []);
@@ -23,6 +24,8 @@ export const OnlineBookingDetail = () => {
     const salonId = search.get("salonId");
     const branchId = search.get("branchId");
     const userId = search.get("userId");
+    var value = [{ branchId: branchId, salonId: salonId }]
+    localStorage.setItem("info", JSON.stringify(value));
 
     const [selectedCategory, setSelectedCategory] = useState("");
 
@@ -70,7 +73,6 @@ export const OnlineBookingDetail = () => {
         }
 
     };
-    console.log(selectedServices);
     const handleChange = (e) => {
         setShowButton(!showButton)
     }
@@ -102,33 +104,59 @@ export const OnlineBookingDetail = () => {
                 </div>
             ) : (
                 <>
-                    <div className='bg-gray-300'>
-                        <div className='max-w-7xl mx-auto px-24 sm:px-6 lg:px-8 flex justify-evenly -mt-8'>
-                            <div className=' bg-white h-16 w-2/4  shadow-lg rounded-lg text-black  lg:w-full '>
-                                <Slider className='py-4 text-center  ' {...settings}>
-                                    {serviceCategory?.map((cat1) => {
-                                        return (
-                                            <div className='hover:bg-gray-300 hover:text-black rounded-full '>
-                                                <h1
-                                                    onClick={(_id) => executeScroll(cat1._id)}
-                                                    className={`truncate cursor-pointer -top-1  rounded-full p-2 
-                                                        ${selectedCategory ===
-                                                            cat1?._id
-                                                            ? "text-white bg-gray-900"
-                                                            : "text-black"
-                                                        }`}
-                                                >
-                                                    {console.log(cat1?._id)}
-                                                    {cat1?.categoryTitle}
-                                                </h1>
-                                            </div>
-                                        );
-                                    })}
-                                </Slider>
-                            </div>
 
-                            <div className=' bg-white flex flex-col  shadow-lg rounded-lg text-black p-2 w-1/4 lg:hidden '>
-                                <div className='flex justify-center rounded-lg shadow-fuchsia-100 -mt-16'>
+                    <div className='bg-gray-300'>
+                        <div className="">
+                            <div className='max-w-7xl mx-auto px-44 sm:px-6 lg:px-8 '>
+                                <div className='bg-gray-200 w-3/5  shadow-lg rounded-lg text-black  lg:w-full '>
+                                    <Slider className='py-4 text-center  ' {...settings}>
+
+                                        {serviceCategory?.map((cat1) => {
+                                            return (
+                                                <div className='hover:bg-gray-300 hover:text-black rounded-full '>
+                                                    <h1
+                                                        onClick={(_id) => executeScroll(cat1._id)}
+                                                        className={`truncate cursor-pointer -top-1  rounded-full p-2 
+                                                        ${selectedCategory ===
+                                                                cat1?._id
+                                                                ? "text-white bg-gray-900"
+                                                                : "text-black"
+                                                            }`}
+                                                    >
+                                                        {cat1?.categoryTitle}
+                                                    </h1>
+                                                </div>
+                                            );
+                                        })}
+                                    </Slider>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div className="float-right -mt-20">
+                            <div className='max-w-7xl mx-auto px-6 sm:px-6 lg:px-8 '>
+                                <div className="bg-white w-2/3 shadow-lg rounded-lg text-black lg:hidden mr-56">
+                                    <div className='flex justify-center rounded-lg shadow-fuchsia-100 '>
+                                        <img
+                                            className='-mt-12 rounded-lg shadow-md border-4 border-neutral-100 '
+                                            src={img}
+                                        />
+                                    </div>
+                                    <h1 className='text-center font-bold pt-2'>{salonTitle}</h1>
+                                    <p className='pt-3 text-center text-gray'> {branchLocation}</p>
+                                    <hr className='mt-3'></hr>
+                                    <div className='flex justify-between p-5 font-bold'>
+                                        <h1>Total </h1>
+                                        <h1>Free</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* <div className="flex justify-end ">
+                            <div className=' bg-white flex-col shadow-lg rounded-lg text-black p-2  lg:hidden '>
+                                <div className='flex justify-center rounded-lg shadow-fuchsia-100 '>
                                     <img
                                         className=' rounded-lg shadow-md border-4 border-neutral-100 '
                                         src={img}
@@ -144,7 +172,7 @@ export const OnlineBookingDetail = () => {
                                     <h1>Free</h1>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
 
                         <div className='max-w-7xl mx-auto px-44 sm:px-6 lg:px-8 '>
                             <div className='' ref={myRef}>
@@ -152,10 +180,11 @@ export const OnlineBookingDetail = () => {
                                     <div className='md:w-full lg:flex flex-wrap ' ref={myRef}>
                                         {item?.allServices?.length ? (
                                             <>
-                                                <h1 className='text-2xl pt-5 font-bold  pl-12'>
+                                                <h1 className='text-2xl pt-5 font-bold  '>
                                                     {item?.categoryTitle}
                                                 </h1>
-                                                <div className='mt-3 bg-white w-3/5  p-7  shadow-lg rounded-lg lg:w-full sm:-mt-12'>
+                                                {/* sm:-mt-12 */}
+                                                <div className='mt-3 bg-white w-3/5  p-7 shadow-lg rounded-lg lg:w-full '>
                                                     <div
                                                         className='sm:w-full cursor-pointer '
                                                         ref={myRef}

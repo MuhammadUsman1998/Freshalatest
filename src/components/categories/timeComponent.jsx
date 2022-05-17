@@ -8,29 +8,29 @@ import 'react-time-picker/dist/TimePicker.css';
 import TimePicker from 'react-bootstrap-time-picker';
 import img from "../../assets/images/clocks.png"
 import service from "../../assets/images/service.webp"
+import moment from 'moment';
 
 
+var moment1 = moment().format();
+var moment2 = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
+var moment3 = moment().format("ddd, hA");
 
 
 export const TimeComponent = () => {
     const [showCalendar, setShowCalendar] = useState("");
     const handleChange = (date) => {
         setShowCalendar(date);
-        console.log(date);
-
-        const object = {
-            date: showCalendar,
-        }
-        console.log(object);
-    };
-
-
+    }
 
     const [time, setTime] = useState("")
     const handleTimeChange = (time) => {
         setTime(time)
     }
-    console.log(time);
+
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August",
+        "September", "October", "November", "December"];
+    var d = new Date();
+    var monthName = months[d.getMonth()];
 
 
 
@@ -61,10 +61,15 @@ export const TimeComponent = () => {
                             <div className="flex justify-end pr-3 pt-12">
                                 <Link to="/signupcontinueComponent" className="fa-solid fa-circle-right "></Link>
                             </div>
+                            <div className='text-center'>
+                                {monthName}
+                            </div>
                             <div className='flex justify-center pt-12'>
                                 <Calendar
                                     onChange={handleChange}
                                 />
+                                <moment />
+
                             </div>
 
                             <div className='flex justify-center pt-3'>

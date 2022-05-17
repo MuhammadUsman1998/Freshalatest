@@ -43,7 +43,7 @@ export const userSignUp = (signUpData) => async (dispatch) => {
         });
 
         const { data } = await jwtInterceptor.post(
-            `${SERVER_IP}/api/v1/client/signup`,
+            `${SERVER_IP}/api/v1/client/create`,
             signUpData
         );
         console.log({ data });

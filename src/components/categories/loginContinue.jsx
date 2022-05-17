@@ -25,6 +25,8 @@ export const LoginContinue = () => {
         dispatch(userLogin(obj));
         navigate("/online-booking/detail")
     }
+    localStorage.setItem("user", JSON.stringify(""));
+
     return (
 
 
@@ -47,7 +49,7 @@ export const LoginContinue = () => {
             <div className="min-h-screen  flex flex-col justify-center py-12 sm:px-6 lg:px-8">
 
                 <div className="w-full mt-8 sm:mx-auto sm:w-full sm:max-w-md flex justify-center">
-                    <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 2xl:w-2/4 lg:w-2/4 md:w-2/3">
+                    <div className=" bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 2xl:w-2/4 lg:w-2/4 md:w-2/3">
                         <div className="sm:mx-auto sm:w-full sm:max-w-md">
                             <h2 className=" text-center text-3xl font-extrabold text-gray-900">Fresha</h2>
                         </div>

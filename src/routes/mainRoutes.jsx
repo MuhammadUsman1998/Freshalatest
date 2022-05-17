@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { LoginContinue, SignUpContinueComponent, StaffComponent, TimeComponent } from "../components";
 import { OnlineBookingDetail } from "../components/categories/onlinebookingdetail";
 // import all pages
-import { HomePage, LoginPage, LoginResetPage, SignFormPage, SignUpPage } from "../pages";
+import { LoginPage, LoginResetPage, SignFormPage, SignUpPage } from "../pages";
 import { LoginFormPage } from "../pages/auth/loginForm";
 
 export const MainRoutes = () => {

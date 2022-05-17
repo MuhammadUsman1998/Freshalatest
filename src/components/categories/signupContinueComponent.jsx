@@ -14,6 +14,11 @@ export const SignUpContinueComponent = () => {
     });
 
 
+
+    const userData = JSON.parse(localStorage.getItem("info"));
+
+
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const handleSubmit = (e) => {
@@ -23,8 +28,10 @@ export const SignUpContinueComponent = () => {
             contactNumber: inputForm.contactNumber,
             email: inputForm.email,
             password: inputForm.password,
-
+            salonId: userData[0].salonId,
+            branchId: userData[0].branchId,
         }
+
         dispatch(userSignUp(obj));
         navigate("/loginContinue")
     }
