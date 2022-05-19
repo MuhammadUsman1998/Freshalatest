@@ -70,8 +70,10 @@ export const OnlineBookingDetail = () => {
     });
     const [selectedServices, setSelectedServices] = useState([])
     const [showButton, setShowButton] = useState(false);
+    // const [count, setCount] = useState(0)
 
     const clickButton = (e, serviceId) => {
+        // setCount(prevCount => prevCount + 1);
         if (e.target.checked) {
             setSelectedServices(prevState => [
                 ...prevState,
@@ -82,7 +84,6 @@ export const OnlineBookingDetail = () => {
             const filtered = selectedServices.filter((item) => item._id !== serviceId)
             setSelectedServices(filtered)
         }
-
     };
 
 
@@ -90,11 +91,12 @@ export const OnlineBookingDetail = () => {
     const handleChange = (e, selected_service_data) => {
         if (e.target.name === 'checkbox' && arrayOfSelectedServices.includes(selected_service_data)) {
             const newList = arrayOfSelectedServices.filter((item) => item !== selected_service_data)
-
             arrayOfSelectedServices = newList
+            console.log(arrayOfSelectedServices);
         } else {
             arrayOfSelectedServices.push(selected_service_data)
         }
+        console.log(arrayOfSelectedServices);
         setShowButton(!showButton)
 
     }
@@ -167,7 +169,24 @@ export const OnlineBookingDetail = () => {
                                         <h1 className='text-center font-bold pt-2'>{salonTitle}</h1>
                                         <p className='pt-3 text-center text-gray'> {branchLocation}</p>
                                         <hr className='mt-3'></hr>
-                                        <div className='flex justify-between p-5 font-bold'>
+                                        {
+                                            arrayOfSelectedServices.map((serviceData) => {
+                                                return (
+                                                    <div className="">
+                                                        <div className="flex justify-between p-4 ">
+                                                            <h1> {serviceData.serviceTitle}</h1>
+                                                            <h1> ${serviceData.price}</h1>
+                                                        </div>
+                                                        <div className="text-gray-500 pl-6 pb-2">
+                                                            <h1> {serviceData.duration}Min</h1>
+                                                        </div>
+                                                        <hr></hr>
+                                                    </div>
+
+                                                )
+                                            })
+                                        }
+                                        <div className='flex justify-between p-4 font-bold '>
                                             <h1>Total </h1>
                                             <h1>Free</h1>
                                         </div>
@@ -236,9 +255,12 @@ export const OnlineBookingDetail = () => {
                         </div>
                     </div>
 
+
                     {selectedServices.some((item) => item.checked === true) &&
                         <div className=' bg-white py-2 mt-4  sticky bottom-0'>
+
                             <div className='flex justify-end '>
+
                                 <Link to='/timeComponent' state={{ services: arrayOfSelectedServices }} >
                                     <button
                                         className='bg-slate-900 w-32 h-12 mr-16  rounded-lg  

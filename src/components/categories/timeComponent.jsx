@@ -80,7 +80,7 @@ export const TimeComponent = () => {
             <div className='bg-gray-300 h-screen'>
                 <div className="max-w-7xl mx-auto px-44 sm:px-16 lg:px-32">
                     <div className="flex justify-between -mt-12">
-                        <div className=" bg-white  w-4/6 shadow-md rounded-lg lg:w-full pb-5">
+                        <div className=" bg-white  w-4/6 shadow-md rounded-lg xl:w-full pb-5">
 
 
 
@@ -106,21 +106,21 @@ export const TimeComponent = () => {
                             </Slider>
 
                             <div className='flex justify-center pt-3'>
-                                <img src={img} />
+                                <img src="https://img.icons8.com/ios/50/000000/time--v1.png" />
                             </div>
                             <div className='text-center font-bold p-3 mb-6'>
                                 <h1>You can Book Your Time When Jocelyn Available</h1>
                             </div>
 
                             <div className='border-solid border-2 '>
-                                <TimePicker onChange={handleTimeChange} value={time} step='5' start="06:00" end="24:00" className="text-center cursor-pointer" />
+                                <TimePicker onChange={handleTimeChange} value={time} step='5' start="09:00AM" end="05:00PM" className="text-center cursor-pointer" />
                             </div>
                             <h1 className='text-center pt-3 font-semibold text-blue-600 cursor-pointer'>Or Try With Another Time</h1>
                         </div>
 
 
 
-                        <div className=" bg-white h-96  shadow-lg rounded-lg sm:mt-5 lg:hidden ml-12 xl:w-full">
+                        <div className=" bg-white h-96  shadow-lg rounded-lg sm:mt-5 xl:hidden ml-12 xl:w-full">
                             <div className='-mt-7 flex justify-center  '>
                                 <img className=' rounded-lg shadow-md border-4 border-neutral-100' src={service} />
                             </div>
