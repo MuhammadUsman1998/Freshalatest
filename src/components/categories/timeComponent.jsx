@@ -1,116 +1,133 @@
 import { useState } from 'react'
 import { Link } from "react-router-dom";
 import "flatpickr/dist/themes/material_green.css";
-import "flatpickr/dist/flatpickr.css";
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
 import 'react-time-picker/dist/TimePicker.css';
 import TimePicker from 'react-bootstrap-time-picker';
 import img from "../../assets/images/clocks.png"
 import service from "../../assets/images/service.webp"
 import moment from 'moment';
-
-
-var moment1 = moment().format();
-var moment2 = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
-var moment3 = moment().format("ddd, hA");
 import { useLocation } from 'react-router-dom';
+import Slider from "react-slick";
 
+
+
+function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+        <div
+            className={className}
+            style={{ ...style, backgroundColor: "black", borderRadius: "50%" }}
+            onClick={onClick}
+        />
+    );
+}
+
+var settings = {
+    infinite: false,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 5,
+    nextArrow: <SamplePrevArrow />,
+    prevArrow: <SamplePrevArrow />
+};
 
 
 export const TimeComponent = () => {
+    const [time, setTime] = useState("")
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [selectedTime, setSelectedTime] = useState(false)
+    const clickDate = (e, index) => {
+        setSelectedCategory(index)
+        setSelectedTime(true)
+    }
 
     let dateArray = [];
-
     const location = useLocation();
-
     const { services } = location?.state ? location.state : "";
 
-    console.log('array from first component', services);
-
-
     var a = moment();
-
     var b = moment(a).add(2, 'month').format('MM:DD:YYYY');
     while (a.format('MM:DD:YYYY') < b) {
-        dateArray.push(a.format("YYYY MMM DD dddd"));
+        dateArray.push(a.format("MMMM DD dddd"))
         a.add(1, 'day');
+
     }
 
 
-
-    const [showCalendar, setShowCalendar] = useState("");
-    const handleChange = (date) => {
-        setShowCalendar(date);
-    }
-
-    const [time, setTime] = useState("")
     const handleTimeChange = (time) => {
         setTime(time)
     }
 
-    var months = ["January", "February", "March", "April", "May", "June", "July", "August",
-        "September", "October", "November", "December"];
-    var d = new Date();
-    var monthName = months[d.getMonth()];
-
-
-
     return (
-        <div className>
-
+        <div className="">
             <div className='bg-slate-900 h-44'>
                 <div className="max-w-7xl mx-auto px-40 sm:px-16 lg:px-32 ">
                     <div className=' p-4'>
-                        <div className='flex justify-between '>
-                            <div className='flex'>
-                                <div className='pl-3'>
-                                    <Link to="/online-booking/details?branchId=627bb85d9c360a41c4d352c7&userId=627bb85d9c360a41c4d352c8&salonId=627bb85d9c360a41c4d352c6" className="hover:text-gray-600 text-white fa-solid fa-arrow-left float-left pr-5" ></Link>
-
-                                </div>
-                                <p className='text-white '>Step 2/3 </p>
+                        <div className='flex '>
+                            <div className='pr-2'>
+                                <Link to="/online-booking/details?branchId=627bb85d9c360a41c4d352c7&userId=627bb85d9c360a41c4d352c8&salonId=627bb85d9c360a41c4d352c6" className="hover:text-gray-600 text-white fa-solid fa-arrow-left " ></Link>
                             </div>
+                            <p className='text-white '>Step 2/3 </p>
                         </div>
-                        <h1 className="text-4xl font-bold text-white pl-10">Select Time</h1>
+                        <div className='flex'>
+                            <h1 className="text-4xl font-bold text-white ">Select Time</h1>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <div className="max-w-7xl mx-auto px-56 sm:px-16 lg:px-32">
 
-                    <div className="flex justify-between ">
-                        <div className=" bg-white  w-3/5 shadow-lg rounded-lg lg:w-full mb-16">
+            <div className='bg-gray-300 h-screen'>
+                <div className="max-w-7xl mx-auto px-44 sm:px-16 lg:px-32">
+                    <div className="flex justify-between -mt-12">
+                        <div className=" bg-white  w-4/6 shadow-md rounded-lg lg:w-full pb-5">
 
-                            <div className="flex justify-end pr-3 pt-12">
-                                <Link to="/signupcontinueComponent" className="fa-solid fa-circle-right "></Link>
-                            </div>
-                            <div className='text-center'>
-                                {monthName}
-                            </div>
-                            <div className='flex justify-center pt-12'>
-                                <Calendar
-                                    onChange={handleChange}
-                                />
-                                <moment />
 
-                            </div>
+
+                            <Slider className='' focusOnSelect={true}  {...settings}>
+                                {
+                                    dateArray?.length &&
+                                    dateArray?.map((date, i) => {
+                                        return (
+                                            <div className='flex justify-around'>
+                                                <div onClick={(e) => clickDate(e, i)}
+                                                    className={`flex justify-center border-solid border-black border-2 rounded-lg hover:bg-gray-300 
+                                                hover:text-black px-3 h-16 w-24 text-center pt-3 font-semibold cursor-pointer   ${selectedCategory ===
+                                                        i
+                                                        && "text-white bg-blue-600"
+
+                                                        }`}
+                                                >
+                                                    <h1 className=''>{date}</h1>
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
+                            </Slider>
 
                             <div className='flex justify-center pt-3'>
                                 <img src={img} />
                             </div>
-                            <div className='flex justify-center mb-12 mt-2'>
-
-                                <TimePicker onChange={handleTimeChange} value={time} step='5' start="06:00" end="24:00" className="text-center pt-2" />
-
+                            <div className='text-center font-bold p-3 mb-6'>
+                                <h1>You can Book Your Time When Jocelyn Available</h1>
                             </div>
+
+                            <div className='border-solid border-2 '>
+                                <TimePicker onChange={handleTimeChange} value={time} step='5' start="06:00" end="24:00" className="text-center cursor-pointer" />
+                            </div>
+                            <h1 className='text-center pt-3 font-semibold text-blue-600 cursor-pointer'>Or Try With Another Time</h1>
                         </div>
-                        <div className=" bg-white h-96 w-72  shadow-lg rounded-lg sm:mt-5 lg:hidden ml-12 ">
+
+
+
+                        <div className=" bg-white h-96  shadow-lg rounded-lg sm:mt-5 lg:hidden ml-12 xl:w-full">
                             <div className='-mt-7 flex justify-center  '>
                                 <img className=' rounded-lg shadow-md border-4 border-neutral-100' src={service} />
                             </div>
                             <div className=''>
                                 <h2 className=' mt-3 text-center font-bold '>Blush + Blow Parsons Green </h2>
                                 <p className="pt-3 text-center"> 234A Upper Tooting Road, London (Tooting), England</p>
-                                <hr className='mt-5'></hr>
+                                <hr className='mt-2'></hr>
                             </div>
                             <div className="flex justify-between p-2">
                                 <p className=''>Half Head Highlights
@@ -118,15 +135,32 @@ export const TimeComponent = () => {
                                     1h 50min 2 services with Irina </p>
                                 <p>$</p>
                             </div>
-                            <hr className='mt-5'></hr>
+                            <hr className=''></hr>
                             <div className='flex justify-between p-2'>
                                 <h1 className=''>Total</h1>
                                 <p>$</p>
                             </div>
                         </div>
+
+
                     </div>
                 </div>
             </div>
+            {selectedTime &&
+                <div className=' bg-white py-2 mt-4  sticky bottom-0'>
+                    <div className='flex justify-end '>
+                        <Link to='/signupcontinueComponent'  >
+                            <button
+                                className='bg-slate-900 w-32 h-12 mr-16  rounded-lg sticky 
+                     text-white  font-bold'
+                            >
+                                Book
+                            </button>
+                        </Link>
+                    </div>
+                </div>
+            }
+
 
         </div>
     )

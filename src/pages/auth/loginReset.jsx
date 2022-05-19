@@ -5,7 +5,7 @@ export const LoginResetPage = () => {
 
 
         <div className='bg-slate-900 h-44'>
-            <div className="max-w-7xl mx-auto px-40 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto px-36 sm:px-6 lg:px-8">
                 <div className=' p-4'>
                     <div className='flex justify-between '>
                         <div className='flex'>
@@ -24,12 +24,12 @@ export const LoginResetPage = () => {
             <div className="min-h-screen  flex flex-col justify-center py-12 sm:px-6 lg:px-8">
 
                 <div className=" mt-6 sm:mx-auto sm:w-full sm:max-w-md 2xl:flex justify-center">
-                    <div className="bg-white py-4 px-4 shadow sm:rounded-lg w-2/4 sm:w-2/3">
+                    <div className="bg-white py-4 px-4 shadow sm:rounded-lg w-2/4 lg:w-2/3 md:w-3/4 sm:w-screen">
                         <div className="sm:mx-auto sm:w-full sm:max-w-md">
                             <h2 className="text-center text-3xl font-extrabold text-gray-900">Fresha</h2>
                         </div>
-                        <h1 className="text-2xl font-bold">Forgot password?</h1>
-                        <p className="mt-5">Enter your registered email address and we'll send you a secure link to setup a new password.</p>
+                        <h1 className="mt-5 text-2xl font-bold">Forgot password?</h1>
+                        <p className="">Enter your registered email address and we'll send you a secure link to setup a new password.</p>
                         <form className="space-y-4 " action="#">
                             <div>
                                 <label htmlFor="emailAddress" className="block text-sm font-medium text-gray-700">
@@ -72,14 +72,13 @@ export const LoginResetPage = () => {
                 </div >
 
                 <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md 2xl:flex justify-center">
-                    <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 w-2/4 sm:w-2/3">
+                    <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10  w-2/4 lg:w-2/3 md:w-3/4 sm:w-screen">
                         <div className="text-center">
                             <h1 className="text-2xl font-bold">Login for businesses</h1>
                             <p className="">To access your business account please go to the business login page</p>
                         </div>
                     </div>
                 </div>
-                <p className="text-center mt-4 text-gray-400">© 2022 Fresha.com SV Ltd</p>
             </div>
         </div >
     )

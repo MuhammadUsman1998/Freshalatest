@@ -40,8 +40,8 @@ export const SignUpContinueComponent = () => {
     return (
         <div>
             <div className='bg-slate-900 h-44'>
-                <div className="max-w-7xl mx-auto px-40 sm:px-6 lg:px-8">
-                    <div className=' p-4'>
+                <div className="max-w-7xl mx-auto px-36 sm:px-6 lg:px-8">
+                    <div className=' p-4 '>
                         <div className='flex justify-between '>
                             <div className='flex'>
                                 <div className='pl-3'>
@@ -50,17 +50,17 @@ export const SignUpContinueComponent = () => {
                                 <p className='text-white '>Step 3/3 </p>
                             </div>
                         </div>
-                        <h1 className="text-4xl font-bold text-white pl-10">SignUp To Continue</h1>
+                        <h1 className="text-4xl font-bold text-white pl-10 ">SignUp To Continue</h1>
                     </div>
 
 
                     <div className="min-h-screen  flex flex-col justify-center py-12 sm:px-6 lg:px-8">
                         <div className="w-full mt-8 sm:mx-auto sm:w-full sm:max-w-md flex justify-center ">
-                            <div className="bg-white py-8 px-4 shadow rounded-lg sm:px-10 2xl:w-2/3 lg:w-2/4 md:w-2/3 ">
+                            <div className="bg-white py-8 px-4 shadow rounded-lg sm:px-10 2xl:w-2/3 lg:w-2/3 md:w-3/4 sm:w-screen ">
                                 <div className="sm:mx-auto sm:w-full sm:max-w-md">
                                     <h2 className=" text-center text-3xl font-extrabold text-gray-900">Fresha</h2>
                                 </div>
-                                <form className="space-y-4 grid grid-cols-2 gap-y-6 gap-x-6 sm:grid-cols-2 mt-4 sm:flex flex-wrap " action="#"
+                                <form className="space-y-4 grid grid-cols-2 gap-y-6 gap-x-6 sm:grid-cols-2 mt-4  " action="#"
                                 >
                                     <div>
                                         <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mt-3 ">
@@ -93,7 +93,6 @@ export const SignUpContinueComponent = () => {
                                                 id="email"
                                                 name="email"
                                                 type="email"
-                                                autoComplete="email"
                                                 placeholder='Your Email'
                                                 onChange={(e) => setInputForm({ ...inputForm, email: e.target.value })}
                                                 value={inputForm.email}
@@ -114,7 +113,8 @@ export const SignUpContinueComponent = () => {
                                                 id="depositedAmount"
                                                 maxLength={11}
                                                 pattern="[+-]?\d+(?:[.,]\d+)?"
-                                                placeholder="Enter Number"
+                                                placeholder="0300 XXXX XXX"
+                                                mask="0300 1234 567"
                                                 required
                                                 onChange={(e) => setInputForm({ ...inputForm, contactNumber: e.target.value })}
                                                 value={inputForm.contactNumber}
@@ -132,7 +132,6 @@ export const SignUpContinueComponent = () => {
                                                 id="password"
                                                 name="password"
                                                 type="password"
-                                                autoComplete="current-password"
                                                 required
                                                 value={inputForm.password}
                                                 onChange={(e) => setInputForm({ ...inputForm, password: e.target.value })}
@@ -176,14 +175,13 @@ export const SignUpContinueComponent = () => {
                         </div>
 
                         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md flex justify-center">
-                            <div className="bg-white py-8 px-4 shadow rounded-lg sm:px-10 2xl:w-2/3 lg:w-2/4 md:w-2/3">
+                            <div className="bg-white py-8 px-4 shadow rounded-lg sm:px-10 2xl:w-2/3 lg:w-2/3 md:w-3/4 sm:w-full">
                                 <div className="text-center">
                                     <h1 className="text-2xl font-bold">Become a partner</h1>
                                     <p className="">Manage your business with Fresha by  signing up as a professional</p>
                                 </div>
                             </div>
                         </div>
-                        <p className="text-center mt-4 text-gray-400">© 2022 Fresha.com SV Ltd</p>
                     </div>
 
                 </div>

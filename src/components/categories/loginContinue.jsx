@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from '../../redux/Actions/userActions';
 
 
@@ -9,9 +9,13 @@ import { userLogin } from '../../redux/Actions/userActions';
 export const LoginContinue = () => {
 
     const [inputForm, setInputForm] = useState({
-        contactNumber: "",
-        password: ""
+        contactNumber: "03023456789",
+        password: "123456"
     });
+
+
+
+
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -31,7 +35,7 @@ export const LoginContinue = () => {
 
 
         <div className='bg-slate-900 h-44'>
-            <div className="max-w-7xl mx-auto px-40 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto px-36 sm:px-6 lg:px-8">
                 <div className=' p-4'>
                     <div className='flex justify-between '>
                         <div className='flex'>
@@ -49,7 +53,7 @@ export const LoginContinue = () => {
             <div className="min-h-screen  flex flex-col justify-center py-12 sm:px-6 lg:px-8">
 
                 <div className="w-full mt-8 sm:mx-auto sm:w-full sm:max-w-md flex justify-center">
-                    <div className=" bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 2xl:w-2/4 lg:w-2/4 md:w-2/3">
+                    <div className=" bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 2xl:w-2/4 lg:w-2/4 md:w-3/4 sm:w-screen">
                         <div className="sm:mx-auto sm:w-full sm:max-w-md">
                             <h2 className=" text-center text-3xl font-extrabold text-gray-900">Fresha</h2>
                         </div>
@@ -65,7 +69,7 @@ export const LoginContinue = () => {
                                         type="contactNumber"
                                         maxLength={11}
                                         // pattern="[+-]?\d+(?:[.,]\d+)?"
-                                        autoComplete="contactNumber"
+                                        // autoComplete="contactNumber"
                                         placeholder="0300 XXXX XXX"
                                         required
                                         value={inputForm.contactNumber}
@@ -127,7 +131,7 @@ export const LoginContinue = () => {
                 </div >
 
                 <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md flex justify-center">
-                    <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 2xl:w-2/4 lg:2/4 md:w-2/3 sm:w-2/3 ">
+                    <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 2xl:w-2/4 lg:2/4 md:w-3/4 sm:w-full ">
                         <div className="text-center">
                             <h1 className="text-2xl font-bold">Login for businesses</h1>
                             <p className="">To access your business account please
@@ -135,7 +139,6 @@ export const LoginContinue = () => {
                         </div>
                     </div>
                 </div>
-                <p className="text-center mt-4 text-gray-400">© 2022 Fresha.com SV Ltd</p>
             </div>
         </div >
     )

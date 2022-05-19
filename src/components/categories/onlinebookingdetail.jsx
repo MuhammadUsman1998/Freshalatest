@@ -8,13 +8,26 @@ import ClipLoader from "react-spinners/ClipLoader";
 import "../../assets/styles/app.css";
 
 let arrayOfSelectedServices = [];
-// import ReactLoading from 'react-loading';
+
+
+function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+        <div
+            className={className}
+            style={{ ...style, backgroundColor: "black", borderRadius: "50%" }}
+            onClick={onClick}
+        />
+    );
+}
+
 var settings = {
     infinite: true,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 3,
-    color: "black",
+    nextArrow: <SamplePrevArrow />,
+    prevArrow: <SamplePrevArrow />
 };
 
 const useMountEffect = (fun) => useEffect(fun, []);
@@ -38,7 +51,7 @@ export const OnlineBookingDetail = () => {
     useMountEffect(executeScroll);
 
     const userInfo = JSON.parse(localStorage.getItem("userData"));
-    const service_info = useSelector((state) => state?.getService);
+    const service_info = useSelector((state) => state.getService);
     const service_data = service_info?.Services?.data[0]?.categories;
 
     const { loading } = service_info;
@@ -56,11 +69,8 @@ export const OnlineBookingDetail = () => {
         serviceCategory.push(obj);
     });
     const [selectedServices, setSelectedServices] = useState([])
-
-
-
-
     const [showButton, setShowButton] = useState(false);
+
     const clickButton = (e, serviceId) => {
         if (e.target.checked) {
             setSelectedServices(prevState => [
@@ -75,20 +85,15 @@ export const OnlineBookingDetail = () => {
 
     };
 
-    // const handleChange = (e) => {
-    //     setShowButton(!showButton)
-    // }
+
 
     const handleChange = (e, selected_service_data) => {
         if (e.target.name === 'checkbox' && arrayOfSelectedServices.includes(selected_service_data)) {
             const newList = arrayOfSelectedServices.filter((item) => item !== selected_service_data)
 
             arrayOfSelectedServices = newList
-            console.log(arrayOfSelectedServices);
-            // console.log('new list of array', arrayOfSelectedServices)
         } else {
             arrayOfSelectedServices.push(selected_service_data)
-            console.log('selected service array', arrayOfSelectedServices)
         }
         setShowButton(!showButton)
 
@@ -100,17 +105,17 @@ export const OnlineBookingDetail = () => {
 
     return (
         <>
-            <div className='bg-slate-900 h-48 text-white '>
-                <div className='max-w-7xl mx-auto px-28 sm:px-6 lg:px-24'>
+            <div className='bg-slate-900 h-48 text-white sticky top-0'>
+                <div className='max-w-7xl mx-auto px-40 sm:px-6 lg:px-24'>
                     <div className='flex flex-col p-4'>
-                        <div className='flex justify-between '>
-                            <div className='flex'>
-                                <p className='text-white pl-12'>Step 1/3 </p>
-                            </div>
+                        <div className='flex'>
+                            <p className='text-white '>Step 1/3 </p>
                         </div>
-                        <h1 className='text-4xl font-bold text-white px-5'>
-                            Select Services
-                        </h1>
+                        <div className="flex">
+                            <h1 className='text-4xl font-bold text-white '>
+                                Select Services
+                            </h1>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -123,9 +128,9 @@ export const OnlineBookingDetail = () => {
                 <>
 
                     <div className='bg-gray-300'>
-                        <div className="">
+                        <div className="sticky top-48">
                             <div className='max-w-7xl mx-auto px-44 sm:px-6 lg:px-8 '>
-                                <div className='bg-gray-200 w-3/5  shadow-lg rounded-lg text-black  lg:w-full '>
+                                <div className='bg-white w-3/5  shadow-lg rounded-lg text-black  lg:w-full '>
                                     <Slider className='py-4 text-center  ' {...settings}>
 
                                         {serviceCategory?.map((cat1) => {
@@ -148,93 +153,77 @@ export const OnlineBookingDetail = () => {
                                     </Slider>
                                 </div>
                             </div>
-                        </div>
 
 
-                        <div className="float-right -mt-20">
-                            <div className='max-w-7xl mx-auto px-6 sm:px-6 lg:px-8 '>
-                                <div className="bg-white w-2/3 shadow-lg rounded-lg text-black lg:hidden mr-56">
-                                    <div className='flex justify-center rounded-lg shadow-fuchsia-100 '>
-                                        <img
-                                            className='-mt-12 rounded-lg shadow-md border-4 border-neutral-100 '
-                                            src={img}
-                                        />
-                                    </div>
-                                    <h1 className='text-center font-bold pt-2'>{salonTitle}</h1>
-                                    <p className='pt-3 text-center text-gray'> {branchLocation}</p>
-                                    <hr className='mt-3'></hr>
-                                    <div className='flex justify-between p-5 font-bold'>
-                                        <h1>Total </h1>
-                                        <h1>Free</h1>
+                            <div className="float-right  -mt-20 mr-12 w-2/6">
+                                <div className='max-w-7xl mx-auto px-6 sm:px-6 lg:px-8 '>
+                                    <div className="bg-white sticky shadow-lg rounded-lg text-black lg:hidden ">
+                                        <div className='flex justify-center rounded-lg shadow-fuchsia-100 '>
+                                            <img
+                                                className='-mt-12 rounded-lg shadow-md border-4 border-neutral-100 '
+                                                src={img}
+                                            />
+                                        </div>
+                                        <h1 className='text-center font-bold pt-2'>{salonTitle}</h1>
+                                        <p className='pt-3 text-center text-gray'> {branchLocation}</p>
+                                        <hr className='mt-3'></hr>
+                                        <div className='flex justify-between p-5 font-bold'>
+                                            <h1>Total </h1>
+                                            <h1>Free</h1>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* <div className="flex justify-end ">
-                            <div className=' bg-white flex-col shadow-lg rounded-lg text-black p-2  lg:hidden '>
-                                <div className='flex justify-center rounded-lg shadow-fuchsia-100 '>
-                                    <img
-                                        className=' rounded-lg shadow-md border-4 border-neutral-100 '
-                                        src={img}
-                                    />
-                                </div>
-                                <h1 className='text-center font-bold pt-3'>{salonTitle}</h1>
-                                <p className='pt-3 text-center text-gray'> {branchLocation}</p>
-                                <hr className='mt-3'></hr>
-                                <p className='pt-10 text-center'>No services selected yet </p>
-                                <hr className='mt-3'></hr>
-                                <div className='flex justify-between p-5'>
-                                    <h1>Total Free</h1>
-                                    <h1>Free</h1>
-                                </div>
-                            </div>
-                        </div> */}
 
                         <div className='max-w-7xl mx-auto px-44 sm:px-6 lg:px-8 '>
                             <div className='' ref={myRef}>
                                 {service_data?.map((item) => (
-                                    <div className='md:w-full lg:flex flex-wrap ' ref={myRef}>
+                                    <div className=' lg:flex flex-wrap ' ref={myRef}>
                                         {item?.allServices?.length ? (
                                             <>
-                                                <h1 className='text-2xl pt-5 font-bold  '>
-                                                    {item?.categoryTitle}
-                                                </h1>
-                                                {/* sm:-mt-12 */}
-                                                <div className='mt-3 bg-white w-3/5  p-7 shadow-lg rounded-lg lg:w-full '>
-                                                    <div
-                                                        className='sm:w-full cursor-pointer '
-                                                        ref={myRef}
-                                                    >
-                                                        {item?.allServices?.map((service, index) => (
-                                                            <div ref={myRef}>
-                                                                <label>
-                                                                    <div className='flex cursor-pointer'>
-                                                                        <input
-                                                                            name='checkbox'
-                                                                            id={index}
-                                                                            className='w-6 h-6 mt-1'
-                                                                            type='checkbox'
-                                                                            onClick={(e) => clickButton(e, service?._id)}
-                                                                            onChange={(e) => handleChange(e, service)}
-                                                                        />
+                                                <div className="flex">
+                                                    <h1 className='text-2xl  font-bold pt-2'>
+                                                        {item?.categoryTitle}
+                                                    </h1>
+                                                </div>
+                                                <div className="mt-3 lg:w-full w-3/5 ">
+                                                    <div className=' bg-white  p-7  rounded-lg  '>
+                                                        <div
+                                                            className='sm:w-full cursor-pointer '
+                                                            ref={myRef}
+                                                        >
+                                                            {item?.allServices?.map((service, index) => (
+                                                                <div ref={myRef}>
+                                                                    <label>
+                                                                        <div className='flex cursor-pointer'>
+                                                                            <input
+                                                                                name='checkbox'
+                                                                                id={index}
+                                                                                className='w-6 h-6 mt-1'
+                                                                                type='checkbox'
+                                                                                onClick={(e) => clickButton(e, service?._id)}
+                                                                                onChange={(e) => handleChange(e, service)}
+                                                                            />
 
-                                                                        <p className='text-xl font-bold pl-6 '>
-                                                                            {service?.serviceTitle}
+                                                                            <p className='text-xl font-bold pl-6 '>
+                                                                                {service?.serviceTitle}
+                                                                            </p>
+                                                                        </div>
+                                                                        <p className='pl-12 text-gray-400'>
+                                                                            {service?.duration}min
+                                                                        </p>
+                                                                    </label>
+                                                                    <hr className='my-3 w-full '></hr>
+                                                                    <div className='flex justify-end lg:flex flex-wrap'>
+                                                                        <p className='-mt-20 font-medium '>
+                                                                            ${service?.price}
                                                                         </p>
                                                                     </div>
-                                                                    <p className='pl-12 text-gray-400'>
-                                                                        {service?.duration}min
-                                                                    </p>
-                                                                </label>
-                                                                <hr className='my-3 w-full '></hr>
-                                                                <div className='flex justify-end lg:flex flex-wrap'>
-                                                                    <p className='-mt-20 font-medium '>
-                                                                        ${service?.price}
-                                                                    </p>
                                                                 </div>
-                                                            </div>
-                                                        ))}
+                                                            ))}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </>
@@ -247,18 +236,19 @@ export const OnlineBookingDetail = () => {
                         </div>
                     </div>
 
-                    {selectedServices.some((item) => item.checked === true) && <div className=' bg-white shadow-md '>
-                        <div className='flex justify-end mr-36 mt-3  pt-6 h-24 '>
-                            <Link to='/timeComponent' state={{ services: arrayOfSelectedServices }} >
-                                <button
-                                    className='bg-slate-900 w-32 h-12 shadow-lg rounded-lg
-                     text-white hover:bg-slate-500 font-bold'
-                                >
-                                    Book Now
-                                </button>
-                            </Link>
-                        </div>
-                    </div>}
+                    {selectedServices.some((item) => item.checked === true) &&
+                        <div className=' bg-white py-2 mt-4  sticky bottom-0'>
+                            <div className='flex justify-end '>
+                                <Link to='/timeComponent' state={{ services: arrayOfSelectedServices }} >
+                                    <button
+                                        className='bg-slate-900 w-32 h-12 mr-16  rounded-lg  
+                     text-white  font-bold'
+                                    >
+                                        Next
+                                    </button>
+                                </Link>
+                            </div>
+                        </div>}
                 </>
             )}
         </>

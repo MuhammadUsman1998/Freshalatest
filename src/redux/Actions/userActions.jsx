@@ -25,6 +25,9 @@ export const userLogin = (login) => async (dispatch) => {
             type: LOGIN_ADD_SUCCESS,
             payload: data,
         });
+
+
+        localStorage.setItem("user", JSON.stringify(data.data));
     } catch (error) {
         dispatch({
             type: LOGIN_ADD_FAIL,
