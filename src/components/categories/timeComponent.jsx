@@ -33,12 +33,15 @@ var settings = {
 
 
 export const TimeComponent = () => {
-    const [time, setTime] = useState("")
+    const [time, setTime] = useState("");
+    const [date, setDate] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedTime, setSelectedTime] = useState(false)
-    const clickDate = (e, index) => {
+    console.log('date is here', date)
+    const clickDate = (e, index, value) => {
         setSelectedCategory(index)
         setSelectedTime(true)
+        setDate(value)
     }
 
     let dateArray = [];
@@ -54,8 +57,29 @@ export const TimeComponent = () => {
     }
 
 
-    const handleTimeChange = (time) => {
-        setTime(time)
+    const secondsToHms = (d) => {
+        d = Number(d);
+        var h = Math.floor(d / 3600);
+        var m = Math.floor(d % 3600 / 60);
+        var s = Math.floor(d % 3600 % 60);
+        // if (h < 12) {
+        //     var hDisplay = h > 0 ? h : ''
+        //     var mDisplay = m > 0 ? m : '00am'
+        // }
+        // else {
+        //     var hDisplay = h > 0 ? h : ''
+        //     var mDisplay = m > 0 ? m : '00pm'
+        // }
+        var hDisplay = h > 0 ? h : ''
+        var mDisplay = m > 0 ? m : '00'
+        return `${hDisplay}:${mDisplay}`
+    }
+
+    console.log('time before', time)
+
+    const handleTimeChange = (hours) => {
+        const value = secondsToHms(hours);
+        setTime(value)
     }
 
     return (
@@ -90,7 +114,7 @@ export const TimeComponent = () => {
                                     dateArray?.map((date, i) => {
                                         return (
                                             <div className='flex justify-around'>
-                                                <div onClick={(e) => clickDate(e, i)}
+                                                <div onClick={(e) => clickDate(e, i, date)}
                                                     className={`flex justify-center border-solid border-black border-2 rounded-lg hover:bg-gray-300 
                                                 hover:text-black px-3 h-16 w-24 text-center pt-3 font-semibold cursor-pointer   ${selectedCategory ===
                                                         i
@@ -113,7 +137,7 @@ export const TimeComponent = () => {
                             </div>
 
                             <div className='border-solid border-2 '>
-                                <TimePicker onChange={handleTimeChange} value={time} step='5' start="09:00AM" end="05:00PM" className="text-center cursor-pointer" />
+                                <TimePicker onChange={handleTimeChange} value={time} step='10' start="09:00AM" end="05:00PM" className="text-center cursor-pointer" />
                             </div>
                             <h1 className='text-center pt-3 font-semibold text-blue-600 cursor-pointer'>Or Try With Another Time</h1>
                         </div>
