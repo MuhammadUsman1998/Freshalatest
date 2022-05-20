@@ -5,6 +5,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import img from "../../assets/images/service.webp";
 import { useDispatch, useSelector } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
+
 import "../../assets/styles/app.css";
 
 let arrayOfSelectedServices = [];
@@ -22,7 +23,7 @@ function SamplePrevArrow(props) {
 }
 
 var settings = {
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 3,
@@ -33,15 +34,23 @@ var settings = {
 const useMountEffect = (fun) => useEffect(fun, []);
 
 export const OnlineBookingDetail = () => {
+    const dispatch = useDispatch();
     const [search, setSearch] = useSearchParams();
+    const [selectedServices, setSelectedServices] = useState([])
+    const [showButton, setShowButton] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const userInfo = JSON.parse(localStorage.getItem("userData"));
 
+    const service_info = useSelector((state) => state.getService);
+
+    const service_data = service_info?.Services?.data[0]?.categories;
+    const { loading } = service_info;
     const salonId = search.get("salonId");
     const branchId = search.get("branchId");
     const userId = search.get("userId");
     var value = [{ branchId: branchId, salonId: salonId }]
     localStorage.setItem("info", JSON.stringify(value));
 
-    const [selectedCategory, setSelectedCategory] = useState("");
 
     const myRef = useRef(null);
     const executeScroll = (_id) => {
@@ -50,26 +59,22 @@ export const OnlineBookingDetail = () => {
     };
     useMountEffect(executeScroll);
 
-    const userInfo = JSON.parse(localStorage.getItem("userData"));
-    const service_info = useSelector((state) => state.getService);
-    const service_data = service_info?.Services?.data[0]?.categories;
 
-    const { loading } = service_info;
 
-    const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getService({ branchId, userId, salonId }));
+        console.log('re-render')
+        dispatch(getService(branchId, salonId));
+
     }, []);
 
-    const serviceCategory = [];
-    service_data?.forEach((cat) => {
-        let obj = {};
-        obj["_id"] = cat?._id;
-        obj["categoryTitle"] = cat?.categoryTitle;
-        serviceCategory.push(obj);
-    });
-    const [selectedServices, setSelectedServices] = useState([])
-    const [showButton, setShowButton] = useState(false);
+    // const serviceCategory = [];
+    // service_data?.forEach((cat) => {
+    //     let obj = {};
+    //     // obj["_id"] = cat?._id;
+    //     // obj["categoryTitle"] = cat?.categoryTitle;
+    //     serviceCategory.push(cat);
+    // });
+
     // const [count, setCount] = useState(0)
 
     const clickButton = (e, serviceId) => {
@@ -101,8 +106,7 @@ export const OnlineBookingDetail = () => {
 
     }
 
-    const salonTitle =
-        service_info?.Services?.data[0]?.salonInformation[0]?.salonTitle;
+    const salonTitle = service_info?.Services?.data[0]?.salonInformation[0]?.salonTitle;
     const branchLocation = service_info?.Services?.data[0]?.branchLocation;
 
     return (
@@ -135,12 +139,13 @@ export const OnlineBookingDetail = () => {
                                 <div className='bg-white w-3/5  shadow-lg rounded-lg text-black  lg:w-full '>
                                     <Slider className='py-4 text-center  ' {...settings}>
 
-                                        {serviceCategory?.map((cat1) => {
+                                        {service_data?.map((cat1) => {
+
                                             return (
                                                 <div className='hover:bg-gray-300 hover:text-black rounded-full '>
                                                     <h1
-                                                        onClick={(_id) => executeScroll(cat1._id)}
-                                                        className={`truncate cursor-pointer -top-1  rounded-full p-2 
+                                                        onClick={(_id) => executeScroll(cat1?._id)}
+                                                        className={`truncate cursor-pointer   rounded-full p-2 
                                                         ${selectedCategory ===
                                                                 cat1?._id
                                                                 ? "text-white bg-gray-900"
@@ -148,48 +153,51 @@ export const OnlineBookingDetail = () => {
                                                             }`}
                                                     >
                                                         {cat1?.categoryTitle}
+
                                                     </h1>
                                                 </div>
+
                                             );
                                         })}
                                     </Slider>
                                 </div>
                             </div>
+                        </div>
 
 
-                            <div className="float-right  -mt-20 mr-12 w-2/6">
-                                <div className='max-w-7xl mx-auto px-6 sm:px-6 lg:px-8 '>
-                                    <div className="bg-white sticky shadow-lg rounded-lg text-black lg:hidden ">
-                                        <div className='flex justify-center rounded-lg shadow-fuchsia-100 '>
-                                            <img
-                                                className='-mt-12 rounded-lg shadow-md border-4 border-neutral-100 '
-                                                src={img}
-                                            />
-                                        </div>
-                                        <h1 className='text-center font-bold pt-2'>{salonTitle}</h1>
-                                        <p className='pt-3 text-center text-gray'> {branchLocation}</p>
-                                        <hr className='mt-3'></hr>
-                                        {
-                                            arrayOfSelectedServices.map((serviceData) => {
-                                                return (
-                                                    <div className="">
-                                                        <div className="flex justify-between p-4 ">
-                                                            <h1> {serviceData.serviceTitle}</h1>
-                                                            <h1> ${serviceData.price}</h1>
-                                                        </div>
-                                                        <div className="text-gray-500 pl-6 pb-2">
-                                                            <h1> {serviceData.duration}Min</h1>
-                                                        </div>
-                                                        <hr></hr>
+
+                        <div className="float-right -mt-20  mr-12 w-2/6 sticky top-12">
+                            <div className='max-w-7xl mx-auto px-6 sm:px-6 lg:px-8 '>
+                                <div className="bg-white  shadow-lg rounded-lg text-black lg:hidden ">
+                                    <div className='  flex justify-center rounded-lg shadow-fuchsia-100 '>
+                                        <img
+                                            className=' -mt-12 rounded-lg shadow-md border-4 border-neutral-100 '
+                                            src={img}
+                                        />
+                                    </div>
+                                    <h1 className='text-center font-bold pt-2'>{salonTitle}</h1>
+                                    <p className='pt-3 text-center text-gray'> {branchLocation}</p>
+                                    <hr className='mt-3'></hr>
+                                    {
+                                        arrayOfSelectedServices.map((serviceData) => {
+                                            return (
+                                                <div className="">
+                                                    <div className="flex justify-between p-4 ">
+                                                        <h1> {serviceData.serviceTitle}</h1>
+                                                        <h1> ${serviceData.price}</h1>
                                                     </div>
+                                                    <div className="text-gray-500 pl-6 pb-2">
+                                                        <h1> {serviceData.duration}Min</h1>
+                                                    </div>
+                                                    <hr></hr>
+                                                </div>
 
-                                                )
-                                            })
-                                        }
-                                        <div className='flex justify-between p-4 font-bold '>
-                                            <h1>Total </h1>
-                                            <h1>Free</h1>
-                                        </div>
+                                            )
+                                        })
+                                    }
+                                    <div className='flex justify-between p-4 font-bold '>
+                                        <h1>Total </h1>
+                                        <h1>Free</h1>
                                     </div>
                                 </div>
                             </div>
@@ -272,7 +280,8 @@ export const OnlineBookingDetail = () => {
                             </div>
                         </div>}
                 </>
-            )}
+            )
+            }
         </>
     );
 };

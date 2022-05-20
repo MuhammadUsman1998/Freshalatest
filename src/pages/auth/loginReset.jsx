@@ -1,5 +1,7 @@
 import React from 'react'
 import { Routes, Route, Link } from "react-router-dom";
+import service from "../../assets/images/service.webp"
+
 export const LoginResetPage = () => {
     return (
 
@@ -21,10 +23,9 @@ export const LoginResetPage = () => {
 
 
 
-            <div className="min-h-screen  flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-
+            <div className=" flex  justify-center py-12 sm:px-6 lg:px-8 -mt-12 mr-12">
                 <div className=" mt-6 sm:mx-auto sm:w-full sm:max-w-md 2xl:flex justify-center">
-                    <div className="bg-white py-4 px-4 shadow sm:rounded-lg w-2/4 lg:w-2/3 md:w-3/4 sm:w-screen">
+                    <div className="bg-white py-4 px-4 shadow rounded-lg w-3/4 lg:w-2/3 md:w-3/4 sm:w-screen">
                         <div className="sm:mx-auto sm:w-full sm:max-w-md">
                             <h2 className="text-center text-3xl font-extrabold text-gray-900">Fresha</h2>
                         </div>
@@ -71,14 +72,17 @@ export const LoginResetPage = () => {
                     </div>
                 </div >
 
-                <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md 2xl:flex justify-center">
-                    <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10  w-2/4 lg:w-2/3 md:w-3/4 sm:w-screen">
-                        <div className="text-center">
-                            <h1 className="text-2xl font-bold">Login for businesses</h1>
-                            <p className="">To access your business account please go to the business login page</p>
-                        </div>
+                <div className=" bg-white mt-4  w-72 shadow-lg rounded-lg sm:mt-5 lg:hidden ">
+                    <div className='-mt-7 flex justify-center  '>
+                        <img className=' rounded-lg shadow-md border-4 border-neutral-100' src={service} />
+                    </div>
+                    <div className='text-center font-bold pt-3'>
+                        <h1>Salon</h1>
+                        <h1 className='pt-2'>LHR</h1>
                     </div>
                 </div>
+
+
             </div>
         </div >
     )
