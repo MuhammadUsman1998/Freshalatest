@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { userSignUp } from '../../redux/Actions/userActions';
 import service from "../../assets/images/service.webp"
@@ -41,27 +41,27 @@ export const SignUpContinueComponent = () => {
 
     return (
         <div>
-            <div className='bg-slate-900 h-44'>
-                <div className="max-w-7xl mx-auto px-40 sm:px-6 lg:px-8">
+            <div className='bg-slate-900 h-36'>
+                <div className="max-w-7xl mx-auto px-32 sm:px-6 lg:px-8">
                     <div className=' p-4 '>
-                        <div className='flex justify-between '>
-                            <div className='flex'>
-                                <div className='pl-3'>
-                                    <Link to="/timeComponent" className="hover:text-gray-600 text-white fa-solid fa-arrow-left float-left pr-5" ></Link>
-                                </div>
-                                <p className='text-white '>Step 3/3 </p>
+                        {/* <div className='flex justify-between '> */}
+                        <div className='flex'>
+                            <div className='pr-5'>
+                                <Link to="/timeComponent" className="hover:text-gray-600 text-white fa-solid fa-arrow-left float-left pr-2" ></Link>
                             </div>
+                            <p className='text-white '>Step 3/3 </p>
                         </div>
+                        {/* </div> */}
                         <h1 className="text-4xl font-bold text-white pl-10 ">SignUp To Continue</h1>
                     </div>
                 </div>
             </div>
 
 
-            <div className="max-w-7xl mx-auto px-44 sm:px-6 lg:px-8">
-                <div className=" flex justify-center  sm:px-6 lg:px-8">
-                    <div className=" -mt-12 sm:mx-auto sm:w-full sm:max-w-md  mb-12">
-                        <div className="bg-white py-8 px-4 shadow rounded-lg sm:px-10   ">
+            <div className="max-w-7xl mx-auto px-48 sm:px-6 lg:px-8">
+                <div className=" flex justify-between ">
+                    <div className="  sm:mx-auto sm:w-full sm:max-w-md  mb-12 w-2/3">
+                        <div className="bg-white py-8 px-4 shadow-md rounded-lg w-full xl:w-full ">
                             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                                 <h2 className=" text-center text-3xl font-extrabold text-gray-900">Fresha</h2>
                             </div>
@@ -179,8 +179,8 @@ export const SignUpContinueComponent = () => {
                         </div>
                     </div>
 
-                    <div className=" bg-white h-96 w-72 shadow-lg rounded-lg sm:mt-5  ml-12 lg:hidden -mt-12">
-                        <div className='-mt-7 flex justify-center  '>
+                    <div className=" bg-white h-96 w-64 shadow-lg rounded-lg sm:mt-5  mr-3 lg:hidden ">
+                        <div className='-mt-10 flex justify-center  '>
                             <img className=' rounded-lg shadow-md border-4 border-neutral-100' src={service} />
                         </div>
                         <div className='text-center font-bold pt-3'>

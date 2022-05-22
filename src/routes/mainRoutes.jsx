@@ -20,7 +20,7 @@ export const MainRoutes = () => {
       <Route exact path="/timeComponent" element={<TimeComponent />} />
       <Route exact path="/signupcontinueComponent" element={<SignUpContinueComponent />} />
       <Route exact path="/loginContinue" element={<LoginContinue />} />
-      {/* <Route exact path="/orderSuccess" element={<OrderSuccess />} /> */}
+      <Route exact path="/orderSuccess" element={<OrderSuccess />} />
     </Routes>
   );
 };

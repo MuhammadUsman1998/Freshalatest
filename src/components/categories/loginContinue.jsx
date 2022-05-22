@@ -3,10 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from '../../redux/Actions/userActions';
 import service from "../../assets/images/service.webp"
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
 
-const MySwal = withReactContent(Swal);
 
 
 
@@ -16,23 +13,6 @@ export const LoginContinue = () => {
         contactNumber: "03023456789",
         password: "123456"
     });
-
-
-    useEffect(() => {
-        MySwal.fire({
-            title: "Checkout completed",
-            icon: "success",
-
-            customClass: {
-                confirmButton: "btn btn-success",
-            },
-            html: <>hello</>,
-            buttonsStyling: false,
-        });
-    }
-
-        // viewChange("1");
-        , []);
 
 
     const dispatch = useDispatch();
@@ -52,8 +32,8 @@ export const LoginContinue = () => {
     return (
 
 
-        <div className='bg-slate-900 h-44'>
-            <div className="max-w-7xl mx-auto px-36 sm:px-6 lg:px-8">
+        <div className='bg-slate-900 h-36'>
+            <div className="max-w-7xl mx-auto px-32 sm:px-6 lg:px-8">
                 <div className=' p-4'>
                     <div className='flex justify-between '>
                         <div className='flex'>
@@ -67,10 +47,10 @@ export const LoginContinue = () => {
                 </div>
             </div>
 
-            <div className="max-w-7xl mx-auto px-52 sm:px-6 lg:px-8">
-                <div className=" flex justify-center  sm:px-6 lg:px-8">
-                    <div className="w-full  sm:mx-auto sm:w-full sm:max-w-md ">
-                        <div className=" bg-white py-8 px-4 shadow rounded-lg sm:px-10 w-10/12 mt-3">
+            <div className="max-w-7xl mx-auto px-48 sm:px-6 lg:px-8">
+                <div className=" flex justify-between  sm:px-6 lg:px-8">
+                    <div className="w-2/3  sm:mx-auto sm:w-full sm:max-w-md ">
+                        <div className=" bg-white py-8 px-4 shadow rounded-lg sm:px-10 w-full mt-9">
                             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                                 <h2 className=" text-center text-3xl font-extrabold text-gray-900">Fresha</h2>
                             </div>
@@ -123,12 +103,14 @@ export const LoginContinue = () => {
                                 <br></br>
                             </form>
                             <div>
-                                <button
-                                    type="submit" onClick={handleSubmit}
-                                    className=" mt-2 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-slate-900 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                >
-                                    Log in
-                                </button>
+                                <Link to="/orderSuccess">
+                                    <button
+                                        type="submit" onClick={handleSubmit}
+                                        className=" mt-2 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-slate-900 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    >
+                                        Log in
+                                    </button>
+                                </Link>
                             </div>
 
                             <div className="mt-6">
@@ -145,8 +127,8 @@ export const LoginContinue = () => {
                         </div>
                     </div >
 
-                    <div className=" bg-white mt-3 w-96 shadow-lg rounded-lg sm:mt-5 lg:hidden ">
-                        <div className='-mt-7 flex justify-center  '>
+                    <div className=" bg-white mt-8 w-64 shadow-lg rounded-lg sm:mt-5 lg:hidden mr-3">
+                        <div className='-mt-10 flex justify-center  '>
                             <img className=' rounded-lg shadow-md border-4 border-neutral-100' src={service} />
                         </div>
                         <div className='text-center font-bold pt-3'>

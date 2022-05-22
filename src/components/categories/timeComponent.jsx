@@ -11,24 +11,24 @@ import Slider from "react-slick";
 
 
 
-function SamplePrevArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-        <div
-            className={className}
-            style={{ ...style, backgroundColor: "black", borderRadius: "50%" }}
-            onClick={onClick}
-        />
-    );
-}
+// function SamplePrevArrow(props) {
+//     const { className, style, onClick } = props;
+//     return (
+//         <div
+//             className={className}
+//             style={{ ...style, backgroundColor: "black", borderRadius: "50%" }}
+//             onClick={onClick}
+//         />
+//     );
+// }
 
 var settings = {
-    infinite: false,
+    // infinite: false,
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 5,
-    nextArrow: <SamplePrevArrow />,
-    prevArrow: <SamplePrevArrow />
+    // nextArrow: <SamplePrevArrow />,
+    // prevArrow: <SamplePrevArrow />
 };
 
 
@@ -37,7 +37,6 @@ export const TimeComponent = () => {
     const [myDate, setMyDate] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedTime, setSelectedTime] = useState(false)
-    // console.log('time array here', timeArray)
     console.log('date is here', myDate)
     const clickDate = (e, index, value) => {
         setSelectedCategory(index)
@@ -48,7 +47,6 @@ export const TimeComponent = () => {
     let dateArray = [];
     const location = useLocation();
     const { services } = location?.state ? location.state : "";
-    // console.log(services);
     var a = moment();
     var b = moment(a).add(2, 'month').format('MM:DD:YYYY');
     while (a.format('MM:DD:YYYY') < b) {
@@ -85,12 +83,11 @@ export const TimeComponent = () => {
         console.log(Arr);
         // setTime(Arr)
     }
-    // console.log(time)
     let timeArray = ["9:00AM", "9:15AM", "9:30AM", "9:45AM", "10:00AM", "10:15AM", "10:30AM", "10:45AM", "11:00AM", "11:15AM", "11:30AM", "11:45AM", "12:00PM", "12:15PM", "12:30PM", "12:45PM", "1:00PM", "1:15PM", "1:30PM", "1:45PM", "2:00PM", "2:15PM", "2:30PM", "2:45PM", "3:00PM", "3:15PM", "3:30PM", "3:45PM", "4:00PM", "4:15PM", "4:30PM", "4:45PM", "5:00PM"]
 
     return (
         <div className="">
-            <div className='bg-slate-900 h-44 sticky top-0'>
+            <div className='bg-slate-900 h-36 sticky top-0'>
                 <div className="max-w-7xl mx-auto px-40 sm:px-16 lg:px-32 ">
                     <div className=' p-4'>
                         <div className='flex '>
@@ -100,7 +97,7 @@ export const TimeComponent = () => {
                             <p className='text-white '>Step 2/3 </p>
                         </div>
                         <div className='flex'>
-                            <h1 className="text-4xl font-bold text-white ">Select Time</h1>
+                            <h1 className="text-4xl font-bold text-white pl-4">Select Time</h1>
                         </div>
                     </div>
                 </div>
@@ -108,48 +105,45 @@ export const TimeComponent = () => {
 
 
             <div className='bg-gray-300 h-auto pb-12'>
-                <div className="max-w-7xl mx-auto px-44 sm:px-16 lg:px-32 sticky top-36">
-                    <div className="flex justify-between  -mt-12 ">
-                        <div className=" bg-white  w-4/6 shadow-md rounded-lg xl:w-full  ">
+                <div className="max-w-7xl mx-auto px-48 sm:px-16 lg:px-32 sticky top-36">
+                    {/* <div className="flex justify-between bg-red-300  "> */}
+                    <div className=" bg-white  w-4/6 shadow-md  xl:w-full  ">
 
 
 
-                            <Slider className='' focusOnSelect={true}  {...settings}>
-                                {
-                                    dateArray?.length &&
-                                    dateArray?.map((date, i) => {
-                                        return (
-                                            <div className='flex justify-around'>
-                                                <div onClick={(e) => clickDate(e, i, date)}
-                                                    className={`flex justify-center border-solid border-black border-2 rounded-lg hover:bg-gray-300 
+                        <Slider className='' focusOnSelect={true}  {...settings}>
+                            {
+                                dateArray?.length &&
+                                dateArray?.map((date, i) => {
+                                    return (
+                                        <div className='flex justify-around'>
+                                            <div onClick={(e) => clickDate(e, i, date)}
+                                                className={`flex justify-center border-solid border-black border-2 rounded-lg hover:bg-gray-300 
                                                 hover:text-black px-3 h-16 w-24 text-center pt-3 font-semibold cursor-pointer   ${selectedCategory ===
-                                                        i
-                                                        && "text-white bg-blue-600"
+                                                    i
+                                                    && "text-white bg-blue-600"
 
-                                                        }`}
-                                                >
-                                                    <h1 className=''>{date}</h1>
-                                                </div>
+                                                    }`}
+                                            >
+                                                <h1 className=''>{date}</h1>
                                             </div>
-                                        )
-                                    })}
-                            </Slider>
+                                        </div>
+                                    )
+                                })}
+                        </Slider>
 
-                            <div className='flex justify-center pt-3'>
-                                <img src="https://img.icons8.com/ios/50/000000/time--v1.png" />
-                            </div>
-                            <div className='text-center font-bold p-3 mb-6'>
-                                <h1>You can Book Your Time When Jocelyn Available</h1>
-                            </div>
-
-
-                            {/* <TimePicker onChange={handleTimeChange} value={time} step='10' start="09:00AM" end="05:00PM" className="text-center cursor-pointer" /> */}
+                        <div className='flex justify-center pt-3'>
+                            <img src="https://img.icons8.com/ios/50/000000/time--v1.png" />
+                        </div>
+                        <div className='text-center font-bold p-3 mb-6'>
+                            <h1>You can Book Your Time When Jocelyn is Available</h1>
                         </div>
                     </div>
+                    {/* </div> */}
 
 
-                    <div className='float-right -mt-60'>
-                        <div className=" bg-white  w-72 shadow-lg rounded-lg sm:mt-5 xl:hidden ">
+                    <div className='flex justify-end -mt-60 -mr-3 '>
+                        <div className=" bg-white h-1/2 w-72 shadow-lg rounded-lg sm:mt-5 xl:hidden ">
                             <div className=' flex justify-center  '>
                                 <img className='-mt-10 rounded-lg shadow-md border-4 border-neutral-100' src={service} />
                             </div>
@@ -157,9 +151,7 @@ export const TimeComponent = () => {
                                 <h1>Salon</h1>
                                 <h1 className='pt-2 text-gray-400'>LHR</h1>
                             </div>
-                            {/* <h1 className='text-center font-bold pt-2'>{salonTitle}</h1>
-                            <p className='pt-3 text-center text-gray'> {branchLocation}</p>
-                            <hr className='mt-3'></hr> */}
+
                             {
                                 services?.map((serviceData) => {
                                     return (
@@ -178,7 +170,7 @@ export const TimeComponent = () => {
                                                 <div className="text-gray-500 px-4">
                                                     <h1> {serviceData.duration}Min</h1>
                                                 </div>
-                                                <hr className='mt-3'></hr>
+                                                {/* <hr className='mt-3'></hr> */}
 
                                             </div>
 
@@ -196,12 +188,12 @@ export const TimeComponent = () => {
                 </div>
 
                 <div className="">
-                    <div className="max-w-7xl mx-auto px-44 sm:px-16 lg:px-32">
+                    <div className="max-w-7xl mx-auto px-48 sm:px-16 lg:px-32">
 
-                        <div className='w-2/3  mt-3 xl:w-full '>
+                        <div className='w-2/3 -mt-28  xl:w-full '>
                             {timeArray.map((Arr, i) => {
                                 return (
-                                    <div className=' border-solid border-1 border-black px-3 py-4 bg-slate-100 flex justify-between cursor-pointer hover:bg-slate-400 font-bold'>
+                                    <div className=' border-solid border-1 border-black px-3 py-4  bg-white flex justify-between cursor-pointer hover:bg-slate-400 font-bold'>
                                         <h1 onClick={getTime(Arr)}>
                                             {Arr}
                                         </h1>

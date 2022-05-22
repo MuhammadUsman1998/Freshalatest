@@ -111,7 +111,7 @@ export const OnlineBookingDetail = () => {
 
     return (
         <>
-            <div className='bg-slate-900 h-48 text-white sticky top-0'>
+            <div className='bg-slate-900 h-36 text-white sticky top-0'>
                 <div className='max-w-7xl mx-auto px-40 sm:px-6 lg:px-24'>
                     <div className='flex flex-col p-4'>
                         <div className='flex'>
@@ -134,10 +134,11 @@ export const OnlineBookingDetail = () => {
                 <>
 
                     <div className='bg-gray-300'>
-                        <div className="sticky top-48">
+                        <div className="sticky top-36">
                             <div className='max-w-7xl mx-auto px-44 sm:px-6 lg:px-8 '>
-                                <div className='bg-white w-3/5  shadow-lg rounded-lg text-black  lg:w-full '>
-                                    <Slider className='py-4 text-center  ' {...settings}>
+                                <div className='bg-white w-2/3  shadow-lg rounded-lg text-black  lg:w-full '>
+                                    {/* focusOnSelect={true} */}
+                                    <Slider className='py-4 text-center  '  {...settings}>
 
                                         {service_data?.map((cat1) => {
 
@@ -166,7 +167,7 @@ export const OnlineBookingDetail = () => {
 
 
 
-                        <div className="float-right -mt-20  mr-12 w-2/6 sticky top-12">
+                        <div className="float-right -mt-20 w-1/4 mr-44  sticky top-12">
                             <div className='max-w-7xl mx-auto px-6 sm:px-6 lg:px-8 '>
                                 <div className="bg-white  shadow-lg rounded-lg text-black lg:hidden ">
                                     <div className='  flex justify-center rounded-lg shadow-fuchsia-100 '>
@@ -215,7 +216,7 @@ export const OnlineBookingDetail = () => {
                                                         {item?.categoryTitle}
                                                     </h1>
                                                 </div>
-                                                <div className="mt-3 lg:w-full w-3/5 ">
+                                                <div className="mt-3 lg:w-full w-2/3 ">
                                                     <div className=' bg-white  p-7  rounded-lg  '>
                                                         <div
                                                             className='sm:w-full cursor-pointer '
