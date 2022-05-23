@@ -23,7 +23,7 @@ function SamplePrevArrow(props) {
 }
 
 var settings = {
-    infinite: false,
+    infinite: true,
     // dots: true,
     speed: 500,
     slidesToShow: 3,
@@ -143,7 +143,7 @@ export const OnlineBookingDetail = () => {
             ) : (
                 <>
 
-                    <div className='bg-gray-300'>
+                    <div className='bg-gray-200'>
                         <div className="sticky top-36">
                             <div className='max-w-7xl mx-auto px-44 sm:px-6 lg:px-8 '>
                                 <div className='bg-white w-2/3  shadow-lg rounded-lg text-black  lg:w-full '>

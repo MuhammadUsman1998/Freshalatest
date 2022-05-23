@@ -92,7 +92,7 @@ export const TimeComponent = () => {
             </div>
 
 
-            <div className='bg-gray-300 h-auto pb-12'>
+            <div className='bg-gray-200 h-auto pb-12'>
                 <div className="max-w-7xl mx-auto px-48 sm:px-16 lg:px-32 sticky top-36">
                     {/* <div className="flex justify-between bg-red-300  "> */}
                     <div className=" bg-white  w-4/6 shadow-md  xl:w-full  ">
@@ -144,13 +144,14 @@ export const TimeComponent = () => {
                                 <h1>{myDate}</h1>
                                 <h1>{time}</h1>
                             </div>
+                            <hr className='mt-3'></hr>
+
                             {
                                 services?.map((serviceData) => {
                                     return (
                                         <>
                                             <div className="">
 
-                                                <hr className='mt-3'></hr>
                                                 <div className="flex justify-between px-4 py-3 ">
                                                     <h1> {serviceData.serviceTitle}</h1>
                                                     <h1> ${serviceData.price}</h1>
@@ -176,22 +177,19 @@ export const TimeComponent = () => {
                     </div>
                 </div>
 
-                <div className="">
-                    <div className="max-w-7xl mx-auto px-48 sm:px-16 lg:px-32">
+                <div className="max-w-7xl mx-auto px-48 sm:px-16 lg:px-32">
+                    <div className='w-2/3  xl:w-full '>
+                        {timeArray.map((Arr, index) => {
+                            return (
+                                <div onClick={(event) => timeDiv(event, Arr)} key={index} className=' border-solid border-1 border-black px-3 py-4  bg-white flex justify-between cursor-pointer hover:bg-slate-400 font-bold'>
+                                    <h1>
+                                        {Arr}
+                                    </h1>
 
-                        <div className='w-2/3 -mt-28  xl:w-full '>
-                            {timeArray.map((Arr, index) => {
-                                return (
-                                    <div onClick={(event) => timeDiv(event, Arr)} key={index} className=' border-solid border-1 border-black px-3 py-4  bg-white flex justify-between cursor-pointer hover:bg-slate-400 font-bold'>
-                                        <h1>
-                                            {Arr}
-                                        </h1>
-
-                                        <h1 className="fa-solid fa-angle-right pt-2  px-3"></h1>
-                                    </div>
-                                )
-                            })}
-                        </div>
+                                    <h1 className="fa-solid fa-angle-right pt-2  px-3"></h1>
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
 

@@ -26,10 +26,10 @@ export const LoginResetPage = () => {
             <div className="max-w-7xl mx-auto px-48 sm:px-6 lg:px-8">
                 <div className=" flex  justify-between py-12 sm:px-6 lg:px-8 -mt-10 mr-12">
                     <div className=" mt-6 sm:mx-auto sm:w-full sm:max-w-md flex justify-between w-11/12">
-                        <div className="bg-white py-4 px-4 shadow rounded-lg w-full lg:w-2/3 md:w-3/4 sm:w-screen">
-                            <div className="sm:mx-auto sm:w-full sm:max-w-md">
+                        <div className="bg-white py-4 px-4 shadow rounded-lg w-full lg:w-full md:w-3/4 sm:w-screen">
+                            {/* <div className="sm:mx-auto sm:w-full sm:max-w-md">
                                 <h2 className="text-center text-3xl font-extrabold text-gray-900">Fresha</h2>
-                            </div>
+                            </div> */}
                             <h1 className="mt-5 text-2xl font-bold">Forgot password?</h1>
                             <p className="">Enter your registered email address and we'll send you a secure link to setup a new password.</p>
                             <form className="space-y-4 " action="#">
