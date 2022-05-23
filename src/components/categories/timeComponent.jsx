@@ -200,7 +200,7 @@ export const TimeComponent = () => {
                 <div className=' bg-white py-2 mt-4  sticky bottom-0'>
                     <div className='flex justify-end '>
                         <Link to='/signupcontinueComponent' state={{
-                            selectedTime: time, selectedDate: myDate, salonName: total, salonLocation: myTotal, serviceTotal: myfunction
+                            selectedTime: time, selectedDate: myDate, salonName: total, salonLocation: myTotal, serviceTotal: myfunction, services
                         }} >
                             <button
                                 className='bg-slate-900 w-32 h-12 mr-16  rounded-lg sticky 

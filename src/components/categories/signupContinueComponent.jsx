@@ -9,12 +9,13 @@ import { useLocation } from 'react-router-dom';
 export const SignUpContinueComponent = () => {
 
     const location = useLocation();
-    const { selectedTime, selectedDate, salonName, salonLocation, serviceTotal } = location?.state ? location.state : "";
+    const { selectedTime, selectedDate, salonName, salonLocation, serviceTotal, services } = location?.state ? location.state : "";
     console.log('Selected Time:', selectedTime)
     console.log('Selected Date:', selectedDate)
     console.log('Salon Name:', salonName);
     console.log('Salon Location:', salonLocation);
     console.log('Service Total:', serviceTotal);
+    console.log('Services', services)
 
 
     const [inputForm, setInputForm] = useState({
@@ -170,7 +171,7 @@ export const SignUpContinueComponent = () => {
                                 >
                                     {/* Sign Up */}
                                     <Link to="/loginContinue" state={{
-                                        selectedTime, selectedDate, salonName, salonLocation, serviceTotal
+                                        selectedTime, selectedDate, salonName, salonLocation, serviceTotal, services
                                     }} className="flex justify-center text-blue">Sign Up</Link>
                                 </button>
 
@@ -185,7 +186,7 @@ export const SignUpContinueComponent = () => {
                                     </div>
                                 </div >
                                 <Link to="/loginContinue" state={{
-                                    selectedTime, selectedDate, salonName, salonLocation, serviceTotal
+                                    selectedTime, selectedDate, salonName, salonLocation, serviceTotal, services
                                 }} className="flex justify-center text-blue">Sign in now</Link>
                             </div>
                         </div>
