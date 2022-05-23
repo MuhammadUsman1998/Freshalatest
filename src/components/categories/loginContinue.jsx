@@ -3,19 +3,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from '../../redux/Actions/userActions';
 import service from "../../assets/images/service.webp"
-import { useLocation } from 'react-router-dom'
-
 
 export const LoginContinue = () => {
 
-    const location = useLocation();
-    const { selectedTime, selectedDate, salonName, salonLocation, serviceTotal, services } = location?.state ? location.state : "";
-    console.log('Selected Time:', selectedTime)
-    console.log('Selected Date:', selectedDate)
-    console.log('Salon Name:', salonName);
-    console.log('Salon Location:', salonLocation);
-    console.log('Service Total:', serviceTotal);
-    console.log('Services', services);
+    const services = JSON.parse(localStorage.getItem('selected_services'))
+    const salonName = localStorage.getItem('salonTitle')
+    const salonLocation = localStorage.getItem('branchLocation')
+    const selectedTime = localStorage.getItem('selected_time')
+    const selectedDate = localStorage.getItem('selected_date')
+    console.log('local servixes', services);
+    console.log('local salonTitle', salonName);
+    console.log('local location', salonLocation);
+    console.log('local selected_time', selectedTime);
+    console.log('local selected_date', selectedDate);
 
     const [inputForm, setInputForm] = useState({
         contactNumber: "03023456789",
@@ -36,6 +36,14 @@ export const LoginContinue = () => {
         navigate("/orderSuccess")
     }
     localStorage.setItem("user", JSON.stringify(""));
+
+    const calculateTotal = (array) => {
+        if (!array.length) {
+            return 0;
+        } else {
+            return array.reduce((accumulator, value) => accumulator + Number(value.price), 0);
+        }
+    }
 
     return (
 
@@ -142,6 +150,7 @@ export const LoginContinue = () => {
                         <div className='text-center font-bold pt-3'>
                             <h1>Salon</h1>
                             <h1 className='pt-2'>LHR</h1>
+                            {calculateTotal(services)}
                         </div>
                     </div>
                 </div>

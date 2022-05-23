@@ -8,8 +8,6 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 import "../../assets/styles/app.css";
 
-let arrayOfSelectedServices = [];
-
 
 function SamplePrevArrow(props) {
     const { className, style, onClick } = props;
@@ -23,7 +21,7 @@ function SamplePrevArrow(props) {
 }
 
 var settings = {
-    infinite: false,
+    infinite: true,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 3,
@@ -39,6 +37,7 @@ export const OnlineBookingDetail = () => {
     const [selectedServices, setSelectedServices] = useState([])
     const [showButton, setShowButton] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState("");
+    const [arrayOfSelectedServices, setArrayOfSelectedServices] = useState([])
     const userInfo = JSON.parse(localStorage.getItem("userData"));
 
     const service_info = useSelector((state) => state.getService);
@@ -50,6 +49,7 @@ export const OnlineBookingDetail = () => {
     const userId = search.get("userId");
     var value = [{ branchId: branchId, salonId: salonId }]
     localStorage.setItem("info", JSON.stringify(value));
+
 
 
     const myRef = useRef(null);
@@ -64,8 +64,12 @@ export const OnlineBookingDetail = () => {
     useEffect(() => {
         console.log('re-render')
         dispatch(getService(branchId, salonId));
-
     }, []);
+
+
+    useEffect(() => {
+        localStorage.setItem('selected_services', JSON.stringify(arrayOfSelectedServices))
+    }, [selectedServices])
 
     // const serviceCategory = [];
     // service_data?.forEach((cat) => {
@@ -91,23 +95,21 @@ export const OnlineBookingDetail = () => {
         }
     };
 
-
-
     const handleChange = (e, selected_service_data) => {
         if (e.target.name === 'checkbox' && arrayOfSelectedServices.includes(selected_service_data)) {
             const newList = arrayOfSelectedServices.filter((item) => item !== selected_service_data)
-            arrayOfSelectedServices = newList
-            console.log(arrayOfSelectedServices);
+            setArrayOfSelectedServices(newList)
         } else {
-            arrayOfSelectedServices.push(selected_service_data)
+            setArrayOfSelectedServices(prevState => [...prevState, selected_service_data])
         }
-        console.log(arrayOfSelectedServices);
         setShowButton(!showButton)
 
     }
 
     const salonTitle = service_info?.Services?.data[0]?.salonInformation[0]?.salonTitle;
+    localStorage.setItem("salonTitle", salonTitle);
     const branchLocation = service_info?.Services?.data[0]?.branchLocation;
+    localStorage.setItem("branchLocation", branchLocation);
 
     const calculateTotal = (array) => {
         if (!array.length) {
@@ -279,7 +281,7 @@ export const OnlineBookingDetail = () => {
 
                             <div className='flex justify-end '>
 
-                                <Link to='/timeComponent' state={{ services: arrayOfSelectedServices, total: salonTitle, myTotal: branchLocation, myfunction: calculateTotal(arrayOfSelectedServices) }} >
+                                <Link to='/timeComponent' >
                                     <button
                                         className='bg-slate-900 w-32 h-12 mr-16  rounded-lg  
                      text-white  font-bold'

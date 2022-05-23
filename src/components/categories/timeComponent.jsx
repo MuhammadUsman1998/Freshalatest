@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from "react-router-dom";
 import "flatpickr/dist/themes/material_green.css";
 import 'react-time-picker/dist/TimePicker.css';
@@ -44,11 +44,21 @@ export const TimeComponent = () => {
         setMyDate(value)
     }
 
-    console.log('time is here', time)
+    useEffect(() => {
+        localStorage.setItem('selected_date', myDate)
+        localStorage.setItem('selected_time', time)
+    }, [myDate, time])
+
 
     let dateArray = [];
-    const location = useLocation();
-    const { services, total, myTotal, myfunction } = location?.state ? location.state : "";
+    const services = JSON.parse(localStorage.getItem('selected_services'))
+    const total = localStorage.getItem('salonTitle')
+    const myTotal = localStorage.getItem('branchLocation')
+    console.log('local servixes', services);
+    console.log('local salonTitle', total);
+    console.log('local location', myTotal);
+
+
     var a = moment();
     var b = moment(a).add(2, 'month').format('MM:DD:YYYY');
     while (a.format('MM:DD:YYYY') < b) {
@@ -72,6 +82,15 @@ export const TimeComponent = () => {
     }
 
     let timeArray = ["9:00AM", "9:15AM", "9:30AM", "9:45AM", "10:00AM", "10:15AM", "10:30AM", "10:45AM", "11:00AM", "11:15AM", "11:30AM", "11:45AM", "12:00PM", "12:15PM", "12:30PM", "12:45PM", "1:00PM", "1:15PM", "1:30PM", "1:45PM", "2:00PM", "2:15PM", "2:30PM", "2:45PM", "3:00PM", "3:15PM", "3:30PM", "3:45PM", "4:00PM", "4:15PM", "4:30PM", "4:45PM", "5:00PM"]
+
+
+    const calculateTotal = (array) => {
+        if (!array.length) {
+            return 0;
+        } else {
+            return array.reduce((accumulator, value) => accumulator + Number(value.price), 0);
+        }
+    }
 
     return (
         <div className="">
@@ -169,7 +188,7 @@ export const TimeComponent = () => {
                             }
                             <div className='flex justify-between px-4 py-3'>
                                 <h1 className=''>Total</h1>
-                                <p>${myfunction}</p>
+                                <p>${calculateTotal(services)}</p>
                             </div>
                         </div>
                     </div>
@@ -199,9 +218,7 @@ export const TimeComponent = () => {
             {selectedTime &&
                 <div className=' bg-white py-2 mt-4  sticky bottom-0'>
                     <div className='flex justify-end '>
-                        <Link to='/signupcontinueComponent' state={{
-                            selectedTime: time, selectedDate: myDate, salonName: total, salonLocation: myTotal, serviceTotal: myfunction, services
-                        }} >
+                        <Link to='/signupcontinueComponent' >
                             <button
                                 className='bg-slate-900 w-32 h-12 mr-16  rounded-lg sticky 
                      text-white  font-bold'

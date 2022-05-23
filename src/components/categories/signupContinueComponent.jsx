@@ -8,14 +8,16 @@ import { useLocation } from 'react-router-dom';
 
 export const SignUpContinueComponent = () => {
 
-    const location = useLocation();
-    const { selectedTime, selectedDate, salonName, salonLocation, serviceTotal, services } = location?.state ? location.state : "";
-    console.log('Selected Time:', selectedTime)
-    console.log('Selected Date:', selectedDate)
-    console.log('Salon Name:', salonName);
-    console.log('Salon Location:', salonLocation);
-    console.log('Service Total:', serviceTotal);
-    console.log('Services', services)
+    const services = JSON.parse(localStorage.getItem('selected_services'))
+    const salonName = localStorage.getItem('salonTitle')
+    const salonLocation = localStorage.getItem('branchLocation')
+    const selectedTime = localStorage.getItem('selected_time')
+    const selectedDate = localStorage.getItem('selected_date')
+    console.log('local servixes', services);
+    console.log('local salonTitle', salonName);
+    console.log('local location', salonLocation);
+    console.log('local selected_time', selectedTime);
+    console.log('local selected_date', selectedDate);
 
 
     const [inputForm, setInputForm] = useState({
@@ -44,6 +46,13 @@ export const SignUpContinueComponent = () => {
         navigate("/loginContinue")
     }
 
+    const calculateTotal = (array) => {
+        if (!array.length) {
+            return 0;
+        } else {
+            return array.reduce((accumulator, value) => accumulator + Number(value.price), 0);
+        }
+    }
 
     return (
         <div>
@@ -170,9 +179,7 @@ export const SignUpContinueComponent = () => {
                              font-medium text-white bg-slate-900 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                 >
                                     {/* Sign Up */}
-                                    <Link to="/loginContinue" state={{
-                                        selectedTime, selectedDate, salonName, salonLocation, serviceTotal, services
-                                    }} className="flex justify-center text-blue">Sign Up</Link>
+                                    <Link to="/loginContinue" className="flex justify-center text-blue">Sign Up</Link>
                                 </button>
 
                             </div>
@@ -185,9 +192,7 @@ export const SignUpContinueComponent = () => {
                                         <span className="px-2 bg-white text-gray-500">Already have a booker account?</span>
                                     </div>
                                 </div >
-                                <Link to="/loginContinue" state={{
-                                    selectedTime, selectedDate, salonName, salonLocation, serviceTotal, services
-                                }} className="flex justify-center text-blue">Sign in now</Link>
+                                <Link to="/loginContinue" className="flex justify-center text-blue">Sign in now</Link>
                             </div>
                         </div>
                     </div>
@@ -199,6 +204,7 @@ export const SignUpContinueComponent = () => {
                         <div className='text-center font-bold pt-3'>
                             <h1>Salon</h1>
                             <h1 className='pt-2'>LHR</h1>
+                            {calculateTotal(services)}
                         </div>
                     </div>
                 </div>
