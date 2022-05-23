@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { userSignUp } from '../../redux/Actions/userActions';
 import service from "../../assets/images/service.webp"
 import { useLocation } from 'react-router-dom';
-
+import { useForm } from 'react-hook-form';
 export const SignUpContinueComponent = () => {
 
     const location = useLocation();
@@ -15,6 +15,10 @@ export const SignUpContinueComponent = () => {
     console.log('Salon Name:', salonName);
     console.log('Salon Location:', salonLocation);
     console.log('Service Total:', serviceTotal);
+    console.log({ location });
+
+    const { register, handleSubmit } = useForm();
+
 
 
     const [inputForm, setInputForm] = useState({
@@ -28,7 +32,7 @@ export const SignUpContinueComponent = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const handleSubmit = (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
         const obj = {
             fullName: inputForm.fullName,
@@ -41,6 +45,14 @@ export const SignUpContinueComponent = () => {
 
         dispatch(userSignUp(obj));
         navigate("/loginContinue")
+    }
+
+    const handleDisabled = () => {
+        if (!inputForm.fullName || !inputForm.email || !inputForm.contactNumber || !inputForm.password) {
+            return true
+        } else {
+            return false
+        }
     }
 
 
@@ -65,12 +77,12 @@ export const SignUpContinueComponent = () => {
 
             <div className="max-w-7xl mx-auto px-48 sm:px-6 lg:px-8">
                 <div className=" flex justify-between ">
-                    <div className="  sm:mx-auto sm:w-full sm:max-w-md  mb-12 w-2/3">
+                    <div className="  sm:mx-auto sm:w-full sm:max-w-md  mb-12 w-2/3 xl:w-full ">
                         <div className="bg-white py-8 px-4 shadow-md rounded-lg w-full xl:w-full ">
                             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                                 <h2 className=" text-center text-3xl font-extrabold text-gray-900">Fresha</h2>
                             </div>
-                            <form className="space-y-4 grid grid-cols-2 gap-y-6 gap-x-6 sm:grid-cols-2 mt-4  " action="#"
+                            <form className="space-y-4 grid grid-cols-2 gap-y-6 gap-x-6 sm:grid-cols-2 mt-4  " action="#" onSubmit={handleSubmit(onSubmit)}
                             >
                                 <div>
                                     <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mt-3 ">
@@ -83,12 +95,12 @@ export const SignUpContinueComponent = () => {
                                             type="fullName"
                                             autoComplete="fullName"
                                             placeholder='Your Full Name'
-                                            required="true"
                                             value={inputForm.fullName}
                                             onChange={(e) => setInputForm({ ...inputForm, fullName: e.target.value })}
                                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm 
                                     placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         />
+                                        {!inputForm.fullName ? <span>Error</span> : ""}
                                     </div>
                                 </div>
 
@@ -106,7 +118,7 @@ export const SignUpContinueComponent = () => {
                                             placeholder='Your Email'
                                             onChange={(e) => setInputForm({ ...inputForm, email: e.target.value })}
                                             value={inputForm.email}
-                                            required
+                                            required={true}
                                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         />
                                     </div>
@@ -125,7 +137,7 @@ export const SignUpContinueComponent = () => {
                                             pattern="[+-]?\d+(?:[.,]\d+)?"
                                             placeholder="0300 XXXX XXX"
                                             mask="0300 1234 567"
-                                            required
+                                            required={true}
                                             onChange={(e) => setInputForm({ ...inputForm, contactNumber: e.target.value })}
                                             value={inputForm.contactNumber}
                                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -142,7 +154,7 @@ export const SignUpContinueComponent = () => {
                                             id="password"
                                             name="password"
                                             type="password"
-                                            required
+                                            required={true}
                                             value={inputForm.password}
                                             onChange={(e) => setInputForm({ ...inputForm, password: e.target.value })}
                                             placeholder='Enter Password'
@@ -164,6 +176,7 @@ export const SignUpContinueComponent = () => {
                             <div>
 
                                 <button
+                                    disabled={true}
                                     type="submit" onClick={handleSubmit}
                                     className=" mt-2 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm
                              font-medium text-white bg-slate-900 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -191,13 +204,24 @@ export const SignUpContinueComponent = () => {
                         </div>
                     </div>
 
-                    <div className=" bg-white h-96 w-64 shadow-lg rounded-lg sm:mt-5  mr-3 lg:hidden ">
+                    <div className=" bg-white h-96 w-64 shadow-lg rounded-lg sm:mt-5  mr-3 lg:hidden xl:ml-24 xl:w-3/4">
                         <div className='-mt-10 flex justify-center  '>
                             <img className=' rounded-lg shadow-md border-4 border-neutral-100' src={service} />
                         </div>
-                        <div className='text-center font-bold pt-3'>
-                            <h1>Salon</h1>
-                            <h1 className='pt-2'>LHR</h1>
+                        <div className='text-center  pt-3'>
+                            {salonName}
+                            <br></br>
+                            <h1 className='text-gray-400 pt-2'>  {salonLocation}</h1>
+                            <hr className='mt-4'></hr>
+                        </div>
+                        <div className='px-4 py-3 font-bold flex justify-between'>
+                            <h1>{selectedDate}</h1>
+                            <h1> {selectedTime}</h1>
+                        </div>
+                        <hr className='mt-4'></hr>
+                        <div className=' flex justify-between px-4 py-3 font-bold'>
+                            <h1>Total</h1>
+                            <h1 className=' '>${serviceTotal}</h1>
                         </div>
                     </div>
                 </div>

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from '../../redux/Actions/userActions';
 import service from "../../assets/images/service.webp"
 import { useLocation } from 'react-router-dom'
-
+import { useForm } from 'react-hook-form';
 
 export const LoginContinue = () => {
 
@@ -138,9 +138,20 @@ export const LoginContinue = () => {
                         <div className='-mt-10 flex justify-center  '>
                             <img className=' rounded-lg shadow-md border-4 border-neutral-100' src={service} />
                         </div>
-                        <div className='text-center font-bold pt-3'>
-                            <h1>Salon</h1>
-                            <h1 className='pt-2'>LHR</h1>
+                        <div className='text-center  pt-3'>
+                            {salonName}
+                            <br></br>
+                            <h1 className='text-gray-400 pt-2'>  {salonLocation}</h1>
+                            <hr className='mt-4'></hr>
+                        </div>
+                        <div className='px-4 py-3 font-bold flex justify-between'>
+                            <h1>{selectedDate}</h1>
+                            <h1> {selectedTime}</h1>
+                        </div>
+                        <hr className='mt-4'></hr>
+                        <div className=' flex justify-between px-4 py-3 font-bold'>
+                            <h1>Total</h1>
+                            <h1 className=' '>${serviceTotal}</h1>
                         </div>
                     </div>
                 </div>

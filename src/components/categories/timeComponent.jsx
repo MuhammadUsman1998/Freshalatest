@@ -135,21 +135,21 @@ export const TimeComponent = () => {
                             <div className=' flex justify-center  '>
                                 <img className='-mt-10 rounded-lg shadow-md border-4 border-neutral-100' src={service} />
                             </div>
-                            <div className='text-center font-bold pt-3'>
+                            <div className='text-center  pt-3'>
                                 <h1>{total}</h1>
                                 <h1 className='pt-2 text-gray-400'>{myTotal}</h1>
                             </div>
-
+                            <hr></hr>
+                            <div className='font-bold  flex justify-between px-4 py-4 '>
+                                <h1>{myDate}</h1>
+                                <h1>{time}</h1>
+                            </div>
                             {
                                 services?.map((serviceData) => {
                                     return (
                                         <>
                                             <div className="">
-                                                <hr className='mt-2'></hr>
-                                                <div className='font-bold  flex justify-between px-4 py-4 '>
-                                                    <h1>{myDate}</h1>
-                                                    <h1>{time}</h1>
-                                                </div>
+
                                                 <hr className='mt-3'></hr>
                                                 <div className="flex justify-between px-4 py-3 ">
                                                     <h1> {serviceData.serviceTitle}</h1>
@@ -158,7 +158,7 @@ export const TimeComponent = () => {
                                                 <div className="text-gray-500 px-4">
                                                     <h1> {serviceData.duration}Min</h1>
                                                 </div>
-                                                {/* <hr className='mt-3'></hr> */}
+                                                <hr className='mt-3'></hr>
 
                                             </div>
 
@@ -167,7 +167,8 @@ export const TimeComponent = () => {
                                     )
                                 })
                             }
-                            <div className='flex justify-between px-4 py-3'>
+
+                            <div className='flex justify-between px-4 py-3 font-bold'>
                                 <h1 className=''>Total</h1>
                                 <p>${myfunction}</p>
                             </div>

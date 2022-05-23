@@ -24,6 +24,7 @@ function SamplePrevArrow(props) {
 
 var settings = {
     infinite: false,
+    // dots: true,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 3,
@@ -146,8 +147,8 @@ export const OnlineBookingDetail = () => {
                         <div className="sticky top-36">
                             <div className='max-w-7xl mx-auto px-44 sm:px-6 lg:px-8 '>
                                 <div className='bg-white w-2/3  shadow-lg rounded-lg text-black  lg:w-full '>
-                                    {/* focusOnSelect={true} */}
-                                    <Slider className='py-4 text-center  '  {...settings}>
+
+                                    <Slider className='py-4 text-center' focusOnSelect={true} {...settings}>
 
                                         {service_data?.map((cat1) => {
 
@@ -178,7 +179,7 @@ export const OnlineBookingDetail = () => {
 
                         <div className="float-right -mt-20 w-1/4 mr-44  sticky top-12">
                             <div className='max-w-7xl mx-auto px-6 sm:px-6 lg:px-8 '>
-                                <div className="bg-white  shadow-lg rounded-lg text-black lg:hidden ">
+                                <div className="bg-white  shadow-lg rounded-lg text-black lg:hidden xl:ml-20 xl:w-full">
                                     <div className='  flex justify-center rounded-lg shadow-fuchsia-100 '>
                                         <img
                                             className=' -mt-12 rounded-lg shadow-md border-4 border-neutral-100 '
