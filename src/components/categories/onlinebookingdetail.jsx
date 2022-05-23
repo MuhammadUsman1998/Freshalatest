@@ -109,6 +109,15 @@ export const OnlineBookingDetail = () => {
     const salonTitle = service_info?.Services?.data[0]?.salonInformation[0]?.salonTitle;
     const branchLocation = service_info?.Services?.data[0]?.branchLocation;
 
+    const calculateTotal = (array) => {
+        if (!array.length) {
+            return 0;
+        } else {
+            return array.reduce((accumulator, value) => accumulator + Number(value.price), 0);
+        }
+    }
+
+
     return (
         <>
             <div className='bg-slate-900 h-36 text-white sticky top-0'>
@@ -198,7 +207,7 @@ export const OnlineBookingDetail = () => {
                                     }
                                     <div className='flex justify-between p-4 font-bold '>
                                         <h1>Total </h1>
-                                        <h1>Free</h1>
+                                        <h1>${calculateTotal(arrayOfSelectedServices)}</h1>
                                     </div>
                                 </div>
                             </div>
@@ -270,7 +279,7 @@ export const OnlineBookingDetail = () => {
 
                             <div className='flex justify-end '>
 
-                                <Link to='/timeComponent' state={{ services: arrayOfSelectedServices }} >
+                                <Link to='/timeComponent' state={{ services: arrayOfSelectedServices, total: salonTitle, myTotal: branchLocation, myfunction: calculateTotal(arrayOfSelectedServices) }} >
                                     <button
                                         className='bg-slate-900 w-32 h-12 mr-16  rounded-lg  
                      text-white  font-bold'

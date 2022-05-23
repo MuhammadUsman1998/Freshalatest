@@ -4,8 +4,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { userSignUp } from '../../redux/Actions/userActions';
 import service from "../../assets/images/service.webp"
+import { useLocation } from 'react-router-dom';
 
 export const SignUpContinueComponent = () => {
+
+    const location = useLocation();
+    const { selectedTime, selectedDate, salonName, salonLocation, serviceTotal } = location?.state ? location.state : "";
+    console.log('Selected Time:', selectedTime)
+    console.log('Selected Date:', selectedDate)
+    console.log('Salon Name:', salonName);
+    console.log('Salon Location:', salonLocation);
+    console.log('Service Total:', serviceTotal);
 
 
     const [inputForm, setInputForm] = useState({
@@ -15,11 +24,7 @@ export const SignUpContinueComponent = () => {
         password: ""
     });
 
-
-
     const userData = JSON.parse(localStorage.getItem("info"));
-
-
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -157,13 +162,18 @@ export const SignUpContinueComponent = () => {
                                 <p>I agree to receive marketing notifications with offers and news</p>
                             </div>
                             <div>
+
                                 <button
                                     type="submit" onClick={handleSubmit}
                                     className=" mt-2 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm
                              font-medium text-white bg-slate-900 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                 >
-                                    Sign Up
+                                    {/* Sign Up */}
+                                    <Link to="/loginContinue" state={{
+                                        selectedTime, selectedDate, salonName, salonLocation, serviceTotal
+                                    }} className="flex justify-center text-blue">Sign Up</Link>
                                 </button>
+
                             </div>
 
                             <div className="mt-6">
@@ -174,7 +184,9 @@ export const SignUpContinueComponent = () => {
                                         <span className="px-2 bg-white text-gray-500">Already have a booker account?</span>
                                     </div>
                                 </div >
-                                <Link to="/loginContinue" className="flex justify-center text-blue">Sign in now</Link>
+                                <Link to="/loginContinue" state={{
+                                    selectedTime, selectedDate, salonName, salonLocation, serviceTotal
+                                }} className="flex justify-center text-blue">Sign in now</Link>
                             </div>
                         </div>
                     </div>

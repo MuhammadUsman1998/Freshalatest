@@ -3,11 +3,18 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from '../../redux/Actions/userActions';
 import service from "../../assets/images/service.webp"
-
-
+import { useLocation } from 'react-router-dom'
 
 
 export const LoginContinue = () => {
+
+    const location = useLocation();
+    const { selectedTime, selectedDate, salonName, salonLocation, serviceTotal } = location?.state ? location.state : "";
+    console.log('Selected Time:', selectedTime)
+    console.log('Selected Date:', selectedDate)
+    console.log('Salon Name:', salonName);
+    console.log('Salon Location:', salonLocation);
+    console.log('Service Total:', serviceTotal);
 
     const [inputForm, setInputForm] = useState({
         contactNumber: "03023456789",

@@ -44,45 +44,33 @@ export const TimeComponent = () => {
         setMyDate(value)
     }
 
+    console.log('time is here', time)
+
     let dateArray = [];
     const location = useLocation();
-    const { services } = location?.state ? location.state : "";
+    const { services, total, myTotal, myfunction } = location?.state ? location.state : "";
     var a = moment();
     var b = moment(a).add(2, 'month').format('MM:DD:YYYY');
     while (a.format('MM:DD:YYYY') < b) {
         dateArray.push(a.format("MMMM DD dddd"))
         a.add(1, 'day');
-
     }
-
 
     const secondsToHms = (d) => {
         d = Number(d);
         var h = Math.floor(d / 3600);
         var m = Math.floor(d % 3600 / 60);
         var s = Math.floor(d % 3600 % 60);
-        // if (h < 12) {
-        //     var hDisplay = h > 0 ? h : ''
-        //     var mDisplay = m > 0 ? m : '00am'
-        // }
-        // else {
-        //     var hDisplay = h > 0 ? h : ''
-        //     var mDisplay = m > 0 ? m : '00pm'
-        // }
         var hDisplay = h > 0 ? h : ''
         var mDisplay = m > 0 ? m : '00'
         return `${hDisplay}:${mDisplay}`
     }
-    // console.log('time before', time)
 
-    // const handleTimeChange = (hours) => {
-    //     const value = secondsToHms(hours);
-    // setTime(value)
-    // }
-    const getTime = (Arr) => {
-        console.log(Arr);
-        // setTime(Arr)
+    const timeDiv = (event, timeData) => {
+        event.preventDefault();
+        setTime(timeData)
     }
+
     let timeArray = ["9:00AM", "9:15AM", "9:30AM", "9:45AM", "10:00AM", "10:15AM", "10:30AM", "10:45AM", "11:00AM", "11:15AM", "11:30AM", "11:45AM", "12:00PM", "12:15PM", "12:30PM", "12:45PM", "1:00PM", "1:15PM", "1:30PM", "1:45PM", "2:00PM", "2:15PM", "2:30PM", "2:45PM", "3:00PM", "3:15PM", "3:30PM", "3:45PM", "4:00PM", "4:15PM", "4:30PM", "4:45PM", "5:00PM"]
 
     return (
@@ -148,8 +136,8 @@ export const TimeComponent = () => {
                                 <img className='-mt-10 rounded-lg shadow-md border-4 border-neutral-100' src={service} />
                             </div>
                             <div className='text-center font-bold pt-3'>
-                                <h1>Salon</h1>
-                                <h1 className='pt-2 text-gray-400'>LHR</h1>
+                                <h1>{total}</h1>
+                                <h1 className='pt-2 text-gray-400'>{myTotal}</h1>
                             </div>
 
                             {
@@ -181,7 +169,7 @@ export const TimeComponent = () => {
                             }
                             <div className='flex justify-between px-4 py-3'>
                                 <h1 className=''>Total</h1>
-                                <p>$</p>
+                                <p>${myfunction}</p>
                             </div>
                         </div>
                     </div>
@@ -191,10 +179,10 @@ export const TimeComponent = () => {
                     <div className="max-w-7xl mx-auto px-48 sm:px-16 lg:px-32">
 
                         <div className='w-2/3 -mt-28  xl:w-full '>
-                            {timeArray.map((Arr, i) => {
+                            {timeArray.map((Arr, index) => {
                                 return (
-                                    <div className=' border-solid border-1 border-black px-3 py-4  bg-white flex justify-between cursor-pointer hover:bg-slate-400 font-bold'>
-                                        <h1 onClick={getTime(Arr)}>
+                                    <div onClick={(event) => timeDiv(event, Arr)} key={index} className=' border-solid border-1 border-black px-3 py-4  bg-white flex justify-between cursor-pointer hover:bg-slate-400 font-bold'>
+                                        <h1>
                                             {Arr}
                                         </h1>
 
@@ -211,7 +199,9 @@ export const TimeComponent = () => {
             {selectedTime &&
                 <div className=' bg-white py-2 mt-4  sticky bottom-0'>
                     <div className='flex justify-end '>
-                        <Link to='/signupcontinueComponent'  >
+                        <Link to='/signupcontinueComponent' state={{
+                            selectedTime: time, selectedDate: myDate, salonName: total, salonLocation: myTotal, serviceTotal: myfunction
+                        }} >
                             <button
                                 className='bg-slate-900 w-32 h-12 mr-16  rounded-lg sticky 
                      text-white  font-bold'
