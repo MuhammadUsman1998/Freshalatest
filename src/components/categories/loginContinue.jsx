@@ -9,12 +9,13 @@ import { useForm } from 'react-hook-form';
 export const LoginContinue = () => {
 
     const location = useLocation();
-    const { selectedTime, selectedDate, salonName, salonLocation, serviceTotal } = location?.state ? location.state : "";
+    const { selectedTime, selectedDate, salonName, salonLocation, serviceTotal, services } = location?.state ? location.state : "";
     console.log('Selected Time:', selectedTime)
     console.log('Selected Date:', selectedDate)
     console.log('Salon Name:', salonName);
     console.log('Salon Location:', salonLocation);
     console.log('Service Total:', serviceTotal);
+    console.log('Services', services);
 
     const [inputForm, setInputForm] = useState({
         contactNumber: "03023456789",
