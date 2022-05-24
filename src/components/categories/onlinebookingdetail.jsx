@@ -37,7 +37,7 @@ export const OnlineBookingDetail = () => {
     const [selectedServices, setSelectedServices] = useState([])
     const [showButton, setShowButton] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState("");
-    const [arrayOfSelectedServices, setArrayOfSelectedServices] = useState([])
+    const [arrayOfSelectedServices, setArrayOfSelectedServices] = useState(JSON.parse(localStorage.getItem('selected_services')) || [])
     const userInfo = JSON.parse(localStorage.getItem("userData"));
 
     const service_info = useSelector((state) => state.getService);
@@ -62,24 +62,9 @@ export const OnlineBookingDetail = () => {
 
 
     useEffect(() => {
-        console.log('re-render')
         dispatch(getService(branchId, salonId));
     }, []);
 
-
-    useEffect(() => {
-        localStorage.setItem('selected_services', JSON.stringify(arrayOfSelectedServices))
-    }, [selectedServices])
-
-    // const serviceCategory = [];
-    // service_data?.forEach((cat) => {
-    //     let obj = {};
-    //     // obj["_id"] = cat?._id;
-    //     // obj["categoryTitle"] = cat?.categoryTitle;
-    //     serviceCategory.push(cat);
-    // });
-
-    // const [count, setCount] = useState(0)
 
     const clickButton = (e, serviceId) => {
         // setCount(prevCount => prevCount + 1);
@@ -95,12 +80,21 @@ export const OnlineBookingDetail = () => {
         }
     };
 
+    const selectedServiceFromLocalStorage = localStorage.getItem('selected_services')
+
     const handleChange = (e, selected_service_data) => {
-        if (e.target.name === 'checkbox' && arrayOfSelectedServices.includes(selected_service_data)) {
+
+        if (e.target.name === 'checkbox' && arrayOfSelectedServices.some(e => e._id === selected_service_data._id)) {
+            console.log('filtered Data')
             const newList = arrayOfSelectedServices.filter((item) => item !== selected_service_data)
             setArrayOfSelectedServices(newList)
+            localStorage.setItem('selected_services', JSON.stringify(newList))
         } else {
+            console.log('add Data')
+
             setArrayOfSelectedServices(prevState => [...prevState, selected_service_data])
+
+            localStorage.setItem('selected_services', JSON.stringify([...arrayOfSelectedServices, selected_service_data]))
         }
         setShowButton(!showButton)
 
@@ -119,6 +113,20 @@ export const OnlineBookingDetail = () => {
         }
     }
 
+    const total = localStorage.getItem('salonTitle')
+    const myTotal = localStorage.getItem('branchLocation')
+
+
+    // const checkedIfExisted = (serviceId) => {
+    //     if (arrayOfSelectedServices.some(e => e._id === serviceId)) {
+    //         console.log('true', serviceId)
+    //         return true
+    //     } else {
+    //         console.log('false', serviceId)
+    //         return false
+    //     }
+
+    // }
 
     return (
         <>
@@ -187,8 +195,8 @@ export const OnlineBookingDetail = () => {
                                             src={img}
                                         />
                                     </div>
-                                    <h1 className='text-center font-bold pt-2'>{salonTitle}</h1>
-                                    <p className='pt-3 text-center text-gray'> {branchLocation}</p>
+                                    <h1 className='text-center font-bold pt-2'>{total}</h1>
+                                    <p className='pt-3 text-center text-gray'> {myTotal}</p>
                                     <hr className='mt-3'></hr>
                                     {
                                         arrayOfSelectedServices.map((serviceData) => {
@@ -238,6 +246,7 @@ export const OnlineBookingDetail = () => {
                                                                     <label>
                                                                         <div className='flex cursor-pointer'>
                                                                             <input
+                                                                                // checked={checkedIfExisted(service?._id) ? true : false}
                                                                                 name='checkbox'
                                                                                 id={index}
                                                                                 className='w-6 h-6 mt-1'
