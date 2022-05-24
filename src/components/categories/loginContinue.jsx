@@ -3,20 +3,20 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from '../../redux/Actions/userActions';
 import service from "../../assets/images/service.webp"
-import { useLocation } from 'react-router-dom'
-import { useForm } from 'react-hook-form';
 
 export const LoginContinue = () => {
     const [disabledButton, setDisabledButton] = useState(true);
 
-    const location = useLocation();
-    const { selectedTime, selectedDate, salonName, salonLocation, serviceTotal, services } = location?.state ? location.state : "";
-    console.log('Selected Time:', selectedTime)
-    console.log('Selected Date:', selectedDate)
-    console.log('Salon Name:', salonName);
-    console.log('Salon Location:', salonLocation);
-    console.log('Service Total:', serviceTotal);
-    console.log('Services', services);
+    const services = JSON.parse(localStorage.getItem('selected_services'))
+    const salonName = localStorage.getItem('salonTitle')
+    const salonLocation = localStorage.getItem('branchLocation')
+    const selectedTime = localStorage.getItem('selected_time')
+    const selectedDate = localStorage.getItem('selected_date')
+    console.log('local servixes', services);
+    console.log('local salonTitle', salonName);
+    console.log('local location', salonLocation);
+    console.log('local selected_time', selectedTime);
+    console.log('local selected_date', selectedDate);
 
     const [inputForm, setInputForm] = useState({
         contactNumber: "",
@@ -47,6 +47,14 @@ export const LoginContinue = () => {
     }
 
 
+
+    const calculateTotal = (array) => {
+        if (!array.length) {
+            return 0;
+        } else {
+            return array.reduce((accumulator, value) => accumulator + Number(value.price), 0);
+        }
+    }
 
     return (
 
@@ -188,22 +196,32 @@ export const LoginContinue = () => {
                                 <h1>Total</h1>
                                 <h1 className=' '>${serviceTotal}</h1>
                             </div>
+                            <div className=" bg-white mt-8 w-64 shadow-lg rounded-lg sm:mt-5 lg:hidden mr-3">
+                                <div className='-mt-10 flex justify-center  '>
+                                    <img className=' rounded-lg shadow-md border-4 border-neutral-100' src={service} />
+                                </div>
+                                <div className='text-center font-bold pt-3'>
+                                    <h1>Salon</h1>
+                                    <h1 className='pt-2'>LHR</h1>
+                                    {calculateTotal(services)}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
 
-            <div className=' bg-white py-2 mt-4  sticky bottom-0'>
-                <div className='flex justify-end '>
-                    <button
-                        style={{ cursor: disabledButton ? "not-allowed" : "pointer" }}
-                        disabled={disabledButton}
-                        className='bg-slate-900 hover:bg-slate-600 w-32 h-12 mr-16  rounded-lg sticky 
+                <div className=' bg-white py-2 mt-4  sticky bottom-0'>
+                    <div className='flex justify-end '>
+                        <button
+                            style={{ cursor: disabledButton ? "not-allowed" : "pointer" }}
+                            disabled={disabledButton}
+                            className='bg-slate-900 hover:bg-slate-600 w-32 h-12 mr-16  rounded-lg sticky 
                      text-white  font-bold'
-                    >
-                        Book
-                    </button>
+                        >
+                            Book
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

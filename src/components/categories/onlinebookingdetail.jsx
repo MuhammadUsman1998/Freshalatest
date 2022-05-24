@@ -8,7 +8,6 @@ import ClipLoader from "react-spinners/ClipLoader";
 import "../../assets/styles/app.css";
 import { Link, Button, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
-let arrayOfSelectedServices = [];
 
 function SamplePrevArrow(props) {
     const { className, style, onClick } = props;
@@ -23,7 +22,6 @@ function SamplePrevArrow(props) {
 
 var settings = {
     infinite: true,
-    // dots: true,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 3,
@@ -39,6 +37,7 @@ export const OnlineBookingDetail = () => {
     const [selectedServices, setSelectedServices] = useState([])
     const [showButton, setShowButton] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState("");
+    const [arrayOfSelectedServices, setArrayOfSelectedServices] = useState(JSON.parse(localStorage.getItem('selected_services')) || [])
     const userInfo = JSON.parse(localStorage.getItem("userData"));
 
     const service_info = useSelector((state) => state.getService);
@@ -50,6 +49,7 @@ export const OnlineBookingDetail = () => {
     const userId = search.get("userId");
     var value = [{ branchId: branchId, salonId: salonId }]
     localStorage.setItem("info", JSON.stringify(value));
+
 
 
     const myRef = useRef(null);
@@ -67,16 +67,7 @@ export const OnlineBookingDetail = () => {
 
     useEffect(() => {
         dispatch(getService(branchId, salonId));
-
     }, []);
-
-    // const serviceCategory = [];
-    // service_data?.forEach((cat) => {
-    //     let obj = {};
-    //     // obj["_id"] = cat?._id;
-    //     // obj["categoryTitle"] = cat?.categoryTitle;
-    //     serviceCategory.push(cat);
-    // });
 
 
     const clickButton = (e, serviceId) => {
@@ -92,21 +83,30 @@ export const OnlineBookingDetail = () => {
         }
     };
 
-
+    const selectedServiceFromLocalStorage = localStorage.getItem('selected_services')
 
     const handleChange = (e, selected_service_data) => {
-        if (e.target.name === 'checkbox' && arrayOfSelectedServices.includes(selected_service_data)) {
+
+        if (e.target.name === 'checkbox' && arrayOfSelectedServices.some(e => e._id === selected_service_data._id)) {
+            console.log('filtered Data')
             const newList = arrayOfSelectedServices.filter((item) => item !== selected_service_data)
-            arrayOfSelectedServices = newList
+            setArrayOfSelectedServices(newList)
+            localStorage.setItem('selected_services', JSON.stringify(newList))
         } else {
-            arrayOfSelectedServices.push(selected_service_data)
+            console.log('add Data')
+
+            setArrayOfSelectedServices(prevState => [...prevState, selected_service_data])
+
+            localStorage.setItem('selected_services', JSON.stringify([...arrayOfSelectedServices, selected_service_data]))
         }
         setShowButton(!showButton)
 
     }
 
     const salonTitle = service_info?.Services?.data[0]?.salonInformation[0]?.salonTitle;
+    localStorage.setItem("salonTitle", salonTitle);
     const branchLocation = service_info?.Services?.data[0]?.branchLocation;
+    localStorage.setItem("branchLocation", branchLocation);
 
     const calculateTotal = (array) => {
         if (!array.length) {
@@ -116,6 +116,20 @@ export const OnlineBookingDetail = () => {
         }
     }
 
+    const total = localStorage.getItem('salonTitle')
+    const myTotal = localStorage.getItem('branchLocation')
+
+
+    // const checkedIfExisted = (serviceId) => {
+    //     if (arrayOfSelectedServices.some(e => e._id === serviceId)) {
+    //         console.log('true', serviceId)
+    //         return true
+    //     } else {
+    //         console.log('false', serviceId)
+    //         return false
+    //     }
+
+    // }
 
     return (
         <>
@@ -184,8 +198,8 @@ export const OnlineBookingDetail = () => {
                                             src={img}
                                         />
                                     </div>
-                                    <h1 className='text-center font-bold pt-2'>{salonTitle}</h1>
-                                    <p className='pt-3 text-center text-gray'> {branchLocation}</p>
+                                    <h1 className='text-center font-bold pt-2'>{total}</h1>
+                                    <p className='pt-3 text-center text-gray'> {myTotal}</p>
                                     <hr className='mt-3'></hr>
                                     {
                                         arrayOfSelectedServices.map((serviceData) => {
@@ -233,6 +247,7 @@ export const OnlineBookingDetail = () => {
                                                                     <label>
                                                                         <div className='flex cursor-pointer'>
                                                                             <input
+                                                                                // checked={checkedIfExisted(service?._id) ? true : false}
                                                                                 name='checkbox'
                                                                                 id={index}
                                                                                 className='w-6 h-6 mt-1'
@@ -276,7 +291,7 @@ export const OnlineBookingDetail = () => {
 
                             <div className='flex justify-end '>
 
-                                <Link to='/timeComponent' state={{ services: arrayOfSelectedServices, total: salonTitle, myTotal: branchLocation, myfunction: calculateTotal(arrayOfSelectedServices) }} >
+                                <Link to='/timeComponent' >
                                     <button
                                         className='bg-slate-900 w-32 h-12 mr-16  rounded-lg  
                      text-white  font-bold'
