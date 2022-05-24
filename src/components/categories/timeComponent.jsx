@@ -104,10 +104,10 @@ export const TimeComponent = () => {
                                 dateArray?.length &&
                                 dateArray?.map((date, i) => {
                                     return (
-                                        <div className='flex justify-around'>
+                                        <div className='flex   xl:flex justify-center '>
                                             <div onClick={(e) => clickDate(e, i, date)}
                                                 className={`flex justify-center border-solid border-black border-2 rounded-lg hover:bg-gray-300 
-                                                hover:text-black px-3 h-16 w-24 text-center pt-3 font-semibold cursor-pointer   ${selectedCategory ===
+                                                hover:text-black px-3 h-16 w-24 text-center pt-3 font-semibold cursor-pointer md:w-20 md:h-14 md:text-sm sm:w-12  ${selectedCategory ===
                                                     i
                                                     && "text-white bg-blue-600"
 
@@ -181,7 +181,7 @@ export const TimeComponent = () => {
                     <div className='w-2/3  xl:w-full '>
                         {timeArray.map((Arr, index) => {
                             return (
-                                <div onClick={(event) => timeDiv(event, Arr)} key={index} className=' border-solid border-1 border-black px-3 py-4  bg-white flex justify-between cursor-pointer hover:bg-slate-400 font-bold'>
+                                <div onClick={(event) => timeDiv(event, Arr)} key={index} className=' border-solid border-1 border-black px-3 py-4  bg-zinc-50 flex justify-between cursor-pointer hover:bg-slate-200 font-bold'>
                                     <h1>
                                         {Arr}
                                     </h1>

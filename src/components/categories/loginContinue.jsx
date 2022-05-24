@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom'
 import { useForm } from 'react-hook-form';
 
 export const LoginContinue = () => {
-    const [disabledButton, setDisabledButton] = useState(false);
+    const [disabledButton, setDisabledButton] = useState(true);
 
     const location = useLocation();
     const { selectedTime, selectedDate, salonName, salonLocation, serviceTotal, services } = location?.state ? location.state : "";
@@ -19,8 +19,8 @@ export const LoginContinue = () => {
     console.log('Services', services);
 
     const [inputForm, setInputForm] = useState({
-        contactNumber: "03023456789",
-        password: "123456"
+        contactNumber: "",
+        password: ""
     });
 
 
@@ -28,16 +28,25 @@ export const LoginContinue = () => {
     const navigate = useNavigate();
     const handleSubmit = (e) => {
         e.preventDefault();
-        setDisabledButton(true)
         const obj = {
             contactNumber: inputForm.contactNumber,
             password: inputForm.password,
 
         }
         dispatch(userLogin(obj));
-        navigate("/")
+        navigate("/loginSuccess")
     }
     localStorage.setItem("user", JSON.stringify(""));
+
+    const handleFormDisabled = () => {
+        if (!inputForm.contactNumber || !inputForm.password) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+
 
     return (
 
@@ -79,7 +88,6 @@ export const LoginContinue = () => {
                                                 type="contactNumber"
                                                 maxLength={11}
                                                 placeholder="0300 XXXX XXX"
-                                                required
                                                 value={inputForm.contactNumber}
                                                 onChange={(e) => setInputForm({ ...inputForm, contactNumber: e.target.value })}
                                                 className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -96,8 +104,6 @@ export const LoginContinue = () => {
                                                 id="password"
                                                 name="password"
                                                 type="password"
-                                                autoComplete="current-password"
-                                                required
                                                 value={inputForm.password}
                                                 onChange={(e) => setInputForm({ ...inputForm, password: e.target.value })}
                                                 placeholder='Enter Password'
@@ -116,14 +122,16 @@ export const LoginContinue = () => {
                                     <br></br>
                                 </form>
                                 <div>
-
+                                    {/* <Link to="/orderSuccess"> */}
                                     <button
-                                        type="submit" onClick={() => handleSubmit}
+                                        disabled={handleFormDisabled()}
+                                        style={{ cursor: handleFormDisabled() ? "not-allowed" : "pointer" }}
+                                        type="submit" onClick={handleSubmit}
                                         className=" mt-2 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-slate-900 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                     >
                                         Log in
                                     </button>
-
+                                    {/* </Link> */}
                                 </div>
 
                                 <div className="mt-6">
@@ -160,7 +168,6 @@ export const LoginContinue = () => {
                                         <>
                                             <div className="">
 
-                                                <hr className='mt-3'></hr>
                                                 <div className="flex justify-between px-4 py-3 ">
                                                     <h1> {serviceData.serviceTitle}</h1>
                                                     <h1> ${serviceData.price}</h1>
@@ -189,14 +196,14 @@ export const LoginContinue = () => {
 
             <div className=' bg-white py-2 mt-4  sticky bottom-0'>
                 <div className='flex justify-end '>
-                    <Link to='/orderSuccess' >
-                        <button
-                            className='bg-slate-900 w-32 h-12 mr-16  rounded-lg sticky 
+                    <button
+                        style={{ cursor: disabledButton ? "not-allowed" : "pointer" }}
+                        disabled={disabledButton}
+                        className='bg-slate-900 hover:bg-slate-600 w-32 h-12 mr-16  rounded-lg sticky 
                      text-white  font-bold'
-                        >
-                            Book
-                        </button>
-                    </Link>
+                    >
+                        Book
+                    </button>
                 </div>
             </div>
         </div>

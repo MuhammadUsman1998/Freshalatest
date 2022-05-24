@@ -16,7 +16,6 @@ export const userLogin = (login) => async (dispatch) => {
             type: LOGIN_ADD_REQUEST,
             Accept: "application/json",
         });
-
         const { data } = await jwtInterceptor.post(
             `${SERVER_IP}/api/v1/client/login`,
             login

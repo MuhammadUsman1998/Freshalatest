@@ -8,3 +8,4 @@ export * from "./categories/timeComponent";
 export * from "./categories/signupContinueComponent";
 export * from "./categories/loginContinue";
 export * from "./categories/orderSuccess";
+export * from "./categories/loginSuccess";

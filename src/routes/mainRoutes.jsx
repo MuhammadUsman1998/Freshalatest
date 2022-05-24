@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { LoginContinue, OrderSuccess, SignUpContinueComponent, StaffComponent, TimeComponent } from "../components";
+import { LoginContinue, LoginSuccess, OrderSuccess, SignUpContinueComponent, StaffComponent, TimeComponent } from "../components";
 import { OnlineBookingDetail } from "../components/categories/onlinebookingdetail";
 // import all pages
 import { LoginPage, LoginResetPage, SignFormPage, SignUpPage } from "../pages";
@@ -21,6 +21,8 @@ export const MainRoutes = () => {
       <Route exact path="/signupcontinueComponent" element={<SignUpContinueComponent />} />
       <Route exact path="/loginContinue" element={<LoginContinue />} />
       <Route exact path="/orderSuccess" element={<OrderSuccess />} />
+      <Route exact path="/loginSuccess" element={<LoginSuccess />} />
+
     </Routes>
   );
 };

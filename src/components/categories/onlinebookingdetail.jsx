@@ -1,15 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useLayoutEffect } from "react";
 import Slider from "react-slick";
 import { getService } from "../../redux/Actions/serviceActions";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import img from "../../assets/images/service.webp";
 import { useDispatch, useSelector } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
-
 import "../../assets/styles/app.css";
+import { Link, Button, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 let arrayOfSelectedServices = [];
-
 
 function SamplePrevArrow(props) {
     const { className, style, onClick } = props;
@@ -58,12 +57,15 @@ export const OnlineBookingDetail = () => {
         setSelectedCategory(_id);
         myRef.current.scrollIntoView();
     };
-    useMountEffect(executeScroll);
+    // useMountEffect(executeScroll);
 
-
+    // const executeScroll = () => window.scroll({
+    //     top: 2000,
+    //     left: 0,
+    //     behavior: 'smooth'
+    // });
 
     useEffect(() => {
-        console.log('re-render')
         dispatch(getService(branchId, salonId));
 
     }, []);
@@ -76,10 +78,8 @@ export const OnlineBookingDetail = () => {
     //     serviceCategory.push(cat);
     // });
 
-    // const [count, setCount] = useState(0)
 
     const clickButton = (e, serviceId) => {
-        // setCount(prevCount => prevCount + 1);
         if (e.target.checked) {
             setSelectedServices(prevState => [
                 ...prevState,
@@ -98,11 +98,9 @@ export const OnlineBookingDetail = () => {
         if (e.target.name === 'checkbox' && arrayOfSelectedServices.includes(selected_service_data)) {
             const newList = arrayOfSelectedServices.filter((item) => item !== selected_service_data)
             arrayOfSelectedServices = newList
-            console.log(arrayOfSelectedServices);
         } else {
             arrayOfSelectedServices.push(selected_service_data)
         }
-        console.log(arrayOfSelectedServices);
         setShowButton(!showButton)
 
     }
@@ -147,15 +145,15 @@ export const OnlineBookingDetail = () => {
                         <div className="sticky top-36">
                             <div className='max-w-7xl mx-auto px-44 sm:px-6 lg:px-8 '>
                                 <div className='bg-white w-2/3  shadow-lg rounded-lg text-black  lg:w-full '>
-
-                                    <Slider className='py-4 text-center' focusOnSelect={true} {...settings}>
+                                    {/* focusOnSelect={true} */}
+                                    <Slider className='py-4 px-1 text-center'  {...settings}>
 
                                         {service_data?.map((cat1) => {
 
                                             return (
                                                 <div className='hover:bg-gray-300 hover:text-black rounded-full '>
-                                                    <h1
-                                                        onClick={(_id) => executeScroll(cat1?._id)}
+                                                    <Link to="test1" spy={true} smooth={true} offset={50} duration={500}
+                                                        // onClick={(_id) => executeScroll(cat1?._id)}
                                                         className={`truncate cursor-pointer   rounded-full p-2 
                                                         ${selectedCategory ===
                                                                 cat1?._id
@@ -165,7 +163,7 @@ export const OnlineBookingDetail = () => {
                                                     >
                                                         {cat1?.categoryTitle}
 
-                                                    </h1>
+                                                    </Link>
                                                 </div>
 
                                             );
@@ -192,7 +190,7 @@ export const OnlineBookingDetail = () => {
                                     {
                                         arrayOfSelectedServices.map((serviceData) => {
                                             return (
-                                                <div className="">
+                                                <div className="overflow-y-scroll" >
                                                     <div className="flex justify-between p-4 ">
                                                         <h1> {serviceData.serviceTitle}</h1>
                                                         <h1> ${serviceData.price}</h1>
@@ -216,24 +214,22 @@ export const OnlineBookingDetail = () => {
 
 
                         <div className='max-w-7xl mx-auto px-44 sm:px-6 lg:px-8 '>
-                            <div className='' ref={myRef}>
+                            <div>
                                 {service_data?.map((item) => (
-                                    <div className=' lg:flex flex-wrap ' ref={myRef}>
+                                    <div className=' lg:flex flex-wrap' >
                                         {item?.allServices?.length ? (
                                             <>
-                                                <div className="flex">
+                                                <div className="flex"  >
                                                     <h1 className='text-2xl  font-bold pt-2'>
                                                         {item?.categoryTitle}
                                                     </h1>
                                                 </div>
                                                 <div className="mt-3 lg:w-full w-2/3 ">
-                                                    <div className=' bg-white  p-7  rounded-lg  '>
+                                                    <div className=' bg-white p-7 rounded-lg'>
                                                         <div
-                                                            className='sm:w-full cursor-pointer '
-                                                            ref={myRef}
-                                                        >
+                                                            className='sm:w-full cursor-pointer' >
                                                             {item?.allServices?.map((service, index) => (
-                                                                <div ref={myRef}>
+                                                                <div >
                                                                     <label>
                                                                         <div className='flex cursor-pointer'>
                                                                             <input
@@ -245,7 +241,7 @@ export const OnlineBookingDetail = () => {
                                                                                 onChange={(e) => handleChange(e, service)}
                                                                             />
 
-                                                                            <p className='text-xl font-bold pl-6 '>
+                                                                            <p className='text-xl font-bold pl-6 ' name="test1" ref={myRef}>
                                                                                 {service?.serviceTitle}
                                                                             </p>
                                                                         </div>

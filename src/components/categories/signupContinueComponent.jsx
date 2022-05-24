@@ -37,9 +37,6 @@ export const SignUpContinueComponent = () => {
     const navigate = useNavigate();
     const handleSubmit = (e) => {
         e.preventDefault();
-        setDisabledButton(false)
-        console.log({ disabledButton });
-
         const obj = {
             fullName: inputForm.fullName,
             contactNumber: inputForm.contactNumber,
@@ -49,16 +46,21 @@ export const SignUpContinueComponent = () => {
             branchId: userData[0].branchId,
         }
         dispatch(userSignUp(obj));
-        navigate("/loginContinue")
+        navigate("/loginContinue", {
+            state
+                : {
+                selectedTime, selectedDate, salonName, salonLocation, serviceTotal, services
+            }
+        })
     }
 
-    // const handleDisabled = () => {
-    //     if (!inputForm.fullName || !inputForm.email || !inputForm.contactNumber || !inputForm.password) {
-    //         return true
-    //     } else {
-    //         return false
-    //     }
-    // }
+    const handleFormDisabled = () => {
+        if (!inputForm.fullName || !inputForm.email || !inputForm.contactNumber || !inputForm.password) {
+            return true
+        } else {
+            return false
+        }
+    }
 
 
     return (
@@ -84,9 +86,6 @@ export const SignUpContinueComponent = () => {
                     <div className=" flex justify-between ">
                         <div className="  sm:mx-auto sm:w-full sm:max-w-md  mb-12 w-2/3 xl:w-full ">
                             <div className="bg-white py-8 px-4 shadow-md rounded-lg w-full xl:w-full ">
-                                {/* <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                                <h2 className=" text-center text-3xl font-extrabold text-gray-900">Fresha</h2>
-                            </div> */}
                                 <form className="space-y-4 grid grid-cols-2 gap-y-6 gap-x-6 sm:grid-cols-2   " action="#"
                                 >
                                     <div>
@@ -136,7 +135,6 @@ export const SignUpContinueComponent = () => {
                                         </label>
                                         <div className=''>
                                             <input
-                                                type="text"
                                                 id="depositedAmount"
                                                 maxLength={11}
                                                 pattern="[+-]?\d+(?:[.,]\d+)?"
@@ -171,31 +169,29 @@ export const SignUpContinueComponent = () => {
                                     <br></br>
                                 </form>
                                 <label>
-                                    <div className="flex mt-3" >
+                                    <div className="flex mt-3 cursor-pointer" >
                                         <input className="mr-1 mt-1" type="checkbox" />
                                         <p > I agree to the Privacy Policy, Terms of Use and Terms of Service</p>
                                     </div>
                                 </label>
                                 <label>
-                                    <div className="flex mt-3" >
+                                    <div className="flex mt-3 cursor-pointer" >
                                         <input className="mr-1 mt-1 inline-flex" type="checkbox" />
                                         <p>I agree to receive marketing notifications with offers and news</p>
                                     </div>
                                 </label>
                                 <div>
-
+                                    {/* <Link to="/loginContinue" className="flex justify-center text-blue"> */}
                                     <button
-
+                                        disabled={handleFormDisabled()}
+                                        style={{ cursor: handleFormDisabled() ? "not-allowed" : "pointer" }}
                                         type="submit" onClick={handleSubmit}
                                         className=" mt-2 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm
                              font-medium text-white bg-slate-900 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                     >
-                                        {/* Sign Up */}
-                                        <Link to="/loginContinue" state={{
-                                            selectedTime, selectedDate, salonName, salonLocation, serviceTotal, services
-                                        }} className="flex justify-center text-blue">Sign Up</Link>
+                                        Sign Up
                                     </button>
-
+                                    {/* </Link> */}
                                 </div>
 
                                 <div className="mt-6">
@@ -227,7 +223,7 @@ export const SignUpContinueComponent = () => {
                                 <h1>{selectedDate}</h1>
                                 <h1> {selectedTime}</h1>
                             </div>
-                            <hr className='mt-4'></hr>
+                            {/* <hr className='mt-4'></hr> */}
                             {
                                 services?.map((serviceData) => {
                                     return (
@@ -264,9 +260,10 @@ export const SignUpContinueComponent = () => {
                 <div className='flex justify-end '>
 
                     <button
+                        style={{ cursor: disabledButton ? "not-allowed" : "pointer" }}
                         disabled={disabledButton}
-                        className='bg-slate-900 w-32 h-12 mr-16  rounded-lg sticky 
-                     text-white  font-bold cursor-pointer' >
+                        className='bg-slate-900 hover:bg-slate-600 w-32 h-12 mr-16  rounded-lg sticky 
+                     text-white  font-bold' >
                         Book
                     </button>
                 </div>
