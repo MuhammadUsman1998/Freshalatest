@@ -5,6 +5,10 @@ import { userLogin } from '../../redux/Actions/userActions';
 import service from "../../assets/images/service.webp"
 
 export const LoginContinue = () => {
+
+    // const loginSuccess = useSelector(state => state.userLogin?.Login?.success)
+
+
     const [disabledButton, setDisabledButton] = useState(true);
 
     const services = JSON.parse(localStorage.getItem('selected_services'))
@@ -24,6 +28,13 @@ export const LoginContinue = () => {
     });
 
 
+    // useEffect(() => {
+    //     if (loginSuccess) {
+    //         navigate("/loginSuccess")
+    //     }
+    // })
+
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const handleSubmit = (e) => {
@@ -34,7 +45,10 @@ export const LoginContinue = () => {
 
         }
         dispatch(userLogin(obj));
+        // if (loginSuccess) {
+
         navigate("/loginSuccess")
+        // }
     }
     localStorage.setItem("user", JSON.stringify(""));
 

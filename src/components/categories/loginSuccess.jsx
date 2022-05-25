@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { orderCreation } from '../../redux/Actions/userActions';
 import service from "../../assets/images/service.webp"
+import { img } from "../../assets/images/check.png"
 export const LoginSuccess = () => {
+
+    const userLogin = useSelector(state => state.userLogin?.Login?.data)
+
+
 
     const services = JSON.parse(localStorage.getItem('selected_services'))
     // console.log('services', services)
@@ -74,7 +79,11 @@ export const LoginSuccess = () => {
                                     <img className='rounded-full border-5 border-solid border-gray-200 p-3' src="https://img.icons8.com/fluency/48/000000/checkmark.png" />
                                 </div>
                                 <div className='text-center py-20'>
-                                    <h1 className='font-bold text-4xl'>LOGGED IN AS</h1>
+                                    {
+
+                                        userLogin && <h1 className='font-bold text-4xl'>LOGGED IN AS {userLogin.fullName} ({userLogin.email})</h1>
+                                    }
+
                                 </div>
                             </div>
                         </div >

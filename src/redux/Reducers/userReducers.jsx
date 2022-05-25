@@ -18,6 +18,8 @@ export const addLoginReducers = (state = {}, action) => {
             return { loading: false, Login: action.payload };
         case LOGIN_ADD_FAIL:
             return { loading: false, error: action.payload };
+        // case LOGIN_ADD_RESET:
+        //     return {loading: false, error: fa}
         default:
             return state;
     }
