@@ -1,9 +1,13 @@
 import React from 'react'
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { orderCreation } from '../../redux/Actions/userActions';
 import service from "../../assets/images/service.webp"
 export const LoginSuccess = () => {
 
     const services = JSON.parse(localStorage.getItem('selected_services'))
+    // console.log('services', services)
     const salonName = localStorage.getItem('salonTitle')
     const salonLocation = localStorage.getItem('branchLocation')
     const selectedTime = localStorage.getItem('selected_time')
@@ -17,9 +21,29 @@ export const LoginSuccess = () => {
         }
     }
 
-    // const handleClick = () => {
-    //     localStorage.clear();
-    // }
+    const dispatch = useDispatch()
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        const obj = {
+            userId: '123456789',
+            branchId: '123456789',
+            createdBy: 'Client',
+            totalOrderPrice: '100',
+            actualOrderPrice: '300',
+            services
+            // orderJob: [
+            //     {
+            //         serviceId: '43153',
+            //         serviceTime: '30',
+            //         duration: '13',
+            //         actualPrice: '100',
+            //         totalPrice: '100',
+            //     }
+            // ]
+        }
+        dispatch(orderCreation(obj))
+    }
 
     return (
 
@@ -105,8 +129,9 @@ export const LoginSuccess = () => {
             <div className=' bg-white py-2 mt-4  sticky bottom-0'>
                 <div className='flex justify-end '>
                     <Link to='/orderSuccess' >
-                        {/* onClick={handleClick} */}
+
                         <button
+                            onClick={handleClick}
                             className='bg-slate-900 w-32 h-12 mr-16  rounded-lg sticky 
                      text-white  font-bold'
                         >

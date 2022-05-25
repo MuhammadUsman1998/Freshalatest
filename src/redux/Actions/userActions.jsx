@@ -4,7 +4,10 @@ import {
     LOGIN_ADD_FAIL,
     SIGNUP_ADD_REQUEST,
     SIGNUP_ADD_SUCCESS,
-    SIGNUP_ADD_FAIL
+    SIGNUP_ADD_FAIL,
+    ORDER_ADD_REQUEST,
+    ORDER_ADD_SUCCESS,
+    ORDER_ADD_FAIL,
 } from "../Constants/userConstants";
 
 import jwtInterceptor from "./jwtInterceptor";
@@ -56,6 +59,32 @@ export const userSignUp = (signUpData) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: SIGNUP_ADD_FAIL,
+            payload: error.response && error.response.data.error,
+        });
+    }
+};
+
+
+export const orderCreation = (order) => async (dispatch) => {
+    try {
+        dispatch({
+            type: ORDER_ADD_REQUEST,
+            Accept: "application/json",
+        });
+        const { data } = await jwtInterceptor.post(
+            `${SERVER_IP}/api/v1/order/create`,
+            order
+        );
+        dispatch({
+            type: ORDER_ADD_SUCCESS,
+            payload: data,
+        });
+
+
+        localStorage.setItem("user", JSON.stringify(data.data));
+    } catch (error) {
+        dispatch({
+            type: ORDER_ADD_FAIL,
             payload: error.response && error.response.data.error,
         });
     }
