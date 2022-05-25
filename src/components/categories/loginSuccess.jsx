@@ -1,69 +1,25 @@
-import { useState, useEffect } from 'react'
-import { Link, useNavigate } from "react-router-dom";
-// import { useDispatch, useSelector } from 'react-redux';
-// import { userLogin } from '../../redux/Actions/userActions';
+import React from 'react'
+import { Link } from "react-router-dom";
 import service from "../../assets/images/service.webp"
-import { useLocation } from 'react-router-dom'
-import { useForm } from 'react-hook-form';
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
-
-const MySwal = withReactContent(Swal);
-
-
-
 export const LoginSuccess = () => {
-    // const [disabledButton, setDisabledButton] = useState(false);
 
-    const location = useLocation();
-    const { selectedTime, selectedDate, salonName, salonLocation, serviceTotal, services } = location?.state ? location.state : "";
-    console.log('Selected Time:', selectedTime)
-    console.log('Selected Date:', selectedDate)
-    console.log('Salon Name:', salonName);
-    console.log('Salon Location:', salonLocation);
-    console.log('Service Total:', serviceTotal);
-    console.log('Services', services);
+    const services = JSON.parse(localStorage.getItem('selected_services'))
+    const salonName = localStorage.getItem('salonTitle')
+    const salonLocation = localStorage.getItem('branchLocation')
+    const selectedTime = localStorage.getItem('selected_time')
+    const selectedDate = localStorage.getItem('selected_date')
 
-    // const [inputForm, setInputForm] = useState({
-    //     contactNumber: "",
-    //     password: ""
-    // });
+    const calculateTotal = (array) => {
+        if (!array.length) {
+            return 0;
+        } else {
+            return array.reduce((accumulator, value) => accumulator + Number(value.price), 0);
+        }
+    }
 
-
-    // const dispatch = useDispatch();
-    // const navigate = useNavigate();
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     const obj = {
-    //         contactNumber: inputForm.contactNumber,
-    //         password: inputForm.password,
-
-    //     }
-    //     dispatch(userLogin(obj));
-    //     navigate("")
+    // const handleClick = () => {
+    //     localStorage.clear();
     // }
-    // localStorage.setItem("user", JSON.stringify(""));
-
-    // const handleFormDisabled = () => {
-    //     if (!inputForm.contactNumber || !inputForm.password) {
-    //         return true
-    //     } else {
-    //         return false
-    //     }
-    // }
-
-
-    // useEffect(() => {
-    //     MySwal.fire({
-    //         title: "APOINTMENT SUCCESSFULL",
-    //         icon: "success",
-    //         // allowOutsideClick: false,
-    //         showConfirmButton: false,
-
-    //     });
-    // }
-
-    //     , []);
 
     return (
 
@@ -85,7 +41,7 @@ export const LoginSuccess = () => {
             </div >
 
 
-            <div className='bg-gray-200'>
+            <div className='bg-gray-200 h-screen'>
                 <div className="max-w-7xl mx-auto px-48 sm:px-6 lg:px-8">
                     <div className=" flex justify-between  sm:px-6 lg:px-8">
                         <div className="w-2/3  sm:mx-auto sm:w-full sm:max-w-md  xl:w-full">
@@ -94,11 +50,8 @@ export const LoginSuccess = () => {
                                     <img className='rounded-full border-5 border-solid border-gray-200 p-3' src="https://img.icons8.com/fluency/48/000000/checkmark.png" />
                                 </div>
                                 <div className='text-center py-20'>
-                                    <h1 className='font-bold text-4xl'>LOGIN SUCCESSFULL</h1>
+                                    <h1 className='font-bold text-4xl'>LOGGED IN AS</h1>
                                 </div>
-
-
-
                             </div>
                         </div >
 
@@ -141,7 +94,7 @@ export const LoginSuccess = () => {
                             }
                             <div className=' flex justify-between px-4 py-3 font-bold'>
                                 <h1>Total</h1>
-                                <h1 className=' '>${serviceTotal}</h1>
+                                <h1 className=' '>${calculateTotal(services)}</h1>
                             </div>
                         </div>
                     </div>
@@ -152,6 +105,7 @@ export const LoginSuccess = () => {
             <div className=' bg-white py-2 mt-4  sticky bottom-0'>
                 <div className='flex justify-end '>
                     <Link to='/orderSuccess' >
+                        {/* onClick={handleClick} */}
                         <button
                             className='bg-slate-900 w-32 h-12 mr-16  rounded-lg sticky 
                      text-white  font-bold'

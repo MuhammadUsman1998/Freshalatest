@@ -76,14 +76,12 @@ export const LoginContinue = () => {
             </div >
 
 
-            <div className='bg-gray-200'>
+            <div className='bg-gray-200 h-screen'>
                 <div className="max-w-7xl mx-auto px-48 sm:px-6 lg:px-8">
                     <div className=" flex justify-between  sm:px-6 lg:px-8">
                         <div className="w-2/3  sm:mx-auto sm:w-full sm:max-w-md  xl:w-full">
                             <div className=" bg-white py-8 px-4 shadow rounded-lg sm:px-10 w-full ">
-                                {/* <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                                    <h2 className=" text-center text-3xl font-extrabold text-gray-900">Fresha</h2>
-                                </div> */}
+
                                 <form className="space-y-4 " action="#  ">
                                     <div>
                                         <label htmlFor="contactNumber" className="block text-sm font-medium text-gray-700">
@@ -130,7 +128,6 @@ export const LoginContinue = () => {
                                     <br></br>
                                 </form>
                                 <div>
-                                    {/* <Link to="/orderSuccess"> */}
                                     <button
                                         disabled={handleFormDisabled()}
                                         style={{ cursor: handleFormDisabled() ? "not-allowed" : "pointer" }}
@@ -139,7 +136,6 @@ export const LoginContinue = () => {
                                     >
                                         Log in
                                     </button>
-                                    {/* </Link> */}
                                 </div>
 
                                 <div className="mt-6">
@@ -170,6 +166,7 @@ export const LoginContinue = () => {
                                 <h1>{selectedDate}</h1>
                                 <h1> {selectedTime}</h1>
                             </div>
+                            <hr></hr>
                             {
                                 services?.map((serviceData) => {
                                     return (
@@ -194,29 +191,20 @@ export const LoginContinue = () => {
                             }
                             <div className=' flex justify-between px-4 py-3 font-bold'>
                                 <h1>Total</h1>
-                                <h1 className=' '>${serviceTotal}</h1>
+                                <h1 className=' '>${calculateTotal(services)}</h1>
                             </div>
-                            <div className=" bg-white mt-8 w-64 shadow-lg rounded-lg sm:mt-5 lg:hidden mr-3">
-                                <div className='-mt-10 flex justify-center  '>
-                                    <img className=' rounded-lg shadow-md border-4 border-neutral-100' src={service} />
-                                </div>
-                                <div className='text-center font-bold pt-3'>
-                                    <h1>Salon</h1>
-                                    <h1 className='pt-2'>LHR</h1>
-                                    {calculateTotal(services)}
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>
 
 
-                <div className=' bg-white py-2 mt-4  sticky bottom-0'>
+                <div className=' bg-white py-2 mt-56 sticky bottom-0 '>
                     <div className='flex justify-end '>
                         <button
                             style={{ cursor: disabledButton ? "not-allowed" : "pointer" }}
                             disabled={disabledButton}
-                            className='bg-slate-900 hover:bg-slate-600 w-32 h-12 mr-16  rounded-lg sticky 
+                            className='bg-slate-400  w-32 h-12 mr-16  rounded-lg 
                      text-white  font-bold'
                         >
                             Book

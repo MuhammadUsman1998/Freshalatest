@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState, useLayoutEffect } from "react";
 import Slider from "react-slick";
 import { getService } from "../../redux/Actions/serviceActions";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import img from "../../assets/images/service.webp";
 import { useDispatch, useSelector } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
 import "../../assets/styles/app.css";
-import { Link, Button, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+// import { Link, Button, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 
 function SamplePrevArrow(props) {
@@ -57,13 +57,6 @@ export const OnlineBookingDetail = () => {
         setSelectedCategory(_id);
         myRef.current.scrollIntoView();
     };
-    // useMountEffect(executeScroll);
-
-    // const executeScroll = () => window.scroll({
-    //     top: 2000,
-    //     left: 0,
-    //     behavior: 'smooth'
-    // });
 
     useEffect(() => {
         dispatch(getService(branchId, salonId));
@@ -93,7 +86,6 @@ export const OnlineBookingDetail = () => {
             setArrayOfSelectedServices(newList)
             localStorage.setItem('selected_services', JSON.stringify(newList))
         } else {
-            console.log('add Data')
 
             setArrayOfSelectedServices(prevState => [...prevState, selected_service_data])
 
@@ -119,17 +111,6 @@ export const OnlineBookingDetail = () => {
     const total = localStorage.getItem('salonTitle')
     const myTotal = localStorage.getItem('branchLocation')
 
-
-    // const checkedIfExisted = (serviceId) => {
-    //     if (arrayOfSelectedServices.some(e => e._id === serviceId)) {
-    //         console.log('true', serviceId)
-    //         return true
-    //     } else {
-    //         console.log('false', serviceId)
-    //         return false
-    //     }
-
-    // }
 
     return (
         <>
@@ -166,8 +147,8 @@ export const OnlineBookingDetail = () => {
 
                                             return (
                                                 <div className='hover:bg-gray-300 hover:text-black rounded-full '>
-                                                    <Link to="test1" spy={true} smooth={true} offset={50} duration={500}
-                                                        // onClick={(_id) => executeScroll(cat1?._id)}
+                                                    <div
+                                                        onClick={(_id) => executeScroll(cat1?._id)}
                                                         className={`truncate cursor-pointer   rounded-full p-2 
                                                         ${selectedCategory ===
                                                                 cat1?._id
@@ -177,7 +158,7 @@ export const OnlineBookingDetail = () => {
                                                     >
                                                         {cat1?.categoryTitle}
 
-                                                    </Link>
+                                                    </div>
                                                 </div>
 
                                             );
@@ -204,7 +185,7 @@ export const OnlineBookingDetail = () => {
                                     {
                                         arrayOfSelectedServices.map((serviceData) => {
                                             return (
-                                                <div className="overflow-y-scroll" >
+                                                <div className="" >
                                                     <div className="flex justify-between p-4 ">
                                                         <h1> {serviceData.serviceTitle}</h1>
                                                         <h1> ${serviceData.price}</h1>
@@ -288,13 +269,11 @@ export const OnlineBookingDetail = () => {
 
                     {selectedServices.some((item) => item.checked === true) &&
                         <div className=' bg-white py-2 mt-4  sticky bottom-0'>
-
                             <div className='flex justify-end '>
-
-                                <Link to='/timeComponent' >
+                                <Link to="/timeComponent">
                                     <button
-                                        className='bg-slate-900 w-32 h-12 mr-16  rounded-lg  
-                     text-white  font-bold'
+
+                                        className='bg-slate-900 w-32 h-12 mr-16  rounded-lg  text-white  font-bold cursor-pointer'
                                     >
                                         Next
                                     </button>

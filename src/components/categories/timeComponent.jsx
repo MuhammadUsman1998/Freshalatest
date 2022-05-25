@@ -62,16 +62,6 @@ export const TimeComponent = () => {
         a.add(1, 'day');
     }
 
-    // const secondsToHms = (d) => {
-    //     d = Number(d);
-    //     var h = Math.floor(d / 3600);
-    //     var m = Math.floor(d % 3600 / 60);
-    //     var s = Math.floor(d % 3600 % 60);
-    //     var hDisplay = h > 0 ? h : ''
-    //     var mDisplay = m > 0 ? m : '00'
-    //     return `${hDisplay}:${mDisplay}`
-    // }
-
     const timeDiv = (event, timeData) => {
         event.preventDefault();
         setTime(timeData)
@@ -110,11 +100,7 @@ export const TimeComponent = () => {
 
             <div className='bg-gray-200 h-auto pb-12'>
                 <div className="max-w-7xl mx-auto px-48 sm:px-16 lg:px-32 sticky top-36">
-                    {/* <div className="flex justify-between bg-red-300  "> */}
                     <div className=" bg-white  w-4/6 shadow-md  xl:w-full  ">
-
-
-
                         <Slider className='' focusOnSelect={true}  {...settings}>
                             {
                                 dateArray?.length &&
@@ -143,7 +129,6 @@ export const TimeComponent = () => {
                             <h1>You can Book Your Time When Jocelyn is Available</h1>
                         </div>
                     </div>
-                    {/* </div> */}
 
 
                     <div className='flex justify-end -mt-60 -mr-3 '>
@@ -193,7 +178,7 @@ export const TimeComponent = () => {
                     </div>
                 </div>
 
-                <div className="max-w-7xl mx-auto px-48 sm:px-16 lg:px-32">
+                <div className="max-w-7xl -mt-32 mx-auto px-48 sm:px-16 lg:px-32">
                     <div className='w-2/3  xl:w-full '>
                         {timeArray.map((Arr, index) => {
                             return (

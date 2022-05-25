@@ -52,7 +52,7 @@ export const SignUpContinueComponent = () => {
         navigate("/loginContinue", {
             state
                 : {
-                selectedTime, selectedDate, salonName, salonLocation, serviceTotal, services
+                selectedTime, selectedDate, salonName, salonLocation, services
             }
         })
     }
@@ -78,14 +78,12 @@ export const SignUpContinueComponent = () => {
             <div className='bg-slate-900 h-36'>
                 <div className="max-w-7xl mx-auto px-32 sm:px-6 lg:px-8">
                     <div className=' p-4 '>
-                        {/* <div className='flex justify-between '> */}
                         <div className='flex'>
                             <div className='pr-5'>
                                 <Link to="/timeComponent" className="hover:text-gray-600 text-white fa-solid fa-arrow-left float-left pr-2" ></Link>
                             </div>
                             <p className='text-white '>Step 3/3 </p>
                         </div>
-                        {/* </div> */}
                         <h1 className="text-4xl font-bold text-white pl-10 ">SignUp To Continue</h1>
                     </div>
                 </div>
@@ -95,7 +93,7 @@ export const SignUpContinueComponent = () => {
                 <div className="max-w-7xl mx-auto px-48 sm:px-6 lg:px-8">
                     <div className=" flex justify-between ">
                         <div className="  sm:mx-auto sm:w-full sm:max-w-md  mb-12 w-2/3 xl:w-full ">
-                            <div className="bg-white py-8 px-4 shadow-md rounded-lg w-full xl:w-full ">
+                            <div className="bg-white py-8 px-4 shadow-md rounded-lg  w-full xl:w-full ">
                                 <form className="space-y-4 grid grid-cols-2 gap-y-6 gap-x-6 sm:grid-cols-2   " action="#"
                                 >
                                     <div>
@@ -212,14 +210,12 @@ export const SignUpContinueComponent = () => {
                                             <span className="px-2 bg-white text-gray-500">Already have a booker account?</span>
                                         </div>
                                     </div >
-                                    <Link to="/loginContinue" state={{
-                                        selectedTime, selectedDate, salonName, salonLocation, serviceTotal, services
-                                    }} className="flex justify-center text-blue">Sign in now</Link>
+                                    <Link to="/loginContinue" className="flex justify-center text-blue">Sign in now</Link>
                                 </div>
                             </div>
                         </div>
 
-                        <div className=" bg-white h-auto w-64 shadow-lg rounded-lg sm:mt-5  mr-3 lg:hidden xl:ml-24 xl:w-3/4">
+                        <div className=" bg-white  w-64 shadow-lg rounded-lg sm:mt-5  mr-3 lg:hidden xl:ml-24 xl:w-3/4">
                             <div className='-mt-10 flex justify-center  '>
                                 <img className=' rounded-lg shadow-md border-4 border-neutral-100' src={service} />
                             </div>
@@ -258,18 +254,9 @@ export const SignUpContinueComponent = () => {
                             }
                             <div className=' flex justify-between px-4 py-3 font-bold'>
                                 <h1>Total</h1>
-                                <h1 className=' '>${serviceTotal}</h1>
+                                <h1 className=' '>${calculateTotal(services)}</h1>
                             </div>
-                            <div className=" bg-white h-96 w-64 shadow-lg rounded-lg sm:mt-5  mr-3 lg:hidden ">
-                                <div className='-mt-10 flex justify-center  '>
-                                    <img className=' rounded-lg shadow-md border-4 border-neutral-100' src={service} />
-                                </div>
-                                <div className='text-center font-bold pt-3'>
-                                    <h1>Salon</h1>
-                                    <h1 className='pt-2'>LHR</h1>
-                                    {calculateTotal(services)}
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -281,7 +268,7 @@ export const SignUpContinueComponent = () => {
                         <button
                             style={{ cursor: disabledButton ? "not-allowed" : "pointer" }}
                             disabled={disabledButton}
-                            className='bg-slate-900 hover:bg-slate-600 w-32 h-12 mr-16  rounded-lg sticky 
+                            className='bg-slate-500  w-32 h-12 mr-16  rounded-lg sticky 
                      text-white  font-bold' >
                             Book
                         </button>
