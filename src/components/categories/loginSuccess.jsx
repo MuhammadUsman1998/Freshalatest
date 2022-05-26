@@ -1,14 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { orderCreation } from '../../redux/Actions/userActions';
 import service from "../../assets/images/service.webp"
-import { img } from "../../assets/images/check.png"
+import checked from "../../assets/images/check.png"
 export const LoginSuccess = () => {
 
-    const userLogin = useSelector(state => state.userLogin?.Login?.data)
 
+    const userLogin = useSelector(state => state.userLogin?.Login?.data)
+    // localStorage.setItem("userLogin", JSON.stringify(userLogin.fullName))
+
+    // const localStorageData = SON.parse(localStorage.getItem("userLogin"))
 
 
     const services = JSON.parse(localStorage.getItem('selected_services'))
@@ -17,7 +20,6 @@ export const LoginSuccess = () => {
     const salonLocation = localStorage.getItem('branchLocation')
     const selectedTime = localStorage.getItem('selected_time')
     const selectedDate = localStorage.getItem('selected_date')
-
     const calculateTotal = (array) => {
         if (!array.length) {
             return 0;
@@ -76,12 +78,12 @@ export const LoginSuccess = () => {
                         <div className="w-2/3  sm:mx-auto sm:w-full sm:max-w-md  xl:w-full">
                             <div className=" bg-white h-96 py-8 px-4 shadow rounded-lg sm:px-10 w-full ">
                                 <div className='flex justify-center  h-28  '>
-                                    <img className='rounded-full border-5 border-solid border-gray-200 p-3' src="https://img.icons8.com/fluency/48/000000/checkmark.png" />
+                                    <img className='rounded-full border-5 border-solid border-gray-200 p-3' src={checked} />
                                 </div>
                                 <div className='text-center py-20'>
                                     {
 
-                                        userLogin && <h1 className='font-bold text-4xl'>LOGGED IN AS {userLogin.fullName} ({userLogin.email})</h1>
+                                        userLogin && <h1 className='font-bold text-4xl'>Logged in as {userLogin.fullName} </h1>
                                     }
 
                                 </div>
@@ -102,13 +104,13 @@ export const LoginSuccess = () => {
                                 <h1>{selectedDate}</h1>
                                 <h1> {selectedTime}</h1>
                             </div>
+                            <hr></hr>
                             {
                                 services?.map((serviceData) => {
                                     return (
                                         <>
                                             <div className="">
 
-                                                <hr className='mt-3'></hr>
                                                 <div className="flex justify-between px-4 py-3 ">
                                                     <h1> {serviceData.serviceTitle}</h1>
                                                     <h1> ${serviceData.price}</h1>

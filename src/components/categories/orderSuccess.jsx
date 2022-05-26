@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import checked from "../../assets/images/check.png"
+
 // import Swal from 'sweetalert2'
 // import withReactContent from 'sweetalert2-react-content'
 
@@ -55,7 +57,7 @@ export const OrderSuccess = () => {
                     <div className=" sm:mx-auto sm:w-full sm:max-w-md  xl:w-full">
                         <div className=" py-8 px-4 rounded-lg sm:px-10 w-full mt-3">
                             <div className='flex justify-center  h-28  '>
-                                <img className='rounded-full border-5 border-solid border-gray-200 p-3' src="https://img.icons8.com/fluency/48/000000/checkmark.png" />
+                                <img className='rounded-full border-5 border-solid border-gray-200 p-3' src={checked} />
                             </div>
                             <div className='text-center py-10'>
                                 <h1 className='font-bold text-2xl '>APPOINTMENT SUCCESSFULL</h1>
@@ -69,15 +71,17 @@ export const OrderSuccess = () => {
                             <h1>Price</h1>
                         </div>
                     </div>
-                    <h1 className=''> {selectedTime}</h1>
+                    <h1 className='mt-4 font-semibold ml-3'> {selectedTime}</h1>
                     <div className='-mt-5'>
                         {
                             services?.map((serviceData) => {
                                 return (
-                                    <div className="flex justify-between " >
+                                    <div className="flex justify-between mt-1 font-semibold ml-5" >
                                         <div></div>
-                                        <h1> {serviceData.serviceTitle}</h1>
-                                        <h1 className='px-2' >{serviceData?.price}</h1>
+                                        <h1 className='inline'> {serviceData.serviceTitle}</h1>
+                                        <div className='mr-3'>
+                                            <h1 className='' >{serviceData?.price}</h1>
+                                        </div>
                                     </div>
                                 )
                             })
@@ -86,10 +90,10 @@ export const OrderSuccess = () => {
 
 
                     <hr className='mt-4 w-full'></hr>
-                    <div className='font-bold px-3'>
+                    <div className='font-bold px-1'>
                         <h1 className='pt-3'>Payment Details</h1>
                     </div>
-                    <div className=' flex justify-between px-3  font-bold'>
+                    <div className=' flex justify-between px-1 py-1 font-bold'>
                         <h1>Total Payment</h1>
                         <h1 className=' '>${calculateTotal(arrayOfSelectedServices)}</h1>
                     </div>

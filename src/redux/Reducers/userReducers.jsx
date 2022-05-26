@@ -2,6 +2,7 @@ import {
     LOGIN_ADD_REQUEST,
     LOGIN_ADD_SUCCESS,
     LOGIN_ADD_FAIL,
+    LOGIN_ADD_RESET,
     SIGNUP_ADD_REQUEST,
     SIGNUP_ADD_SUCCESS,
     SIGNUP_ADD_FAIL,
@@ -15,11 +16,11 @@ export const addLoginReducers = (state = {}, action) => {
         case LOGIN_ADD_REQUEST:
             return { loading: true };
         case LOGIN_ADD_SUCCESS:
-            return { loading: false, Login: action.payload };
+            return { loading: false, success: true, Login: action.payload };
         case LOGIN_ADD_FAIL:
             return { loading: false, error: action.payload };
-        // case LOGIN_ADD_RESET:
-        //     return {loading: false, error: fa}
+        case LOGIN_ADD_RESET:
+            return { loading: false, error: false, success: false, Login: {} }
         default:
             return state;
     }

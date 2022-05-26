@@ -10,17 +10,12 @@ export const LoginContinue = () => {
 
 
     const [disabledButton, setDisabledButton] = useState(true);
-
     const services = JSON.parse(localStorage.getItem('selected_services'))
     const salonName = localStorage.getItem('salonTitle')
     const salonLocation = localStorage.getItem('branchLocation')
     const selectedTime = localStorage.getItem('selected_time')
     const selectedDate = localStorage.getItem('selected_date')
-    console.log('local servixes', services);
-    console.log('local salonTitle', salonName);
-    console.log('local location', salonLocation);
-    console.log('local selected_time', selectedTime);
-    console.log('local selected_date', selectedDate);
+
 
     const [inputForm, setInputForm] = useState({
         contactNumber: "",
