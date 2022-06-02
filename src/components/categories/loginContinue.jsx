@@ -43,7 +43,7 @@ export const LoginContinue = () => {
             navigate("/loginSuccess")
         }
         else if (user.error) {
-            toast("Login Failed!")
+            toast("Login Failed! Check your contactnumber and password! Password atleast 6 Characters!")
         }
         return () => {
 
@@ -87,7 +87,7 @@ export const LoginContinue = () => {
 
 
             <div className='bg-slate-900 h-36'>
-                <div className="max-w-7xl mx-auto px-32 sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto px-28 sm:px-6 lg:px-8">
                     <div className=' p-4'>
                         <div className='flex justify-between '>
                             <div className='flex'>
@@ -104,124 +104,126 @@ export const LoginContinue = () => {
 
 
             <div className='bg-gray-200 h-screen'>
-                <div className="max-w-7xl mx-auto px-48 sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto px-44 sm:px-6 lg:px-8">
                     <div className=" flex justify-between  sm:px-6 lg:px-8">
-                        <div className="w-2/3  sm:mx-auto sm:w-full sm:max-w-md  xl:w-full">
-                            <div className=" bg-white py-8 px-4 shadow rounded-lg sm:px-10 w-full ">
+                        {/* <div className="w-2/3  sm:mx-auto sm:w-full sm:max-w-md  xl:w-full"> */}
+                        <div className=" bg-white py-8 px-4 shadow rounded-lg sm:px-10 w-full ">
 
-                                <form className="space-y-2 " action="#  ">
-                                    <div>
-                                        <label htmlFor="contactNumber" className="block text-sm font-medium text-gray-700">
-                                            Contact Number
-                                        </label>
-                                        <div className="mt-1">
-                                            <input
-                                                id="contactNumber"
-                                                name="contactNumber"
-                                                type="contactNumber"
-                                                maxLength={11}
-                                                placeholder="0300 XXXX XXX"
-                                                value={inputForm.contactNumber}
-                                                onChange={(e) => setInputForm({ ...inputForm, contactNumber: e.target.value })}
-                                                className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                                            Password
-                                        </label>
-                                        <div className="mt-1">
-                                            <input
-                                                id="password"
-                                                name="password"
-                                                type="password"
-                                                value={inputForm.password}
-                                                onChange={(e) => setInputForm({ ...inputForm, password: e.target.value })}
-                                                placeholder='Enter Password'
-                                                className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="flex items-center justify-between">
-                                        <div className="text-sm">
-                                            <Link to="/loginreset" href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                                                Forgot your password?
-                                            </Link>
-                                        </div>
-                                    </div>
-                                    <br></br>
-                                </form>
+                            <form className="space-y-2 " action="#  ">
                                 <div>
-                                    <button
-                                        disabled={handleFormDisabled()}
-                                        style={{ cursor: handleFormDisabled() ? "not-allowed" : "pointer" }}
-                                        type="submit" onClick={handleSubmit}
-                                        className=" mt-2 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-slate-900 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                    >
-                                        Log in
-                                    </button>
-                                </div>
-                                <div className="mt-6">
-                                    <div className="relative">
-                                        <div className="absolute inset-0 flex items-center">
-                                        </div>
-                                        <div className="relative flex justify-center text-sm">
-                                            <span className="px-2 bg-white text-gray-500">Don't have a booker account?</span>
-                                        </div>
+                                    <label htmlFor="contactNumber" className="block text-sm font-medium text-gray-700">
+                                        Contact Number
+                                    </label>
+                                    <div className="mt-1">
+                                        <input
+                                            id="contactNumber"
+                                            name="contactNumber"
+                                            type="contactNumber"
+                                            maxLength={11}
+                                            placeholder="0300 XXXX XXX"
+                                            value={inputForm.contactNumber}
+                                            onChange={(e) => setInputForm({ ...inputForm, contactNumber: e.target.value })}
+                                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        />
                                     </div>
-                                    <Link to="/signupcontinueComponent" className=" cursor-pointer flex justify-center text-blue-400">Sign up now</Link>
-
                                 </div>
-                            </div>
-                        </div >
 
-                        <div className=" bg-white  w-64 shadow-lg rounded-lg sm:mt-5 lg:hidden mr-3 xl:ml-24 xl:w-3/4 ">
-                            <div className='  flex justify-center rounded-lg shadow-fuchsia-100'>
-                                <img
-                                    className=' rounded-lg shadow-md border-4 -mt-12  border-neutral-100'
-                                    src={img}
-                                />
-                            </div>
-                            <div className='text-center font-bold pt-3'>
-                                {salonName}
+                                <div>
+                                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                                        Password
+                                    </label>
+                                    <div className="mt-1">
+                                        <input
+                                            id="password"
+                                            name="password"
+                                            type="password"
+                                            value={inputForm.password}
+                                            onChange={(e) => setInputForm({ ...inputForm, password: e.target.value })}
+                                            placeholder='Enter Password'
+                                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="flex items-center justify-between">
+                                    <div className="text-sm">
+                                        <Link to="/loginreset" href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                                            Forgot your password?
+                                        </Link>
+                                    </div>
+                                </div>
                                 <br></br>
-                                <h1 className=' pt-2'>  {salonLocation}</h1>
-                                <hr className='mt-4'></hr>
+                            </form>
+                            <div>
+                                <button
+                                    disabled={handleFormDisabled()}
+                                    style={{ cursor: handleFormDisabled() ? "not-allowed" : "pointer" }}
+                                    type="submit" onClick={handleSubmit}
+                                    className=" mt-2 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-slate-900 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Log in
+                                </button>
                             </div>
-                            <div className='overflow-y-scroll h-72'>
-                                <div className='px-4 py-3 font-bold flex justify-between'>
-                                    <h1>{selectedDate}</h1>
-                                    <h1> {beginTime?.startTime}</h1>
+                            <div className="mt-6">
+                                <div className="relative">
+                                    <div className="absolute inset-0 flex items-center">
+                                    </div>
+                                    <div className="relative flex justify-center text-sm">
+                                        <span className="px-2 bg-white text-gray-500">Don't have a booker account?</span>
+                                    </div>
                                 </div>
-                                <hr></hr>
-                                {
-                                    services?.map((serviceData) => {
-                                        return (
-                                            <>
-                                                <div className="">
+                                <Link to="/signupcontinueComponent" className=" cursor-pointer flex justify-center text-blue-400">Sign up now</Link>
 
-                                                    <div className="flex justify-between px-4 py-3 ">
-                                                        <h1> {serviceData.serviceTitle}</h1>
-                                                        <h1> {serviceData.price}Rs</h1>
+                            </div>
+                        </div>
+                        {/* </div > */}
+
+                        <div className='ml-4'>
+                            <div className=" bg-white  w-80 shadow-lg rounded-lg sm:mt-5 lg:hidden mr-3 xl:ml-24 xl:w-3/4 ">
+                                <div className='  flex justify-center rounded-lg shadow-fuchsia-100'>
+                                    <img
+                                        className=' rounded-lg shadow-md border-4 -mt-12  border-neutral-100'
+                                        src={img}
+                                    />
+                                </div>
+                                <div className='text-center font-bold pt-3'>
+                                    {salonName}
+                                    <br></br>
+                                    <h1 className=' pt-2'>  {salonLocation}</h1>
+                                    <hr className='mt-4'></hr>
+                                </div>
+                                <div className='overflow-y-scroll h-72'>
+                                    <div className='px-4 py-3 font-bold flex justify-between'>
+                                        <h1>{selectedDate}</h1>
+                                        <h1> {beginTime?.startTime}</h1>
+                                    </div>
+                                    <hr></hr>
+                                    {
+                                        services?.map((serviceData) => {
+                                            return (
+                                                <>
+                                                    <div className="">
+
+                                                        <div className="flex justify-between px-4 py-3 ">
+                                                            <h1> {serviceData.serviceTitle}</h1>
+                                                            <h1> {serviceData.price}Rs</h1>
+                                                        </div>
+                                                        <div className="text-gray-500 px-4">
+                                                            <h1> {serviceData.duration}Min</h1>
+                                                        </div>
+                                                        <hr className='mt-3'></hr>
+
                                                     </div>
-                                                    <div className="text-gray-500 px-4">
-                                                        <h1> {serviceData.duration}Min</h1>
-                                                    </div>
-                                                    <hr className='mt-3'></hr>
 
-                                                </div>
+                                                </>
 
-                                            </>
-
-                                        )
-                                    })
-                                }
-                                <div className=' flex justify-between px-4 py-3 font-bold'>
-                                    <h1>Total</h1>
-                                    <h1>{calculateTotal(services)}Rs</h1>
+                                            )
+                                        })
+                                    }
+                                    <div className=' flex justify-between px-4 py-3 font-bold'>
+                                        <h1>Total</h1>
+                                        <h1>{calculateTotal(services)}Rs</h1>
+                                    </div>
                                 </div>
                             </div>
                         </div>

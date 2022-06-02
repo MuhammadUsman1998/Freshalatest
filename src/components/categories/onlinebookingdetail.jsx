@@ -175,9 +175,9 @@ export const OnlineBookingDetail = ({ IdSet }) => {
 
 
 
-                        <div className="main-div float-right -mt-24 w-1/5 mr-52  sticky top-32">
-                            <div className="bg-white  shadow-lg rounded-lg text-black lg:hidden xl:ml-20 xl:w-full h-full ">
-                                <div className='  flex justify-center rounded-lg shadow-fuchsia-100   '>
+                        <div className=" float-right -mt-24 w-1/5 mr-52  sticky top-32">
+                            <div className="bg-white  shadow-lg rounded-lg text-black lg:hidden xl:ml-20 xl:w-full  ">
+                                <div className='flex justify-center rounded-lg shadow-fuchsia-100   '>
                                     <img
                                         className=' rounded-lg shadow-md border-4 -mt-12  border-neutral-100  '
                                         src={img}
@@ -199,7 +199,7 @@ export const OnlineBookingDetail = ({ IdSet }) => {
                                                     <div className="text-gray-500 pl-6 ">
                                                         <h1> {serviceData.duration}Min</h1>
                                                     </div>
-                                                    <hr></hr>
+                                                    <hr className="mt-2"></hr>
 
                                                 </div>
 
@@ -231,11 +231,11 @@ export const OnlineBookingDetail = ({ IdSet }) => {
                                                 <div className="mt-3 lg:w-full w-2/3 ">
                                                     <div className=' bg-white p-7 rounded-lg mb-12'>
                                                         <div
-                                                            className='sm:w-full cursor-pointer divide-y-2' >
+                                                            className='sm:w-full cursor-pointer divide-y-2 divide-slate-200' >
                                                             {item?.allServices?.map((service, index) => (
                                                                 <div >
                                                                     <label>
-                                                                        <div className='flex cursor-pointer '>
+                                                                        <div className='flex cursor-pointer pt-3'>
                                                                             <input
                                                                                 name='checkbox'
                                                                                 id={index}
@@ -245,7 +245,7 @@ export const OnlineBookingDetail = ({ IdSet }) => {
                                                                                 onChange={(e) => handleChange(e, service)}
                                                                             />
 
-                                                                            <p className='text-xl font-bold pl-6'>
+                                                                            <p className='text-xl font-bold pl-6 '>
                                                                                 {service?.serviceTitle}
                                                                                 {index}
                                                                             </p>

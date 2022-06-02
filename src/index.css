@@ -23,15 +23,16 @@ body {
 /* .main-div::after {
   content: "";
   position: absolute;
-  left: -15px;
-  bottom: 0px;
+  left: -2px;
+  bottom: -6px;
   right: 0px;
+  box-shadow: aliceblue;
   background-repeat: repeat-x;
   height: 15px;
-  background-size: 40px 8px;
+  background-size: 30px 10px;
   background-image: radial-gradient(
     circle at 10px 17px,
     rgba(255, 255, 255, 0) 13px,
-    rgb(242, 242, 247) 14px
+    white 14px
   );
 } */

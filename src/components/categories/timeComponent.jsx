@@ -102,19 +102,18 @@ export const TimeComponent = () => {
 
 
             <div className='bg-gray-200 h-screen '>
-                <div className="max-w-7xl mx-auto px-48 sm:px-16 lg:px-32 fixed">
-                    <div className='flex justify-between'>
-                        <div className=" bg-white  w-4/6 shadow-md  xl:w-full  ">
+                <div className="max-w-7xl mx-auto px-48 sm:px-16 lg:px-32 ">
+                    <div className='flex justify-between sticky'>
+                        <div className=" bg-white  w-4/6 shadow-md  xl:w-full">
                             <Slider className='' focusOnSelect={true}  {...settings}>
                                 {
-                                    dateArray?.length &&
                                     dateArray?.map((date, i) => {
                                         return (
-                                            <div className='flex xl:flex justify-center '>
+                                            <div className='flex justify-center'>
                                                 <div onClick={(e) => clickDate(e, i, date)}
                                                     className={`flex justify-center border-solid border-black border-2 rounded-lg hover:bg-gray-300 
                                                 hover:text-black px-3 h-16 w-24 text-center pt-2 font-semibold cursor-pointer lg:w-24
-                                                 md:w-16 md:h-14 md:text-sm sm:w-16 sm ${selectedCategory ===
+                                                 md:w-16 md:h-18 md:text-sm  ${selectedCategory ===
                                                         i
                                                         && "text-white bg-blue-600"
 
@@ -130,31 +129,34 @@ export const TimeComponent = () => {
                             <div className='flex justify-center pt-3'>
                                 <img src="https://img.icons8.com/ios/50/000000/time--v1.png" />
                             </div>
-                            <div className='text-center font-bold p-3 mb-6'>
+                            <div className='text-center font-bold p-3 '>
                                 <h1>You can Book Your Time When Jocelyn is Available</h1>
                             </div>
-                            <div className='w-full h-96 xl:w-full pb-36 overflow-y-auto'>
-                                {timeArray.map((Arr, index, i) => {
-                                    return (
-                                        <div onClick={(event, i) => timeDiv(event, Arr, i)} key={index} className={` border-solid border-1 border-black px-3 py-4 
+                            <div className='w-full h-96 xl:w-full  overflow-y-auto '>
+
+                                {
+                                    timeArray?.map((Arr, index, i) => {
+                                        return (
+                                            <div onClick={(event, i) => timeDiv(event, Arr, i)} key={index} className={` border-solid border-1 border-black px-3 py-4 
                                           flex justify-between   hover:text-black 
                                           font-bold cursor-pointer ${time === Arr && "text-white bg-blue-600"
-                                            }`}
-                                        >
-                                            <h1>
-                                                {Arr}
-                                            </h1>
+                                                }`}
+                                            >
+                                                <h1>
+                                                    {Arr}
+                                                </h1>
 
-                                            <h1 className="fa-solid fa-angle-right pt-2  px-3"></h1>
-                                        </div>
-                                    )
-                                })}
+                                                <h1 className="fa-solid fa-angle-right pt-2  px-3"></h1>
+                                            </div>
+                                        )
+                                    })
+                                }
                             </div>
                         </div>
 
 
-                        <div className='flex -mr-3 '>
-                            <div className=" bg-white h-96 w-72 shadow-lg rounded-lg sm:mt-5 xl:hidden " >
+                        <div className=' flex ml-4 '>
+                            <div className=" bg-white h-96 w-80 shadow-lg rounded-lg sm:mt-5 xl:hidden " >
                                 <div className='  flex justify-center rounded-lg shadow-fuchsia-100   '>
                                     <img
                                         className=' rounded-lg shadow-md border-4 -mt-12  border-neutral-100  '

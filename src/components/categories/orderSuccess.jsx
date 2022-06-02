@@ -149,9 +149,6 @@ export const OrderSuccess = ({ IDRoute }) => {
                     </div>
                 </div>
 
-                {/* <div className='flex justify-center'>
-                    <button onClick={handleClick} className='bg-slate-900 text-white text-xl rounded-lg p-4 mt-2'>Add Another Appointment</button>
-                </div> */}
             </div>
 
             <div className=' bg-white py-2 mt-4  sticky bottom-0'>

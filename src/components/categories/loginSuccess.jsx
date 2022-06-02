@@ -95,7 +95,7 @@ export const LoginSuccess = () => {
 
         <div>
             <div className='bg-slate-900 h-36'>
-                <div className="max-w-7xl mx-auto px-32 sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto px-28 sm:px-6 lg:px-8">
                     <div className=' p-4'>
                         <div className='flex justify-between '>
                             <div className='flex'>
@@ -112,7 +112,7 @@ export const LoginSuccess = () => {
 
 
             <div className='bg-gray-200 h-screen'>
-                <div className="max-w-7xl mx-auto px-48 sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto px-44 sm:px-6 lg:px-8">
                     <div className=" flex justify-between  sm:px-6 lg:px-8">
                         <div className="w-2/3  sm:mx-auto sm:w-full sm:max-w-md  xl:w-full">
                             <div className=" bg-white h-96 py-8 px-4 shadow rounded-lg sm:px-10 w-full ">
@@ -127,50 +127,52 @@ export const LoginSuccess = () => {
                             </div>
                         </div >
 
-                        <div className=" bg-white  w-64 shadow-lg rounded-lg sm:mt-5 lg:hidden mr-3 xl:ml-24 xl:w-3/4 ">
-                            <div className='  flex justify-center rounded-lg shadow-fuchsia-100   '>
-                                <img
-                                    className=' rounded-lg shadow-md border-4 -mt-12  border-neutral-100  '
-                                    src={img}
-                                />
-                            </div>
-                            <div className='text-center font-bold pt-3'>
-                                {salonName}
-                                <br></br>
-                                <h1 className=' pt-2'>  {salonLocation}</h1>
-                                <hr className='mt-4'></hr>
-                            </div>
-                            <div className='overflow-y-scroll h-72'>
-                                <div className='px-4 py-3 font-bold flex justify-between'>
-                                    <h1>{selectedDate}</h1>
-                                    <h1> {BeginTime?.startTime}</h1>
+                        <div className='ml-4'>
+                            <div className=" bg-white  w-80 shadow-lg rounded-lg sm:mt-5 lg:hidden mr-3 xl:ml-24 xl:w-3/4 ">
+                                <div className='  flex justify-center rounded-lg shadow-fuchsia-100   '>
+                                    <img
+                                        className=' rounded-lg shadow-md border-4 -mt-12  border-neutral-100  '
+                                        src={img}
+                                    />
                                 </div>
-                                <hr></hr>
-                                {
-                                    services?.map((serviceData) => {
-                                        return (
-                                            <>
-                                                <div className="">
+                                <div className='text-center font-bold pt-3'>
+                                    {salonName}
+                                    <br></br>
+                                    <h1 className=' pt-2'>  {salonLocation}</h1>
+                                    <hr className='mt-4'></hr>
+                                </div>
+                                <div className='overflow-y-scroll h-72'>
+                                    <div className='px-4 py-3 font-bold flex justify-between'>
+                                        <h1>{selectedDate}</h1>
+                                        <h1> {BeginTime?.startTime}</h1>
+                                    </div>
+                                    <hr></hr>
+                                    {
+                                        services?.map((serviceData) => {
+                                            return (
+                                                <>
+                                                    <div className="">
 
-                                                    <div className="flex justify-between px-4 py-3 ">
-                                                        <h1> {serviceData.serviceTitle}</h1>
-                                                        <h1> {serviceData.price}Rs</h1>
+                                                        <div className="flex justify-between px-4 py-3 ">
+                                                            <h1> {serviceData.serviceTitle}</h1>
+                                                            <h1> {serviceData.price}Rs</h1>
+                                                        </div>
+                                                        <div className="text-gray-500 px-4">
+                                                            <h1> {serviceData.duration}Min</h1>
+                                                        </div>
+                                                        <hr className='mt-3'></hr>
+
                                                     </div>
-                                                    <div className="text-gray-500 px-4">
-                                                        <h1> {serviceData.duration}Min</h1>
-                                                    </div>
-                                                    <hr className='mt-3'></hr>
 
-                                                </div>
+                                                </>
 
-                                            </>
-
-                                        )
-                                    })
-                                }
-                                <div className=' flex justify-between px-4 py-3 font-bold'>
-                                    <h1>Total</h1>
-                                    <h1 className=' '>{calculateTotal(services)}Rs</h1>
+                                            )
+                                        })
+                                    }
+                                    <div className=' flex justify-between px-4 py-3 font-bold'>
+                                        <h1>Total</h1>
+                                        <h1 className=' '>{calculateTotal(services)}Rs</h1>
+                                    </div>
                                 </div>
                             </div>
                         </div>
