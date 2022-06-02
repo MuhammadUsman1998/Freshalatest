@@ -11,8 +11,8 @@ export const LoginResetPage = () => {
                 <div className=' p-4'>
                     <div className='flex justify-between '>
                         <div className='flex'>
-                            <div className='pl-3'>
-                                <Link to="/loginContinue" className="hover:text-gray-600 text-white fa-solid fa-arrow-left float-left pr-5" ></Link>
+                            <div className=''>
+                                <Link to="/loginContinue" className="hover:text-gray-600 text-white fa-solid fa-arrow-left float-left pr-7" ></Link>
                             </div>
                             <p className='text-white '>Step 3/3 </p>
                         </div>
@@ -27,9 +27,6 @@ export const LoginResetPage = () => {
                 <div className=" flex  justify-between py-12 sm:px-6 lg:px-8 -mt-10 mr-12">
                     <div className=" mt-6 sm:mx-auto sm:w-full sm:max-w-md flex justify-between w-11/12">
                         <div className="bg-white py-4 px-4 shadow rounded-lg w-full lg:w-full md:w-3/4 sm:w-screen">
-                            {/* <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                                <h2 className="text-center text-3xl font-extrabold text-gray-900">Fresha</h2>
-                            </div> */}
                             <h1 className="mt-5 text-2xl font-bold">Forgot password?</h1>
                             <p className="">Enter your registered email address and we'll send you a secure link to setup a new password.</p>
                             <form className="space-y-4 " action="#">

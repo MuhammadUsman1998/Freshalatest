@@ -1,25 +1,70 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { orderCreation } from '../../redux/Actions/userActions';
 import service from "../../assets/images/service.webp"
 import checked from "../../assets/images/check.png"
+import moment from 'moment';
+import img from "../../assets/images/service.webp";
+
 export const LoginSuccess = () => {
+
+    const dispatch = useDispatch()
+    // const navigate = useNavigate();
+
+
 
 
     const userLogin = useSelector(state => state.userLogin?.Login?.data)
-    // localStorage.setItem("userLogin", JSON.stringify(userLogin.fullName))
-
-    // const localStorageData = SON.parse(localStorage.getItem("userLogin"))
-
+    const Data = JSON.parse(localStorage.getItem("user"))
 
     const services = JSON.parse(localStorage.getItem('selected_services'))
-    // console.log('services', services)
     const salonName = localStorage.getItem('salonTitle')
     const salonLocation = localStorage.getItem('branchLocation')
     const selectedTime = localStorage.getItem('selected_time')
+    const BeginTime = JSON.parse(localStorage.getItem('selected_time'))
+
     const selectedDate = localStorage.getItem('selected_date')
+
+
+    const endTimeCalculate = (startTime, endTime) => {
+        const Initial = startTime;
+        const durationInMinutes = endTime?.toString();
+
+        const TotalTime = moment(Initial, "HH:mm")
+            .add(durationInMinutes, "minutes")
+            .format("HH:mm");
+
+        return TotalTime;
+    };
+
+
+    Object.assign(services[0], JSON.parse(selectedTime));
+    let AllServices = [];
+    var servicePriceSum = 0;
+    services.forEach((item, index) => {
+        let obj = {};
+        if (item?.startTime) {
+            obj["startTime"] = item?.startTime;
+            obj["duration"] = item?.duration;
+        }
+        else {
+            var calculateStartTime = endTimeCalculate(
+                AllServices[index - 1]?.startTime,
+                AllServices[index - 1]?.duration
+            );
+            obj["startTime"] = calculateStartTime;
+        }
+        obj["serviceId"] = item?._id;
+        obj["duration"] = item?.duration;
+        obj["totalPrice"] = item?.price;
+        obj["actualPrice"] = item?.price;
+        servicePriceSum += parseInt(item?.price);
+        AllServices.push(obj);
+        // setSumData(servicePriceSum);
+    });
+
     const calculateTotal = (array) => {
         if (!array.length) {
             return 0;
@@ -28,28 +73,22 @@ export const LoginSuccess = () => {
         }
     }
 
-    const dispatch = useDispatch()
-    const navigate = useNavigate();
+    const user = JSON.parse(localStorage.getItem("user"))
 
     const handleClick = () => {
+        var dateFormat = moment(selectedDate, "MMMM DD dddd").format('YYYY-MM-DD');
         const obj = {
-            userId: '123456789',
-            branchId: '123456789',
+            userId: user.id,
+            branchId: user.branchId,
             createdBy: 'Client',
-            totalOrderPrice: '100',
-            actualOrderPrice: '300',
-            services
-            // orderJob: [
-            //     {
-            //         serviceId: '43153',
-            //         serviceTime: '30',
-            //         duration: '13',
-            //         actualPrice: '100',
-            //         totalPrice: '100',
-            //     }
-            // ]
+            orderDate: dateFormat,
+            totalOrderPrice: servicePriceSum,
+            actualOrderPrice: servicePriceSum,
+            orderJob: AllServices
         }
+
         dispatch(orderCreation(obj))
+
     }
 
     return (
@@ -60,8 +99,8 @@ export const LoginSuccess = () => {
                     <div className=' p-4'>
                         <div className='flex justify-between '>
                             <div className='flex'>
-                                <div className='pl-3'>
-                                    <Link to="/loginContinue" className="hover:text-gray-600 text-white fa-solid fa-arrow-left float-left pr-5" ></Link>
+                                <div className='pl-1'>
+                                    <Link to="/loginContinue" className="hover:text-gray-600 text-white fa-solid fa-arrow-left float-left pr-4" ></Link>
                                 </div>
                                 <p className='text-white '>Step 3/3 </p>
                             </div>
@@ -81,55 +120,58 @@ export const LoginSuccess = () => {
                                     <img className='rounded-full border-5 border-solid border-gray-200 p-3' src={checked} />
                                 </div>
                                 <div className='text-center py-20'>
-                                    {
 
-                                        userLogin && <h1 className='font-bold text-4xl'>Logged in as {userLogin.fullName} </h1>
-                                    }
+                                    {Data && <h1 className='font-bold text-3xl'>Logged in as {Data?.fullName} </h1>}
 
                                 </div>
                             </div>
                         </div >
 
-                        <div className=" bg-white  w-64 shadow-lg rounded-lg sm:mt-5 lg:hidden mr-3 xl:ml-24 xl:w-3/4">
-                            <div className='-mt-10 flex justify-center  '>
-                                <img className=' rounded-lg shadow-md border-4 border-neutral-100' src={service} />
+                        <div className=" bg-white  w-64 shadow-lg rounded-lg sm:mt-5 lg:hidden mr-3 xl:ml-24 xl:w-3/4 ">
+                            <div className='  flex justify-center rounded-lg shadow-fuchsia-100   '>
+                                <img
+                                    className=' rounded-lg shadow-md border-4 -mt-12  border-neutral-100  '
+                                    src={img}
+                                />
                             </div>
-                            <div className='text-center  pt-3'>
+                            <div className='text-center font-bold pt-3'>
                                 {salonName}
                                 <br></br>
-                                <h1 className='text-gray-400 pt-2'>  {salonLocation}</h1>
+                                <h1 className=' pt-2'>  {salonLocation}</h1>
                                 <hr className='mt-4'></hr>
                             </div>
-                            <div className='px-4 py-3 font-bold flex justify-between'>
-                                <h1>{selectedDate}</h1>
-                                <h1> {selectedTime}</h1>
-                            </div>
-                            <hr></hr>
-                            {
-                                services?.map((serviceData) => {
-                                    return (
-                                        <>
-                                            <div className="">
+                            <div className='overflow-y-scroll h-72'>
+                                <div className='px-4 py-3 font-bold flex justify-between'>
+                                    <h1>{selectedDate}</h1>
+                                    <h1> {BeginTime?.startTime}</h1>
+                                </div>
+                                <hr></hr>
+                                {
+                                    services?.map((serviceData) => {
+                                        return (
+                                            <>
+                                                <div className="">
 
-                                                <div className="flex justify-between px-4 py-3 ">
-                                                    <h1> {serviceData.serviceTitle}</h1>
-                                                    <h1> ${serviceData.price}</h1>
+                                                    <div className="flex justify-between px-4 py-3 ">
+                                                        <h1> {serviceData.serviceTitle}</h1>
+                                                        <h1> {serviceData.price}Rs</h1>
+                                                    </div>
+                                                    <div className="text-gray-500 px-4">
+                                                        <h1> {serviceData.duration}Min</h1>
+                                                    </div>
+                                                    <hr className='mt-3'></hr>
+
                                                 </div>
-                                                <div className="text-gray-500 px-4">
-                                                    <h1> {serviceData.duration}Min</h1>
-                                                </div>
-                                                <hr className='mt-3'></hr>
 
-                                            </div>
+                                            </>
 
-                                        </>
-
-                                    )
-                                })
-                            }
-                            <div className=' flex justify-between px-4 py-3 font-bold'>
-                                <h1>Total</h1>
-                                <h1 className=' '>${calculateTotal(services)}</h1>
+                                        )
+                                    })
+                                }
+                                <div className=' flex justify-between px-4 py-3 font-bold'>
+                                    <h1>Total</h1>
+                                    <h1 className=' '>{calculateTotal(services)}Rs</h1>
+                                </div>
                             </div>
                         </div>
                     </div>

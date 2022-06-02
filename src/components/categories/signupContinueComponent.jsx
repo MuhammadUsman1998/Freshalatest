@@ -1,31 +1,18 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userSignUp } from '../../redux/Actions/userActions';
 import service from "../../assets/images/service.webp"
-import { useLocation } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import img from "../../assets/images/service.webp";
 
+import {
+    SIGNUP_ADD_RESET
+} from "../../redux/Constants/userConstants";
 
 export const SignUpContinueComponent = () => {
-
-    const [disabledButton, setDisabledButton] = useState(true);
-
-
-
-
-    const services = JSON.parse(localStorage.getItem('selected_services'))
-    const salonName = localStorage.getItem('salonTitle')
-    const salonLocation = localStorage.getItem('branchLocation')
-    const selectedTime = localStorage.getItem('selected_time')
-    const selectedDate = localStorage.getItem('selected_date')
-    console.log('local servixes', services);
-    console.log('local salonTitle', salonName);
-    console.log('local location', salonLocation);
-    console.log('local selected_time', selectedTime);
-    console.log('local selected_date', selectedDate);
-
 
     const [inputForm, setInputForm] = useState({
         fullName: "",
@@ -33,11 +20,41 @@ export const SignUpContinueComponent = () => {
         contactNumber: "",
         password: ""
     });
-
-    const userData = JSON.parse(localStorage.getItem("info"));
+    const [disabledButton, setDisabledButton] = useState(true);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const SignUp = useSelector(state => state?.userSignUp)
+    // console.log('userSignUp', SignUp)
+    // console.log('SignUp error', SignUp.error)
+    useEffect(() => {
+        if (SignUp.success) {
+            // console.log('sigup success')
+            navigate("/loginContinue")
+
+        }
+
+        else if (SignUp.error) {
+            toast("SignUp Failed!")
+        }
+        return () => {
+
+            dispatch({ type: SIGNUP_ADD_RESET })
+        }
+    }, [SignUp.success, SignUp.error])
+
+
+    const services = JSON.parse(localStorage.getItem('selected_services'))
+    const salonName = localStorage.getItem('salonTitle')
+    const salonLocation = localStorage.getItem('branchLocation')
+    const selectedDate = localStorage.getItem('selected_date')
+    const selectedTime = localStorage.getItem('selected_time')
+    const BeginTime = JSON.parse(localStorage.getItem('selected_time'))
+
+
+    const userData = JSON.parse(localStorage.getItem("info"));
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const obj = {
@@ -48,13 +65,14 @@ export const SignUpContinueComponent = () => {
             salonId: userData[0].salonId,
             branchId: userData[0].branchId,
         }
+        // toast("SignUp Successfull!")
         dispatch(userSignUp(obj));
-        navigate("/loginContinue", {
-            state
-                : {
-                selectedTime, selectedDate, salonName, salonLocation, services
-            }
-        })
+        // navigate("/loginContinue", {
+        //     state
+        //         : {
+        //         selectedTime, selectedDate, salonName, salonLocation, services
+        //     }
+        // })
     }
 
     const handleFormDisabled = () => {
@@ -72,14 +90,17 @@ export const SignUpContinueComponent = () => {
             return array.reduce((accumulator, value) => accumulator + Number(value.price), 0);
         }
     }
+    Object.assign(services[0], JSON.parse(selectedTime));
+
+
 
     return (
         <div>
-            <div className='bg-slate-900 h-36'>
+            <div className='bg-slate-900 h-36 sticky'>
                 <div className="max-w-7xl mx-auto px-32 sm:px-6 lg:px-8">
                     <div className=' p-4 '>
                         <div className='flex'>
-                            <div className='pr-5'>
+                            <div className='pr-4'>
                                 <Link to="/timeComponent" className="hover:text-gray-600 text-white fa-solid fa-arrow-left float-left pr-2" ></Link>
                             </div>
                             <p className='text-white '>Step 3/3 </p>
@@ -112,7 +133,6 @@ export const SignUpContinueComponent = () => {
                                                 className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm 
                                     placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                             />
-                                            {/* {!inputForm.fullName ? <span>Error</span> : ""} */}
                                         </div>
                                     </div>
 
@@ -189,7 +209,6 @@ export const SignUpContinueComponent = () => {
                                     </div>
                                 </label>
                                 <div>
-                                    {/* <Link to="/loginContinue" className="flex justify-center text-blue"> */}
                                     <button
                                         disabled={handleFormDisabled()}
                                         style={{ cursor: handleFormDisabled() ? "not-allowed" : "pointer" }}
@@ -199,9 +218,8 @@ export const SignUpContinueComponent = () => {
                                     >
                                         Sign Up
                                     </button>
-                                    {/* </Link> */}
                                 </div>
-
+                                <ToastContainer />
                                 <div className="mt-6">
                                     <div className="relative">
                                         <div className="absolute inset-0 flex items-center">
@@ -215,46 +233,49 @@ export const SignUpContinueComponent = () => {
                             </div>
                         </div>
 
-                        <div className=" bg-white  w-64 shadow-lg rounded-lg sm:mt-5  mr-3 lg:hidden xl:ml-24 xl:w-3/4">
-                            <div className='-mt-10 flex justify-center  '>
-                                <img className=' rounded-lg shadow-md border-4 border-neutral-100' src={service} />
+                        <div className=" bg-white sticky w-64 shadow-lg rounded-lg sm:mt-5  mr-3 lg:hidden xl:ml-10 xl:w-3/4 h-1/2">
+                            <div className='  flex justify-center rounded-lg shadow-fuchsia-100   '>
+                                <img
+                                    className=' rounded-lg shadow-md border-4 -mt-12  border-neutral-100  '
+                                    src={img}
+                                />
                             </div>
-                            <div className='text-center  pt-3'>
+                            <div className='text-center font-bold pt-3'>
                                 {salonName}
                                 <br></br>
-                                <h1 className='text-gray-400 pt-2'>  {salonLocation}</h1>
+                                <h1 className=' pt-2'>  {salonLocation}</h1>
                                 <hr className='mt-4'></hr>
                             </div>
-                            <div className='px-4 py-3 font-bold flex justify-between'>
-                                <h1>{selectedDate}</h1>
-                                <h1> {selectedTime}</h1>
-                            </div>
-                            {/* <hr className='mt-4'></hr> */}
-                            {
-                                services?.map((serviceData) => {
-                                    return (
-                                        <>
-                                            <div className="">
-
-                                                <div className="flex justify-between px-4 py-3 ">
-                                                    <h1> {serviceData.serviceTitle}</h1>
-                                                    <h1> ${serviceData.price}</h1>
+                            <div className='overflow-y-scroll h-72'>
+                                <div className='px-4 py-3 font-bold flex justify-between'>
+                                    <h1>{selectedDate}</h1>
+                                    <h1> {BeginTime?.startTime}</h1>
+                                </div>
+                                <hr></hr>
+                                {
+                                    services?.map((serviceData) => {
+                                        return (
+                                            <>
+                                                <div className="">
+                                                    <div className="flex justify-between px-4 py-3 ">
+                                                        <h1> {serviceData.serviceTitle}</h1>
+                                                        <h1> {serviceData.price}Rs</h1>
+                                                    </div>
+                                                    <div className="text-gray-500 px-4">
+                                                        <h1> {serviceData.duration}Min</h1>
+                                                    </div>
+                                                    <hr className='mt-3'></hr>
                                                 </div>
-                                                <div className="text-gray-500 px-4">
-                                                    <h1> {serviceData.duration}Min</h1>
-                                                </div>
-                                                <hr className='mt-3'></hr>
 
-                                            </div>
+                                            </>
 
-                                        </>
-
-                                    )
-                                })
-                            }
-                            <div className=' flex justify-between px-4 py-3 font-bold'>
-                                <h1>Total</h1>
-                                <h1 className=' '>${calculateTotal(services)}</h1>
+                                        )
+                                    })
+                                }
+                                <div className=' flex justify-between px-4 py-3 font-bold'>
+                                    <h1>Total</h1>
+                                    <h1 className=' '>{calculateTotal(services)}Rs</h1>
+                                </div>
                             </div>
 
                         </div>

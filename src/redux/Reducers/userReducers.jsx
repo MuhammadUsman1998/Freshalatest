@@ -6,6 +6,7 @@ import {
     SIGNUP_ADD_REQUEST,
     SIGNUP_ADD_SUCCESS,
     SIGNUP_ADD_FAIL,
+    SIGNUP_ADD_RESET,
     ORDER_ADD_REQUEST,
     ORDER_ADD_SUCCESS,
     ORDER_ADD_FAIL
@@ -16,9 +17,9 @@ export const addLoginReducers = (state = {}, action) => {
         case LOGIN_ADD_REQUEST:
             return { loading: true };
         case LOGIN_ADD_SUCCESS:
-            return { loading: false, success: true, Login: action.payload };
+            return { loading: false, success: true, Login: action.payload, error: null };
         case LOGIN_ADD_FAIL:
-            return { loading: false, error: action.payload };
+            return { loading: false, success: false, error: true };
         case LOGIN_ADD_RESET:
             return { loading: false, error: false, success: false, Login: {} }
         default:
@@ -32,9 +33,11 @@ export const addSignUpReducers = (state = {}, action) => {
         case SIGNUP_ADD_REQUEST:
             return { loading: true };
         case SIGNUP_ADD_SUCCESS:
-            return { loading: false, SignUp: action.payload };
+            return { loading: false, success: true, SignUp: action.payload, error: null };
         case SIGNUP_ADD_FAIL:
-            return { loading: false, error: action.payload };
+            return { loading: false, success: false, error: true };
+        case SIGNUP_ADD_RESET:
+            return { loading: false, error: false, success: false, SignUp: {} }
         default:
             return state;
     }
