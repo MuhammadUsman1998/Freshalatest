@@ -71,22 +71,26 @@ export const OnlineBookingDetail = ({ IdSet }) => {
                 ...prevState,
                 { _id: serviceId, checked: e.target.checked }
             ])
+            console.log(e.target.checked);
         }
         else {
             const filtered = selectedServices.filter((item) => item._id !== serviceId)
-            setSelectedCategory(filtered)
+            setSelectedServices(filtered)
         }
+
     };
 
-    const selectedServiceFromLocalStorage = localStorage.getItem('selected_services')
 
+    const selectedServiceFromLocalStorage = JSON.parse(localStorage.getItem('selected_services'))
+    console.log({ selectedServiceFromLocalStorage });
     const handleChange = (e, selected_service_data) => {
 
         if (e.target.name === 'checkbox' && arrayOfSelectedServices.some(e => e._id === selected_service_data._id)) {
             const newList = arrayOfSelectedServices.filter((item) => item !== selected_service_data)
             setArrayOfSelectedServices(newList)
             localStorage.setItem('selected_services', JSON.stringify(newList))
-        } else {
+        }
+        else {
 
             setArrayOfSelectedServices(prevState => [...prevState, selected_service_data])
 
@@ -95,6 +99,7 @@ export const OnlineBookingDetail = ({ IdSet }) => {
         setShowButton(!showButton)
 
     }
+
 
     const salonTitle = service_info?.Services?.data[0]?.salonInformation[0]?.salonTitle;
     localStorage.setItem("salonTitle", salonTitle);
@@ -112,6 +117,17 @@ export const OnlineBookingDetail = ({ IdSet }) => {
     const total = localStorage.getItem('salonTitle')
     const myTotal = localStorage.getItem('branchLocation')
 
+
+    // const checkboxes = (serviceId) => {
+    //     if (arrayOfSelectedServices.some(e => e._id === serviceId)) {
+    //         console.log('arrayOfSelectedServices.some(e => e._id === serviceId)', arrayOfSelectedServices.some(e => e._id === serviceId))
+    //         return true;
+    //     } else {
+    //         console.log('arrayOfSelectedServices.some(e => e._id === serviceId)', arrayOfSelectedServices.some(e => e._id === serviceId))
+    //         return false;
+    //     }
+
+    // }
     return (
         <>
             <div className='bg-slate-900 h-36 text-white sticky top-0'>
@@ -228,36 +244,40 @@ export const OnlineBookingDetail = ({ IdSet }) => {
                                                     <div className=' bg-white p-7 rounded-lg mb-12'>
                                                         <div
                                                             className='sm:w-full cursor-pointer divide-y-2 divide-slate-200' >
-                                                            {item?.allServices?.map((service, index) => (
-                                                                <div >
-                                                                    <label>
-                                                                        <div className='flex cursor-pointer pt-3'>
-                                                                            <input
-                                                                                name='checkbox'
-                                                                                id={index}
-                                                                                className='w-6 h-6 mt-1'
-                                                                                type='checkbox'
-                                                                                onClick={(e) => clickButton(e, service?._id)}
-                                                                                onChange={(e) => handleChange(e, service)}
-                                                                            />
+                                                            {
 
-                                                                            <p className='text-xl font-bold pl-6 '>
-                                                                                {service?.serviceTitle}
-                                                                                {index}
+                                                                item?.allServices?.map((service, index) => (
+                                                                    <div >
+                                                                        <label>
+                                                                            <div className='flex cursor-pointer pt-3'>
+                                                                                <input
+                                                                                    name='checkbox'
+                                                                                    id={index}
+                                                                                    className='w-6 h-6 mt-1'
+                                                                                    type='checkbox'
+
+                                                                                    onClick={(e) => clickButton(e, service?._id)}
+                                                                                    onChange={(e) => handleChange(e, service)}
+                                                                                // checked={arrayOfSelectedServices.includes(service._id) ? true : false}
+                                                                                />
+
+                                                                                <p className='text-xl font-bold pl-6 '>
+                                                                                    {service?.serviceTitle}
+                                                                                    {index}
+                                                                                </p>
+                                                                            </div>
+                                                                            <p className='pl-12 text-gray-400'>
+                                                                                {service?.duration}min
+                                                                            </p>
+                                                                        </label>
+                                                                        {/* <hr className='my-3 w-full '></hr> */}
+                                                                        <div className='flex justify-end lg:flex flex-wrap'>
+                                                                            <p className='-mt-12 font-medium '>
+                                                                                {service?.price}Rs
                                                                             </p>
                                                                         </div>
-                                                                        <p className='pl-12 text-gray-400'>
-                                                                            {service?.duration}min
-                                                                        </p>
-                                                                    </label>
-                                                                    {/* <hr className='my-3 w-full '></hr> */}
-                                                                    <div className='flex justify-end lg:flex flex-wrap'>
-                                                                        <p className='-mt-12 font-medium '>
-                                                                            {service?.price}Rs
-                                                                        </p>
                                                                     </div>
-                                                                </div>
-                                                            ))}
+                                                                ))}
                                                         </div>
                                                     </div>
                                                 </div>
