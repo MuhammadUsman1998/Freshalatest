@@ -75,10 +75,6 @@ export const OnlineBookingDetail = ({ IdSet }) => {
         else {
             const filtered = selectedServices.filter((item) => item._id !== serviceId)
             setSelectedCategory(filtered)
-            setSelectedServices(prevState => [
-                ...prevState,
-                { _id: serviceId, checked: e.target.checked }
-            ])
         }
     };
 
