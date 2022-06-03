@@ -17,9 +17,9 @@ export const addLoginReducers = (state = {}, action) => {
         case LOGIN_ADD_REQUEST:
             return { loading: true };
         case LOGIN_ADD_SUCCESS:
-            return { loading: false, success: true, Login: action.payload, error: null };
+            return { loading: false, Login: action.payload };
         case LOGIN_ADD_FAIL:
-            return { loading: false, success: false, error: true };
+            return { loading: false, error: action.payload };
         case LOGIN_ADD_RESET:
             return { loading: false, error: false, success: false, Login: {} }
         default:
@@ -33,9 +33,9 @@ export const addSignUpReducers = (state = {}, action) => {
         case SIGNUP_ADD_REQUEST:
             return { loading: true };
         case SIGNUP_ADD_SUCCESS:
-            return { loading: false, success: true, SignUp: action.payload, error: null };
+            return { loading: false, SignUp: action.payload };
         case SIGNUP_ADD_FAIL:
-            return { loading: false, success: false, error: true };
+            return { loading: false, error: action.payload };
         case SIGNUP_ADD_RESET:
             return { loading: false, error: false, success: false, SignUp: {} }
         default:

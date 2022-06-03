@@ -8,6 +8,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import img from "../../assets/images/service.webp";
 
+import ClipLoader from "react-spinners/ClipLoader";
+
+
 import {
     SIGNUP_ADD_RESET
 } from "../../redux/Constants/userConstants";
@@ -24,24 +27,25 @@ export const SignUpContinueComponent = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const SignUp = useSelector(state => state?.userSignUp)
-    // console.log('userSignUp', SignUp)
+    const user = useSelector(state => state?.userSignUp)
+    const SignupError = user?.SignUp?.error
+    const SignupSuccess = user?.SignUp?.success
+    // console.log('userSignUp', user?.loading)
     // console.log('SignUp error', SignUp.error)
     useEffect(() => {
-        if (SignUp.success) {
-            // console.log('sigup success')
+        if (SignupSuccess) {
             navigate("/loginContinue")
-
         }
-
-        else if (SignUp.error) {
-            toast("SignUp Failed! Please Enter Correct Info in Your Input Fields...")
+        else if (SignupError) {
+            toast(user?.SignUp?.message)
         }
         return () => {
 
             dispatch({ type: SIGNUP_ADD_RESET })
         }
-    }, [SignUp.success, SignUp.error])
+    }, [SignupSuccess, SignupError])
+
+
 
 
     const services = JSON.parse(localStorage.getItem('selected_services'))
@@ -210,13 +214,22 @@ export const SignUpContinueComponent = () => {
                             </label>
                             <div>
                                 <button
-                                    disabled={handleFormDisabled()}
+                                    disabled={handleFormDisabled() || user?.loading}
                                     style={{ cursor: handleFormDisabled() ? "not-allowed" : "pointer" }}
                                     type="submit" onClick={handleSubmit}
-                                    className=" mt-2 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm
+                                    className=" mt-2 w-full flex justify-center items-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm
                              font-medium text-white bg-slate-900 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                 >
-                                    Sign Up
+                                    <span>
+                                        {
+                                            user?.loading && <div className='flex' ><ClipLoader color='white' loading={user?.loading} size={20} /> </div>
+                                        }
+
+                                    </span>
+                                    <span>
+                                        Sign Up
+
+                                    </span>
                                 </button>
                             </div>
                             <ToastContainer />

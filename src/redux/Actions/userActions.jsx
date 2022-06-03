@@ -29,13 +29,12 @@ export const userLogin = (login) => async (dispatch) => {
         });
 
 
-        localStorage.setItem("user", JSON.stringify(data.data));
-        localStorage.setItem("accessToken", data.data.token);
+        localStorage.setItem("user", JSON.stringify(data?.data));
+        localStorage.setItem("accessToken", data?.data?.token);
     } catch (error) {
-
         dispatch({
             type: LOGIN_ADD_FAIL,
-            payload: error.response && error.response.data.error,
+            payload: error.response && error.response.data,
         });
     }
 };
@@ -53,26 +52,24 @@ export const userSignUp = (signUpData) => async (dispatch) => {
             `${SERVER_IP}/api/v1/client/create`,
             signUpData
         );
-        // console.log({ data });
-        // console.log('SIGNUP_ADD_SUCCESS')
 
-        if (!data.error) {
-            dispatch({
-                type: SIGNUP_ADD_SUCCESS,
-                payload: data,
-            });
+        // if (!data.error) {
+        dispatch({
+            type: SIGNUP_ADD_SUCCESS,
+            payload: data,
+        });
 
-        } else {
-            dispatch({
-                type: SIGNUP_ADD_FAIL,
-                payload: data
-            });
-        }
-    } catch (error) {
-        // console.log('SIGNUP_ADD_FAIL')
+        // } else {
+        // dispatch({
+        //     type: SIGNUP_ADD_FAIL,
+        //     payload: data
+        // });
+
+    }
+    catch (error) {
         dispatch({
             type: SIGNUP_ADD_FAIL,
-            payload: error.response && error.response.data.error,
+            payload: error.response && error.response.data,
         });
     }
 };

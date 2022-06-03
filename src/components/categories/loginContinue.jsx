@@ -10,6 +10,7 @@ import {
     LOGIN_ADD_RESET
 } from "../../redux/Constants/userConstants";
 import img from "../../assets/images/service.webp";
+import ClipLoader from "react-spinners/ClipLoader";
 
 
 export const LoginContinue = () => {
@@ -23,8 +24,10 @@ export const LoginContinue = () => {
     const navigate = useNavigate();
 
     const user = useSelector(state => state.userLogin);
-
-    // console.log('userLogin', user)
+    const LoginError = user?.Login?.error
+    const LoginSuccess = user?.Login?.success
+    console.log('userLogin', user?.loading)
+    // console.log('userLogin', user?.Login?.error)
 
 
     const services = JSON.parse(localStorage.getItem('selected_services'))
@@ -39,17 +42,18 @@ export const LoginContinue = () => {
 
 
     useEffect(() => {
-        if (user.success) {
+        if (LoginSuccess) {
             navigate("/loginSuccess")
+
         }
-        else if (user.error) {
-            toast("Login Failed! Check your contactnumber and password! Password atleast 6 Characters!")
+        else if (LoginError) {
+            toast(user?.Login?.message)
         }
         return () => {
 
             dispatch({ type: LOGIN_ADD_RESET })
         }
-    }, [user.success, user.error])
+    }, [LoginSuccess, LoginError])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -156,12 +160,18 @@ export const LoginContinue = () => {
                             </form>
                             <div>
                                 <button
-                                    disabled={handleFormDisabled()}
+                                    disabled={handleFormDisabled() || user?.loading}
                                     style={{ cursor: handleFormDisabled() ? "not-allowed" : "pointer" }}
                                     type="submit" onClick={handleSubmit}
                                     className=" mt-2 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-slate-900 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                 >
-                                    Log in
+                                    <span>
+                                        {
+                                            user?.loading && <div className='flex'><ClipLoader color='white' loading={user?.loading} size={20} /></div>
+                                        }
+
+                                    </span>
+                                    <span> Log in</span>
                                 </button>
                             </div>
                             <div className="mt-6">

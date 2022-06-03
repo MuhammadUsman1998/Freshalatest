@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useLayoutEffect } from "react";
+import { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { getService } from "../../redux/Actions/serviceActions";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -6,7 +6,6 @@ import img from "../../assets/images/service.webp";
 import { useDispatch, useSelector } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
 import "../../assets/styles/app.css";
-import { Link, Button, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 
 function SamplePrevArrow(props) {
@@ -28,7 +27,6 @@ var settings = {
     prevArrow: <SamplePrevArrow />
 };
 
-const useMountEffect = (fun) => useEffect(fun, []);
 
 export const OnlineBookingDetail = ({ IdSet }) => {
     const dispatch = useDispatch();
@@ -58,10 +56,8 @@ export const OnlineBookingDetail = ({ IdSet }) => {
         navigate(path);
     }
 
-    // const myRef = useRef(null);
     const selectColor = (_id) => {
         setSelectedCategory(_id);
-        // myRef.current.scrollIntoView();
     };
 
     useEffect(() => {
@@ -78,7 +74,11 @@ export const OnlineBookingDetail = ({ IdSet }) => {
         }
         else {
             const filtered = selectedServices.filter((item) => item._id !== serviceId)
-            setSelectedServices(filtered)
+            setSelectedCategory(filtered)
+            setSelectedServices(prevState => [
+                ...prevState,
+                { _id: serviceId, checked: e.target.checked }
+            ])
         }
     };
 

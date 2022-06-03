@@ -17,7 +17,7 @@ export const LoginSuccess = () => {
 
 
     const userLogin = useSelector(state => state.userLogin?.Login?.data)
-    const Data = JSON.parse(localStorage.getItem("user"))
+    const userProfileInfo = JSON.parse(localStorage.getItem("user"))
 
     const services = JSON.parse(localStorage.getItem('selected_services'))
     const salonName = localStorage.getItem('salonTitle')
@@ -121,7 +121,7 @@ export const LoginSuccess = () => {
                                 </div>
                                 <div className='text-center py-20'>
 
-                                    {Data && <h1 className='font-bold text-3xl'>Logged in as {Data?.fullName} </h1>}
+                                    {userProfileInfo && <h1 className='font-bold text-3xl'>Logged in as {userProfileInfo?.fullName} </h1>}
 
                                 </div>
                             </div>

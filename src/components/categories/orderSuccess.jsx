@@ -92,14 +92,15 @@ export const OrderSuccess = ({ IDRoute }) => {
     //     }
     //     return time.join("");
     // };
+    const info = JSON.parse(localStorage.getItem("info"))
 
 
     const handleClick = () => {
         localStorage.clear()
-        navigate(`/online-booking/details?branchId=${IDRoute?.BranchId
-            }&salonId=${IDRoute?.SalonId}`, { replace: true })
+        navigate(`/online-booking/details?branchId=${info[0].branchId}&salonId=${info[0].salonId}`)
     }
-
+    // `/online-booking/details?branchId=${IDRoute?.BranchId
+    //     }&salonId=${IDRoute?.SalonId}`, { replace: true }
     return (
         <div className='bg-gray-200 h-screen' >
             <div className="max-w-7xl mx-auto px-96 py-10 sm:px-6 lg:px-8">
