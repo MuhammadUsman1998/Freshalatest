@@ -102,73 +102,74 @@ export const OrderSuccess = ({ IDRoute }) => {
     // `/online-booking/details?branchId=${IDRoute?.BranchId
     //     }&salonId=${IDRoute?.SalonId}`, { replace: true }
     return (
-        <div className='bg-gray-200 h-screen' >
-            <div className="max-w-7xl mx-auto px-96 py-10 sm:px-6 lg:px-8">
-                <div className='bg-white p-6 shadow-md rounded-md w-full lg:w-full'>
-                    <div className=" sm:mx-auto sm:w-full sm:max-w-md  ">
-                        <div className=" py-4 px-4 rounded-lg sm:px-10  mt-3">
-                            <div className='flex justify-center  h-28  '>
-                                <img className='rounded-full border-5 border-solid border-gray-200 p-3' src={checked} />
+        <div>
+            <div className='bg-gray-200 ' >
+                <div className="max-w-7xl mx-auto px-96 py-10 sm:px-6 lg:px-8">
+                    <div className='bg-white p-6 shadow-md rounded-md w-full lg:w-full'>
+                        <div className=" sm:mx-auto sm:w-full sm:max-w-md  ">
+                            <div className=" py-4 px-4 rounded-lg sm:px-10  mt-3">
+                                <div className='flex justify-center h-28 '>
+                                    <img className='rounded-full border-5 border-solid border-gray-200 p-3 sm:rounded-full' src={checked} />
+                                </div>
+                                <div className='text-center py-10'>
+                                    <h1 className='font-bold text-2xl '>APPOINTMENT SUCCESSFULL</h1>
+                                </div>
                             </div>
-                            <div className='text-center py-10'>
-                                <h1 className='font-bold text-2xl '>APPOINTMENT SUCCESSFULL</h1>
+                        </div >
+                        <div className='border-solid border-2 border-black rounded-sm'>
+                            <div className=' p-3 flex justify-between font-bold'>
+                                <h1>Time</h1>
+                                <h1>Service</h1>
+                                <h1>Price</h1>
                             </div>
                         </div>
-                    </div >
-                    <div className='border-solid border-2 border-black rounded-sm'>
-                        <div className=' p-3 flex justify-between font-bold'>
-                            <h1>Time</h1>
-                            <h1>Service</h1>
-                            <h1>Price</h1>
-                        </div>
-                    </div>
-                    <h1 className='mt-4 font-semibold ml-3'>  {tConvert24hour(selectedTime.startTime)}</h1>
-                    <div className='-mt-5'>
-                        {
-                            services?.map((serviceData) => {
-                                return (
-                                    <div className="flex justify-between mt-1 font-semibold ml-5" >
-                                        <div></div>
-                                        <h1 className='inline ml-8'> {serviceData.serviceTitle}</h1>
-                                        <div className='mr-3'>
-                                            <h1 className='' >{serviceData?.price}Rs</h1>
+                        <h1 className='mt-4 font-semibold ml-3'>  {tConvert24hour(selectedTime.startTime)}</h1>
+                        <div className='-mt-5'>
+                            {
+                                services?.map((serviceData) => {
+                                    return (
+                                        <div className="flex justify-between mt-1 font-semibold ml-5" >
+                                            <div></div>
+                                            <h1 className='inline ml-8'> {serviceData.serviceTitle}</h1>
+                                            <div className='mr-3'>
+                                                <h1 className='' >{serviceData?.price}Rs</h1>
+                                            </div>
                                         </div>
-                                    </div>
-                                )
-                            })
-                        }
-                    </div>
+                                    )
+                                })
+                            }
+                        </div>
 
 
-                    <hr className='mt-4 w-full'></hr>
-                    <div className='font-bold px-1'>
-                        <h1 className='pt-3 text-gray-500'>Payment Details</h1>
-                    </div>
-                    <div className=' flex justify-between px-1 py-1 font-bold'>
-                        <h1>Total Payment</h1>
-                        <h1 className=' '>{calculateTotal(arrayOfSelectedServices)}Rs</h1>
+                        <hr className='mt-4 w-full'></hr>
+                        <div className='font-bold px-1'>
+                            <h1 className='pt-3 text-gray-500'>Payment Details</h1>
+                        </div>
+                        <div className=' flex justify-between px-1 py-1 font-bold'>
+                            <h1>Total Payment</h1>
+                            <h1 className=' '>{calculateTotal(arrayOfSelectedServices)}Rs</h1>
+                        </div>
                     </div>
                 </div>
 
             </div>
 
-            <div className=' bg-white py-2 mt-4  sticky bottom-0'>
+            <div className=' bg-white py-2 mt-80 sticky bottom-0'>
                 <div className='flex justify-end '>
 
                     <button
                         onClick={handleClick}
-                        className='bg-slate-900 w-60 h-12 mr-16  rounded-lg sticky 
-                     text-white  font-bold'
+                        className='bg-slate-900 w-60 h-12 mr-16  rounded-lg 
+                                text-white  font-bold'
                     >
                         Add Another Appointment
                     </button>
 
                 </div>
             </div>
-
-
-
         </div>
+
+
     )
 }
 

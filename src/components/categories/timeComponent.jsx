@@ -40,7 +40,7 @@ export const TimeComponent = () => {
     var a = moment();
     var b = moment(a).add(2, 'month').format('MM:DD:YYYY');
     while (a.format('MM:DD:YYYY') < b) {
-        dateArray.push(a.format("MMMM DD dddd"))
+        dateArray.push(a.format("MMMM DD dddd").split("").splice(0, 11).join(""))
         a.add(1, 'day');
     }
 
@@ -84,7 +84,7 @@ export const TimeComponent = () => {
 
     return (
         <div className="">
-            <div className='bg-slate-900 h-36 sticky top-0'>
+            <div className='bg-slate-900 h-36 '>
                 <div className="max-w-7xl mx-auto px-40 sm:px-16 lg:px-32 ">
                     <div className=' p-4'>
                         <div className='flex '>
@@ -103,7 +103,7 @@ export const TimeComponent = () => {
 
             <div className='bg-gray-200 h-screen '>
                 <div className="max-w-7xl mx-auto px-48 sm:px-16 lg:px-32 ">
-                    <div className='flex justify-between sticky'>
+                    <div className='flex justify-between sticky -inset-96'>
                         <div className=" bg-white  w-4/6 shadow-md  xl:w-full">
                             <Slider className='' focusOnSelect={true}  {...settings}>
                                 {
@@ -112,8 +112,8 @@ export const TimeComponent = () => {
                                             <div className='flex justify-center'>
                                                 <div onClick={(e) => clickDate(e, i, date)}
                                                     className={`flex justify-center border-solid border-black border-2 rounded-lg hover:bg-gray-300 
-                                                hover:text-black px-3 h-16 w-24 text-center pt-2 font-semibold cursor-pointer lg:w-24
-                                                 md:w-16 md:h-18 md:text-sm  ${selectedCategory ===
+                                                hover:text-black px-3 h-20 w-24 text-center pt-3 font-semibold cursor-pointer lg:w-20
+                                                 md:w-16 md:h-18 md:text-sm sm:w-12 sm:h-20 sm:text-ellipsis  ${selectedCategory ===
                                                         i
                                                         && "text-white bg-blue-600"
 

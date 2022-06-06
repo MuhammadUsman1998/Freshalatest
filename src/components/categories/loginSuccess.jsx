@@ -115,7 +115,7 @@ export const LoginSuccess = () => {
                 <div className="max-w-7xl mx-auto px-44 sm:px-6 lg:px-8">
                     <div className=" flex justify-between  sm:px-6 lg:px-8">
                         <div className="w-2/3  sm:mx-auto sm:w-full sm:max-w-md  xl:w-full">
-                            <div className=" bg-white h-96 py-8 px-4 shadow rounded-lg sm:px-10 w-full ">
+                            <div className=" bg-white h-full py-8 px-4 shadow rounded-lg sm:px-10 w-full ">
                                 <div className='flex justify-center  h-28  '>
                                     <img className='rounded-full border-5 border-solid border-gray-200 p-3' src={checked} />
                                 </div>

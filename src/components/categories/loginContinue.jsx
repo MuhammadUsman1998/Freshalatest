@@ -2,8 +2,6 @@ import { Component, useEffect, useState } from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from '../../redux/Actions/userActions';
-import service from "../../assets/images/service.webp"
-// import toast, { Toaster } from 'react-hot-toast';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
@@ -27,7 +25,6 @@ export const LoginContinue = () => {
     const LoginError = user?.Login?.error
     const LoginSuccess = user?.Login?.success
     console.log('userLogin', user?.loading)
-    // console.log('userLogin', user?.Login?.error)
 
 
     const services = JSON.parse(localStorage.getItem('selected_services'))
@@ -38,7 +35,6 @@ export const LoginContinue = () => {
     const beginTime = JSON.parse(localStorage.getItem('selected_time'))
     const info = JSON.parse(localStorage.getItem('info'))
 
-    // console.log('user error', user.error)
 
 
     useEffect(() => {
@@ -64,7 +60,6 @@ export const LoginContinue = () => {
 
         dispatch(userLogin(obj));
 
-        // navigate("/loginSuccess")
     }
 
     const handleFormDisabled = () => {
@@ -239,19 +234,19 @@ export const LoginContinue = () => {
                         </div>
                     </div>
                 </div>
+            </div>
 
 
-                <div className=' bg-white py-2 mt-56 sticky bottom-0 '>
-                    <div className='flex justify-end '>
-                        <button
-                            style={{ cursor: disabledButton ? "not-allowed" : "pointer" }}
-                            disabled={disabledButton}
-                            className='bg-slate-400  w-32 h-12 mr-16  rounded-lg 
+            <div className=' bg-white py-2  sticky bottom-0 '>
+                <div className='flex justify-end '>
+                    <button
+                        style={{ cursor: disabledButton ? "not-allowed" : "pointer" }}
+                        disabled={disabledButton}
+                        className='bg-slate-400  w-32 h-12 mr-16  rounded-lg 
                      text-white  font-bold'
-                        >
-                            Book
-                        </button>
-                    </div>
+                    >
+                        Book
+                    </button>
                 </div>
             </div>
         </div>

@@ -35,8 +35,6 @@ export const OnlineBookingDetail = ({ IdSet }) => {
     const [selectedServices, setSelectedServices] = useState([])
     const [showButton, setShowButton] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState("");
-    const [service, setService] = useState("")
-    const [data, setData] = useState([])
     const [arrayOfSelectedServices, setArrayOfSelectedServices] = useState(JSON.parse(localStorage.getItem('selected_services')) || [])
     const userInfo = JSON.parse(localStorage.getItem("userData"));
 
@@ -71,7 +69,6 @@ export const OnlineBookingDetail = ({ IdSet }) => {
                 ...prevState,
                 { _id: serviceId, checked: e.target.checked }
             ])
-            console.log(e.target.checked);
         }
         else {
             const filtered = selectedServices.filter((item) => item._id !== serviceId)
@@ -83,6 +80,7 @@ export const OnlineBookingDetail = ({ IdSet }) => {
 
     const selectedServiceFromLocalStorage = JSON.parse(localStorage.getItem('selected_services'))
     console.log({ selectedServiceFromLocalStorage });
+
     const handleChange = (e, selected_service_data) => {
 
         if (e.target.name === 'checkbox' && arrayOfSelectedServices.some(e => e._id === selected_service_data._id)) {
@@ -166,10 +164,10 @@ export const OnlineBookingDetail = ({ IdSet }) => {
                                                     <a href={`#${cat1?._id}`}
 
                                                         onClick={(_id) => selectColor(cat1?._id)}
-                                                        className={`truncate cursor-pointer hover:no-underline hover:text-black  
+                                                        className={`truncate cursor-pointer hover:no-underline hover:text-black sm:text-sm sm:truncate sm:px-1 sm:1 md:truncate md:px-4 
                                                         ${selectedCategory ===
                                                                 cat1?._id
-                                                                ? "text-white bg-gray-900 px-10 py-2 rounded-full"
+                                                                ? "text-white bg-gray-900 px-10 py-2 rounded-full truncate"
                                                                 : "text-black"
                                                             }`}
                                                     >
@@ -258,12 +256,12 @@ export const OnlineBookingDetail = ({ IdSet }) => {
 
                                                                                     onClick={(e) => clickButton(e, service?._id)}
                                                                                     onChange={(e) => handleChange(e, service)}
-                                                                                // checked={arrayOfSelectedServices.includes(service._id) ? true : false}
+                                                                                // checked={arrayOfSelectedServices.includes(service?._id) ? true : false}
                                                                                 />
 
                                                                                 <p className='text-xl font-bold pl-6 '>
                                                                                     {service?.serviceTitle}
-                                                                                    {index}
+
                                                                                 </p>
                                                                             </div>
                                                                             <p className='pl-12 text-gray-400'>

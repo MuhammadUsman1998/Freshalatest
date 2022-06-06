@@ -3,14 +3,10 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { userSignUp } from '../../redux/Actions/userActions';
-import service from "../../assets/images/service.webp"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import img from "../../assets/images/service.webp";
-
 import ClipLoader from "react-spinners/ClipLoader";
-
-
 import {
     SIGNUP_ADD_RESET
 } from "../../redux/Constants/userConstants";
@@ -30,8 +26,6 @@ export const SignUpContinueComponent = () => {
     const user = useSelector(state => state?.userSignUp)
     const SignupError = user?.SignUp?.error
     const SignupSuccess = user?.SignUp?.success
-    // console.log('userSignUp', user?.loading)
-    // console.log('SignUp error', SignUp.error)
     useEffect(() => {
         if (SignupSuccess) {
             navigate("/loginContinue")
@@ -69,14 +63,7 @@ export const SignUpContinueComponent = () => {
             salonId: userData[0].salonId,
             branchId: userData[0].branchId,
         }
-        // toast("SignUp Successfull!")
         dispatch(userSignUp(obj));
-        // navigate("/loginContinue", {
-        //     state
-        //         : {
-        //         selectedTime, selectedDate, salonName, salonLocation, services
-        //     }
-        // })
     }
 
     const handleFormDisabled = () => {
@@ -100,7 +87,7 @@ export const SignUpContinueComponent = () => {
 
     return (
         <div>
-            <div className='bg-slate-900 h-36 sticky'>
+            <div className='bg-slate-900 h-36 '>
                 <div className="max-w-7xl mx-auto px-28 sm:px-6 lg:px-8">
                     <div className=' p-4 '>
                         <div className='flex'>
@@ -297,7 +284,7 @@ export const SignUpContinueComponent = () => {
                 </div>
 
 
-                <div className=' bg-white py-2 mt-4  sticky bottom-0'>
+                <div className=' bg-white py-2 mt-60 sticky bottom-0'>
                     <div className='flex justify-end '>
 
                         <button
