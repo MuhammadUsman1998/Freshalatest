@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userSignUp } from '../../redux/Actions/userActions';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import img from "../../assets/images/service.webp";
 import ClipLoader from "react-spinners/ClipLoader";
 import {
     SIGNUP_ADD_RESET
@@ -45,7 +44,7 @@ export const SignUpContinueComponent = () => {
     const services = JSON.parse(localStorage.getItem('selected_services'))
     const salonName = localStorage.getItem('salonTitle')
     const salonLocation = localStorage.getItem('branchLocation')
-    const selectedDate = localStorage.getItem('selected_date')
+    const selectedDate = JSON.parse(localStorage.getItem('selected_date'))
     const selectedTime = localStorage.getItem('selected_time')
     const BeginTime = JSON.parse(localStorage.getItem('selected_time'))
 
@@ -83,30 +82,31 @@ export const SignUpContinueComponent = () => {
     }
     Object.assign(services[0], JSON.parse(selectedTime));
 
-
+    const image = "https://fresha-ag-staging.s3.eu-central-1.amazonaws.com/0a934130-e644-11ec-8fdc-1bab29ade56f-download%20%281%29.jpg";
+    localStorage.setItem("image", image)
+    localStorage.getItem("image", image)
 
     return (
         <div>
             <div className='bg-slate-900 h-36 '>
-                <div className="max-w-7xl mx-auto px-28 sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto px-36 sm:px-0 lg:px-8">
                     <div className=' p-4 '>
                         <div className='flex'>
-                            <div className='pr-4'>
+                            <div className='pr-0'>
                                 <Link to="/timeComponent" className="hover:text-gray-600 text-white fa-solid fa-arrow-left float-left pr-2" ></Link>
                             </div>
-                            <p className='text-white '>Step 3/3 </p>
+                            <p className='text-white sm:pr-4 '>Step 3/3 </p>
                         </div>
-                        <h1 className="text-4xl font-bold text-white pl-10 ">SignUp To Continue</h1>
+                        <h1 className="text-4xl font-bold text-white pl-3 sm:pl-4 ">SignUp To Continue</h1>
                     </div>
                 </div>
             </div>
 
             <div className='bg-gray-200'>
-                <div className="max-w-7xl mx-auto px-44 sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto px-44 sm:px-0 md:px-0 lg:px-0 ">
                     <div className=" flex">
-                        {/* <div className="  sm:mx-auto sm:w-full sm:max-w-md  mb-12 w-2/3 xl:w-full "> */}
                         <div className="bg-white py-8 px-4 shadow-md rounded-lg  w-3/4 xl:w-full ">
-                            <form className="space-y-4 grid grid-cols-2 gap-y-6 gap-x-6 sm:grid-cols-2   " action="#"
+                            <form className="space-y-4 grid grid-cols-2 gap-y-6 gap-x-6 sm:grid-cols-2" action="#"
                             >
                                 <div>
                                     <label htmlFor="fullName" className="block text-sm font-medium text-gray-700  mt-3">
@@ -231,14 +231,13 @@ export const SignUpContinueComponent = () => {
                                 <Link to="/loginContinue" className="flex justify-center text-blue">Sign in now</Link>
                             </div>
                         </div>
-                        {/* </div> */}
 
                         <div className=' ml-4'>
                             <div className=" bg-white sticky  shadow-lg rounded-lg w-80  lg:hidden  xl:full ">
                                 <div className='  flex justify-center rounded-lg shadow-fuchsia-100   '>
                                     <img
-                                        className=' rounded-lg shadow-md border-4 -mt-12  border-neutral-100  '
-                                        src={img}
+                                        className=' rounded-lg shadow-md border-4 -mt-12 w-20 h-20 border-neutral-100  '
+                                        src={image}
                                     />
                                 </div>
                                 <div className='text-center font-bold pt-3'>
@@ -290,7 +289,7 @@ export const SignUpContinueComponent = () => {
                         <button
                             style={{ cursor: disabledButton ? "not-allowed" : "pointer" }}
                             disabled={disabledButton}
-                            className='bg-slate-500  w-32 h-12 mr-16  rounded-lg sticky 
+                            className='bg-slate-500  w-32 h-12 mr-10  rounded-lg sticky 
                      text-white  font-bold' >
                             Book
                         </button>

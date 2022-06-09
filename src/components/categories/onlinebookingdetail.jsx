@@ -2,18 +2,16 @@ import { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { getService } from "../../redux/Actions/serviceActions";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import img from "../../assets/images/service.webp";
 import { useDispatch, useSelector } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
 import "../../assets/styles/app.css";
-
 
 function SamplePrevArrow(props) {
     const { className, style, onClick } = props;
     return (
         <div
             className={className}
-            style={{ ...style, backgroundColor: "black", borderRadius: "50%" }}
+            style={{ ...style, backgroundColor: "gray", borderRadius: "50%" }}
             onClick={onClick}
         />
     );
@@ -22,7 +20,6 @@ function SamplePrevArrow(props) {
 var settings = {
     infinite: true,
     speed: 500,
-
     nextArrow: <SamplePrevArrow />,
     prevArrow: <SamplePrevArrow />
 };
@@ -32,10 +29,16 @@ export const OnlineBookingDetail = ({ IdSet }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [search, setSearch] = useSearchParams();
-    const [selectedServices, setSelectedServices] = useState([])
-    const [showButton, setShowButton] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState("");
-    const [arrayOfSelectedServices, setArrayOfSelectedServices] = useState(JSON.parse(localStorage.getItem('selected_services')) || [])
+    const [arrayOfSelectedServices, setArrayOfSelectedServices] = useState(() => {
+        const items = localStorage.getItem('selected_services')
+        if (items) {
+            return JSON.parse(items)
+        } else {
+            return []
+        }
+    })
+
     const userInfo = JSON.parse(localStorage.getItem("userData"));
 
     const service_info = useSelector((state) => state.getService);
@@ -47,6 +50,8 @@ export const OnlineBookingDetail = ({ IdSet }) => {
     const userId = search.get("userId");
     var value = [{ branchId: branchId, salonId: salonId }]
     localStorage.setItem("info", JSON.stringify(value));
+
+
 
     const routeChange = () => {
         IdSet({ BranchId: branchId, SalonId: salonId })
@@ -63,46 +68,30 @@ export const OnlineBookingDetail = ({ IdSet }) => {
     }, []);
 
 
-    const clickButton = (e, serviceId) => {
-        if (e.target.checked) {
-            setSelectedServices(prevState => [
-                ...prevState,
-                { _id: serviceId, checked: e.target.checked }
-            ])
-        }
-        else {
-            const filtered = selectedServices.filter((item) => item._id !== serviceId)
-            setSelectedServices(filtered)
-        }
+    useEffect(() => {
+        localStorage.setItem('selected_services', JSON.stringify(arrayOfSelectedServices))
+    }, [arrayOfSelectedServices])
 
+    const setCheckedList = (e, value) => {
+        if (e.target.name === "service" && arrayOfSelectedServices.some(e => e._id === value._id)) {
+            const newList = arrayOfSelectedServices.filter((item) => item._id !== value._id);
+            setArrayOfSelectedServices([...newList])
+
+
+        }
+        else if (e.target.name === "service" && !arrayOfSelectedServices.some(e => e._id === value._id)) {
+            setArrayOfSelectedServices([...arrayOfSelectedServices, value]);
+        }
     };
-
-
-    const selectedServiceFromLocalStorage = JSON.parse(localStorage.getItem('selected_services'))
-    console.log({ selectedServiceFromLocalStorage });
-
-    const handleChange = (e, selected_service_data) => {
-
-        if (e.target.name === 'checkbox' && arrayOfSelectedServices.some(e => e._id === selected_service_data._id)) {
-            const newList = arrayOfSelectedServices.filter((item) => item !== selected_service_data)
-            setArrayOfSelectedServices(newList)
-            localStorage.setItem('selected_services', JSON.stringify(newList))
-        }
-        else {
-
-            setArrayOfSelectedServices(prevState => [...prevState, selected_service_data])
-
-            localStorage.setItem('selected_services', JSON.stringify([...arrayOfSelectedServices, selected_service_data]))
-        }
-        setShowButton(!showButton)
-
-    }
-
 
     const salonTitle = service_info?.Services?.data[0]?.salonInformation[0]?.salonTitle;
     localStorage.setItem("salonTitle", salonTitle);
     const branchLocation = service_info?.Services?.data[0]?.branchLocation;
     localStorage.setItem("branchLocation", branchLocation);
+
+    const image = service_info?.Services?.data[0].image;
+    localStorage.setItem("image", image)
+
 
     const calculateTotal = (array) => {
         if (!array.length) {
@@ -115,21 +104,12 @@ export const OnlineBookingDetail = ({ IdSet }) => {
     const total = localStorage.getItem('salonTitle')
     const myTotal = localStorage.getItem('branchLocation')
 
+    localStorage.getItem("image")
 
-    // const checkboxes = (serviceId) => {
-    //     if (arrayOfSelectedServices.some(e => e._id === serviceId)) {
-    //         console.log('arrayOfSelectedServices.some(e => e._id === serviceId)', arrayOfSelectedServices.some(e => e._id === serviceId))
-    //         return true;
-    //     } else {
-    //         console.log('arrayOfSelectedServices.some(e => e._id === serviceId)', arrayOfSelectedServices.some(e => e._id === serviceId))
-    //         return false;
-    //     }
-
-    // }
     return (
         <>
             <div className='bg-slate-900 h-36 text-white sticky top-0'>
-                <div className='max-w-7xl mx-auto px-40 sm:px-6 lg:px-24'>
+                <div className='max-w-7xl mx-auto px-40 sm:px-0 lg:px-24'>
                     <div className='flex flex-col p-4'>
                         <div className='flex'>
                             <p className='text-white '>Step 1/3 </p>
@@ -152,17 +132,17 @@ export const OnlineBookingDetail = ({ IdSet }) => {
 
                     <div className='bg-gray-200'>
                         <div className="sticky top-36">
-                            <div className='max-w-7xl mx-auto px-44 sm:px-6 lg:px-8 '>
+                            <div className='max-w-7xl mx-auto px-44 sm:px-0 lg:px-0 '>
                                 <div className='bg-white w-2/3  shadow-lg rounded-lg text-black  lg:w-full '>
                                     <Slider className='py-4 px-1 text-center' focusOnSelect={true} slidesToShow={service_data?.length <= 2 ? 2 : 3}
                                         slidesToScroll={service_data?.length <= 2 ? 2 : 3}  {...settings}>
 
-                                        {service_data?.map((cat1) => {
+                                        {service_data?.map((cat1, index) => {
 
                                             return (
                                                 <div className='   py-2 rounded-full   hover:py-2'>
                                                     <a href={`#${cat1?._id}`}
-
+                                                        key={index}
                                                         onClick={(_id) => selectColor(cat1?._id)}
                                                         className={`truncate cursor-pointer hover:no-underline hover:text-black sm:text-sm sm:truncate sm:px-1 sm:1 md:truncate md:px-4 
                                                         ${selectedCategory ===
@@ -189,8 +169,8 @@ export const OnlineBookingDetail = ({ IdSet }) => {
                             <div className="bg-white  shadow-lg rounded-lg text-black lg:hidden xl:ml-20 xl:w-full  ">
                                 <div className='flex justify-center rounded-lg shadow-fuchsia-100   '>
                                     <img
-                                        className=' rounded-lg shadow-md border-4 -mt-12  border-neutral-100  '
-                                        src={img}
+                                        className=' rounded-lg shadow-md border-4 -mt-12 w-20 h-20 border-neutral-100  '
+                                        src={image}
                                     />
                                 </div>
                                 <h1 className='text-center font-bold pt-2'>{total}</h1>
@@ -203,6 +183,7 @@ export const OnlineBookingDetail = ({ IdSet }) => {
 
                                                 <div>
                                                     <div className="flex justify-between p-4 ">
+
                                                         <h1> {serviceData.serviceTitle}</h1>
                                                         <h1> {serviceData.price}Rs</h1>
                                                     </div>
@@ -226,14 +207,14 @@ export const OnlineBookingDetail = ({ IdSet }) => {
 
 
 
-                        <div className='max-w-7xl mx-auto px-44 sm:px-6 lg:px-8 '>
+                        <div className='max-w-7xl mx-auto px-44 sm:px-0 lg:px-0 '>
                             <div>
                                 {service_data?.map((item) => (
                                     <div className=' lg:flex flex-wrap mt-6' >
                                         {item?.allServices?.length ? (
                                             <>
                                                 <div className="flex"  >
-                                                    <h1 className='text-2xl  font-bold pt-2' name="Service One" id={item._id}>
+                                                    <h1 className='text-2xl  font-bold pt-2 px-8' name="Service One" id={item._id}>
                                                         {item.categoryTitle}
 
                                                     </h1>
@@ -249,14 +230,15 @@ export const OnlineBookingDetail = ({ IdSet }) => {
                                                                         <label>
                                                                             <div className='flex cursor-pointer pt-3'>
                                                                                 <input
-                                                                                    name='checkbox'
+                                                                                    name='service'
                                                                                     id={index}
                                                                                     className='w-6 h-6 mt-1'
                                                                                     type='checkbox'
 
-                                                                                    onClick={(e) => clickButton(e, service?._id)}
-                                                                                    onChange={(e) => handleChange(e, service)}
-                                                                                // checked={arrayOfSelectedServices.includes(service?._id) ? true : false}
+
+                                                                                    onChange={(e) => setCheckedList(e, service)}
+
+                                                                                    checked={arrayOfSelectedServices.some(e => e._id === service?._id) ? true : false}
                                                                                 />
 
                                                                                 <p className='text-xl font-bold pl-6 '>
@@ -290,17 +272,18 @@ export const OnlineBookingDetail = ({ IdSet }) => {
                     </div>
 
 
-                    {selectedServices.some((item) => item.checked === true) &&
+                    {arrayOfSelectedServices.length ?
                         <div className=' bg-white py-2 mt-4  sticky bottom-0'>
                             <div className='flex justify-end '>
                                 <button
                                     onClick={routeChange}
-                                    className='bg-slate-900 w-32 h-12 mr-16  rounded-lg  text-white  font-bold cursor-pointer'
+                                    className='bg-slate-900 w-32 h-12 mr-10  rounded-lg  text-white  font-bold cursor-pointer'
                                 >
                                     Next
                                 </button>
                             </div>
-                        </div>}
+                        </div> : ""}
+
                 </>
             )
             }

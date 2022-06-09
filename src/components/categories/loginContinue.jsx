@@ -1,4 +1,4 @@
-import { Component, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from '../../redux/Actions/userActions';
@@ -7,7 +7,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import {
     LOGIN_ADD_RESET
 } from "../../redux/Constants/userConstants";
-import img from "../../assets/images/service.webp";
 import ClipLoader from "react-spinners/ClipLoader";
 
 
@@ -24,13 +23,12 @@ export const LoginContinue = () => {
     const user = useSelector(state => state.userLogin);
     const LoginError = user?.Login?.error
     const LoginSuccess = user?.Login?.success
-    console.log('userLogin', user?.loading)
 
 
     const services = JSON.parse(localStorage.getItem('selected_services'))
     const salonName = localStorage.getItem('salonTitle')
     const salonLocation = localStorage.getItem('branchLocation')
-    const selectedDate = localStorage.getItem('selected_date')
+    const selectedDate = JSON.parse(localStorage.getItem('selected_date'))
     const selectedTime = localStorage.getItem('selected_time')
     const beginTime = JSON.parse(localStorage.getItem('selected_time'))
     const info = JSON.parse(localStorage.getItem('info'))
@@ -79,34 +77,35 @@ export const LoginContinue = () => {
         }
     }
 
+    const image = "https://fresha-ag-staging.s3.eu-central-1.amazonaws.com/0a934130-e644-11ec-8fdc-1bab29ade56f-download%20%281%29.jpg";
+    localStorage.setItem("image", image)
+    localStorage.getItem("image", image)
+
     return (
 
         <div>
             <ToastContainer />
-
-
             <div className='bg-slate-900 h-36'>
-                <div className="max-w-7xl mx-auto px-28 sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto px-32 sm:px-0 lg:px-8">
                     <div className=' p-4'>
                         <div className='flex justify-between '>
                             <div className='flex'>
-                                <div className=''>
-                                    <Link to="/signupcontinueComponent" className="hover:text-gray-600 text-white fa-solid fa-arrow-left float-left pr-8" ></Link>
+                                <div className='pr-0'>
+                                    <Link to="/signupcontinueComponent" className="hover:text-gray-600 text-white fa-solid fa-arrow-left float-left pr-2.5" ></Link>
                                 </div>
                                 <p className='text-white '>Step 3/3 </p>
                             </div>
                         </div>
-                        <h1 className="text-4xl font-bold text-white pl-11">Login To Continue</h1>
+                        <h1 className="text-4xl font-bold text-white pl-4 ">Login To Continue</h1>
                     </div>
                 </div>
             </div >
 
 
             <div className='bg-gray-200 h-screen'>
-                <div className="max-w-7xl mx-auto px-44 sm:px-6 lg:px-8">
-                    <div className=" flex justify-between  sm:px-6 lg:px-8">
-                        {/* <div className="w-2/3  sm:mx-auto sm:w-full sm:max-w-md  xl:w-full"> */}
-                        <div className=" bg-white py-8 px-4 shadow rounded-lg sm:px-10 w-full ">
+                <div className="max-w-7xl mx-auto px-44 sm:px-0  lg:px-0">
+                    <div className=" flex justify-between  sm:px-0 lg:px-0">
+                        <div className=" bg-white py-8 px-4 shadow rounded-lg sm:px-0 w-full ">
 
                             <form className="space-y-2 " action="#  ">
                                 <div>
@@ -181,14 +180,13 @@ export const LoginContinue = () => {
 
                             </div>
                         </div>
-                        {/* </div > */}
 
                         <div className='ml-4'>
                             <div className=" bg-white  w-80 shadow-lg rounded-lg sm:mt-5 lg:hidden mr-3 xl:ml-24 xl:w-3/4 ">
                                 <div className='  flex justify-center rounded-lg shadow-fuchsia-100'>
                                     <img
-                                        className=' rounded-lg shadow-md border-4 -mt-12  border-neutral-100'
-                                        src={img}
+                                        className=' rounded-lg shadow-md border-4 -mt-12 w-20 h-20 border-neutral-100  '
+                                        src={image}
                                     />
                                 </div>
                                 <div className='text-center font-bold pt-3'>
@@ -242,7 +240,7 @@ export const LoginContinue = () => {
                     <button
                         style={{ cursor: disabledButton ? "not-allowed" : "pointer" }}
                         disabled={disabledButton}
-                        className='bg-slate-400  w-32 h-12 mr-16  rounded-lg 
+                        className='bg-slate-400  w-32 h-12 mr-10  rounded-lg 
                      text-white  font-bold'
                     >
                         Book

@@ -1,19 +1,13 @@
 import React from 'react'
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { orderCreation } from '../../redux/Actions/userActions';
-import service from "../../assets/images/service.webp"
 import checked from "../../assets/images/check.png"
 import moment from 'moment';
-import img from "../../assets/images/service.webp";
 
 export const LoginSuccess = () => {
 
     const dispatch = useDispatch()
-    // const navigate = useNavigate();
-
-
 
 
     const userLogin = useSelector(state => state.userLogin?.Login?.data)
@@ -25,7 +19,7 @@ export const LoginSuccess = () => {
     const selectedTime = localStorage.getItem('selected_time')
     const BeginTime = JSON.parse(localStorage.getItem('selected_time'))
 
-    const selectedDate = localStorage.getItem('selected_date')
+    const selectedDate = JSON.parse(localStorage.getItem('selected_date'))
 
 
     const endTimeCalculate = (startTime, endTime) => {
@@ -62,7 +56,6 @@ export const LoginSuccess = () => {
         obj["actualPrice"] = item?.price;
         servicePriceSum += parseInt(item?.price);
         AllServices.push(obj);
-        // setSumData(servicePriceSum);
     });
 
     const calculateTotal = (array) => {
@@ -91,35 +84,39 @@ export const LoginSuccess = () => {
 
     }
 
+    const image = "https://fresha-ag-staging.s3.eu-central-1.amazonaws.com/0a934130-e644-11ec-8fdc-1bab29ade56f-download%20%281%29.jpg";
+    localStorage.setItem("image", image)
+    localStorage.getItem("image", image)
+
     return (
 
         <div>
             <div className='bg-slate-900 h-36'>
-                <div className="max-w-7xl mx-auto px-28 sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto px-32 sm:px-0 lg:px-8">
                     <div className=' p-4'>
                         <div className='flex justify-between '>
                             <div className='flex'>
                                 <div className='pl-1'>
-                                    <Link to="/loginContinue" className="hover:text-gray-600 text-white fa-solid fa-arrow-left float-left pr-4" ></Link>
+                                    <Link to="/loginContinue" className="hover:text-gray-600 text-white fa-solid fa-arrow-left float-left pr-2" ></Link>
                                 </div>
                                 <p className='text-white '>Step 3/3 </p>
                             </div>
                         </div>
-                        <h1 className="text-4xl font-bold text-white pl-10">Login Success</h1>
+                        <h1 className="text-4xl font-bold text-white pl-4">Login Success</h1>
                     </div>
                 </div>
             </div >
 
 
             <div className='bg-gray-200 h-screen'>
-                <div className="max-w-7xl mx-auto px-44 sm:px-6 lg:px-8">
-                    <div className=" flex justify-between  sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto px-44 sm:px-0  lg:px-0">
+                    <div className=" flex justify-between sm:px-0 lg:px-0">
                         <div className="w-2/3  sm:mx-auto sm:w-full sm:max-w-md  xl:w-full">
-                            <div className=" bg-white h-full py-8 px-4 shadow rounded-lg sm:px-10 w-full ">
-                                <div className='flex justify-center  h-28  '>
+                            <div className=" bg-white h-full py-8 px-0 shadow rounded-lg sm:px-10 w-full ">
+                                <div className='flex justify-center  h-28 '>
                                     <img className='rounded-full border-5 border-solid border-gray-200 p-3' src={checked} />
                                 </div>
-                                <div className='text-center py-20'>
+                                <div className='text-center py-20 sm:py-12 '>
 
                                     {userProfileInfo && <h1 className='font-bold text-3xl'>Logged in as {userProfileInfo?.fullName} </h1>}
 
@@ -131,8 +128,8 @@ export const LoginSuccess = () => {
                             <div className=" bg-white  w-80 shadow-lg rounded-lg sm:mt-5 lg:hidden mr-3 xl:ml-24 xl:w-3/4 ">
                                 <div className='  flex justify-center rounded-lg shadow-fuchsia-100   '>
                                     <img
-                                        className=' rounded-lg shadow-md border-4 -mt-12  border-neutral-100  '
-                                        src={img}
+                                        className=' rounded-lg shadow-md border-4 -mt-12 w-20 h-20 border-neutral-100  '
+                                        src={image}
                                     />
                                 </div>
                                 <div className='text-center font-bold pt-3'>
@@ -187,8 +184,8 @@ export const LoginSuccess = () => {
 
                         <button
                             onClick={handleClick}
-                            className='bg-slate-900 w-32 h-12 mr-16  rounded-lg sticky 
-                     text-white  font-bold'
+                            className='bg-slate-900 w-32 h-12 mr-10  rounded-lg sticky 
+                     text-white  font-bold '
                         >
                             Book
                         </button>

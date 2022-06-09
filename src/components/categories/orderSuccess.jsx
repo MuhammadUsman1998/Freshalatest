@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import checked from "../../assets/images/check.png"
-import { useNavigate, useLocation, useHistory } from 'react-router-dom'
-import { Redirect } from "react-router"
+import { useNavigate } from 'react-router-dom'
 
 
 
@@ -9,45 +8,11 @@ import { Redirect } from "react-router"
 export const OrderSuccess = ({ IDRoute }) => {
     const [arrayOfSelectedServices, setArrayOfSelectedServices] = useState(JSON.parse(localStorage.getItem('selected_services')) || [])
     const navigate = useNavigate()
-    // const history = useHistory()
     const services = JSON.parse(localStorage.getItem('selected_services'))
-    const salonName = localStorage.getItem('salonTitle')
-    const salonLocation = localStorage.getItem('branchLocation')
     const selectedTime = JSON.parse(localStorage.getItem('selected_time'))
-    const selectedDate = localStorage.getItem('selected_date')
-    console.log(IDRoute)
-    // const { state } = useLocation(); 
-    // const { branchId, salonId } = state;
-    // const info = JSON.parse(localStorage.getItem('info'))
-
-
-    // useEffect(() => {
-    //     return () => {
-    //         localStorage.clear()
-    //     }
-    // }, [])
-    // const info = JSON.parse(localStorage.getItem("info"))
-
-    // window.addEventListener('beforeunload', function (event) {
-    //     return navigate(`/online-booking/details?branchId=${IDRoute?.BranchId
-    //         }&salonId=${IDRoute?.SalonId}`, { replace: true })
-    // })
-
-    // useEffect(() => {
-    //     // let currentPath = window.location.pathname;
-    //     // navigate('/online-booking/details');
-    //     // setTimeout(() => {
-    //     //     history.replace(currentPath)
-    //     // }, 0)
-    //     debugger
-    //     navigate(`/online-booking/details?branchId=${IDRoute?.BranchId
-    //         }&salonId=${IDRoute?.SalonId}`, { replace: true })
-    // }
-    //     , [])
-
-    // onUnload() {
-    //     window.location.href = "/online-booking/details";
-    // }
+    localStorage.getItem('salonTitle')
+    localStorage.getItem('branchLocation')
+    localStorage.getItem('selected_date')
 
     const calculateTotal = (array) => {
         if (!array.length) {
@@ -66,7 +31,7 @@ export const OrderSuccess = ({ IDRoute }) => {
     };
 
     const tConvert24hour = (time) => {
-        time = time.match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [
+        time = time?.match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [
             time,
         ];
 
@@ -79,21 +44,7 @@ export const OrderSuccess = ({ IDRoute }) => {
         return time.join("");
     };
 
-    // const convertTimeFormat = (time) => {
-    //     debugger
-    //     time = time?.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [
-    //         time,
-    //     ];
-
-    //     if (time.length > 1) {
-    //         time = time.slice(1);
-    //         time[5] = +time[0] < 12 ? "AM" : "PM";
-    //         time[0] = +time[0] % 12 || 12;
-    //     }
-    //     return time.join("");
-    // };
     const info = JSON.parse(localStorage.getItem("info"))
-
 
     const handleClick = () => {
         localStorage.clear()
@@ -104,10 +55,10 @@ export const OrderSuccess = ({ IDRoute }) => {
     return (
         <div>
             <div className='bg-gray-200 ' >
-                <div className="max-w-7xl mx-auto px-96 py-10 sm:px-6 lg:px-8">
-                    <div className='bg-white p-6 shadow-md rounded-md w-full lg:w-full'>
+                <div className="max-w-7xl mx-auto px-96 py-10 sm:px-0  lg:py-0 lg:px-0">
+                    <div className='bg-white p-6 shadow-md rounded-md w-full  xl:w-full'>
                         <div className=" sm:mx-auto sm:w-full sm:max-w-md  ">
-                            <div className=" py-4 px-4 rounded-lg sm:px-10  mt-3">
+                            <div className="  rounded-lg sm:px-10  mt-3">
                                 <div className='flex justify-center h-28 '>
                                     <img className='rounded-full border-5 border-solid border-gray-200 p-3 sm:rounded-full' src={checked} />
                                 </div>
@@ -123,7 +74,7 @@ export const OrderSuccess = ({ IDRoute }) => {
                                 <h1>Price</h1>
                             </div>
                         </div>
-                        <h1 className='mt-4 font-semibold ml-3'>  {tConvert24hour(selectedTime.startTime)}</h1>
+                        <h1 className='mt-4 font-semibold ml-3'>  {tConvert24hour(selectedTime?.startTime)}</h1>
                         <div className='-mt-5'>
                             {
                                 services?.map((serviceData) => {
@@ -159,7 +110,7 @@ export const OrderSuccess = ({ IDRoute }) => {
 
                     <button
                         onClick={handleClick}
-                        className='bg-slate-900 w-60 h-12 mr-16  rounded-lg 
+                        className='bg-slate-900 w-60 h-12 mr-10  rounded-lg 
                                 text-white  font-bold'
                     >
                         Add Another Appointment

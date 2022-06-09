@@ -1,14 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from "react-router-dom";
 import "flatpickr/dist/themes/material_green.css";
 import 'react-time-picker/dist/TimePicker.css';
-import service from "../../assets/images/service.webp"
 import moment from 'moment';
 import Slider from "react-slick";
-import img from "../../assets/images/service.webp";
-
-
-
 
 var settings = {
     speed: 500,
@@ -19,18 +14,43 @@ var settings = {
 
 export const TimeComponent = () => {
 
-    const [time, setTime] = useState('');
-    const [myDate, setMyDate] = useState("");
+
+
+    const [time, setTime] = useState(() => {
+        const timeFromLocalStorage = JSON.parse(localStorage.getItem('selected_time'))
+        if (timeFromLocalStorage) {
+            return timeFromLocalStorage?.startTime
+        } else {
+            return ''
+        }
+    });
+    const [myDate, setMyDate] = useState(() => {
+        const items = localStorage.getItem('selected_date')
+        if (items) {
+            return JSON.parse(items)
+        } else {
+            return ''
+        }
+    });
     const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedTime, setSelectedTime] = useState(false)
+
+    useEffect(() => {
+        localStorage.setItem('selected_date', JSON.stringify(myDate))
+        if (myDate) {
+            setSelectedCategory(myDate)
+            setSelectedTime(true)
+        }
+    }, [myDate])
     const clickDate = (e, index, value) => {
+
         setSelectedCategory(index)
         setSelectedTime(true)
         setMyDate(value)
-        localStorage.setItem('selected_date', value)
-    }
-    const info = JSON.parse(localStorage.getItem("info"))
 
+    }
+
+    const info = JSON.parse(localStorage.getItem("info"))
     let dateArray = [];
     const services = JSON.parse(localStorage.getItem('selected_services'))
     const total = localStorage.getItem('salonTitle')
@@ -40,38 +60,48 @@ export const TimeComponent = () => {
     var a = moment();
     var b = moment(a).add(2, 'month').format('MM:DD:YYYY');
     while (a.format('MM:DD:YYYY') < b) {
-        dateArray.push(a.format("MMMM DD dddd").split("").splice(0, 11).join(""))
+        dateArray.push(a.format("MMMM DD "))
         a.add(1, 'day');
     }
+
+    useEffect(() => {
+        localStorage.setItem('selected_time', JSON.stringify({ "startTime": time }))
+    }, [time])
 
     const timeDiv = (event, timeData) => {
         event.preventDefault();
         setTime(timeData)
-        const convertTime12to24 = (time12h) => {
-            const [time, modifier] = time12h.split(' ');
 
-            let [hours, minutes] = time.split(':');
+        // const convertTime12to24 = (time12h) => {
+        //     const [time, modifier] = time12h.split(' ');
 
-            if (hours === '12') {
-                hours = '00';
-            }
+        //     let [hours, minutes] = time.split(':');
 
-            if (modifier === 'PM') {
-                hours = parseInt(hours, 10) + 12;
-            }
+        //     if (hours === '12') {
+        //         hours = '00';
+        //     }
 
-            return `${hours}:${minutes}`;
-        }
-        localStorage.setItem('selected_time', JSON.stringify({
-            "startTime": convertTime12to24(timeData)
-        }))
+        //     if (modifier === 'PM') {
+        //         hours = parseInt(hours, 10) + 12;
+        //     }
 
+        //     return `${hours}:${minutes}`;
+        // }
+
+
+    }
+    const converter = (hours) => {
+        const splitHours = hours.split(":")[0];
+        const suffix = splitHours >= 12 ? "PM" : "AM"
+        const newTime = splitHours + ":" + hours.split(":")[1] + suffix;
+        return newTime;
     }
 
 
 
 
-    let timeArray = ["9:00 AM", "9:15 AM", "9:30 AM", "9:45 AM", "10:00 AM", "10:15 AM", "10:30 AM", "10:45 AM", "11:00 AM", "11:15 AM", "11:30 AM", "11:45 AM", "12:00 PM", "12:15 PM", "12:30 PM", "12:45 PM", "1:00 PM", "1:15 PM", "1:30 PM", "1:45 PM", "2:00 PM", "2:15 PM", "2:30 PM", "2:45 PM", "3:00 PM", "3:15 PM", "3:30 PM", "3:45 PM", "4:00 PM", "4:15 PM", "4:30 PM", "4:45 PM", "5:00 PM"]
+    // let timeArray = ["9:00 AM", "9:15 AM", "9:30 AM", "9:45 AM", "10:00 AM", "10:15 AM", "10:30 AM", "10:45 AM", "11:00 AM", "11:15 AM", "11:30 AM", "11:45 AM", "12:00 PM", "12:15 PM", "12:30 PM", "12:45 PM", "1:00 PM", "1:15 PM", "1:30 PM", "1:45 PM", "2:00 PM", "2:15 PM", "2:30 PM", "2:45 PM", "3:00 PM", "3:15 PM", "3:30 PM", "3:45 PM", "4:00 PM", "4:15 PM", "4:30 PM", "4:45 PM", "5:00 PM"]
+    let timeArray = ["9:00", "9:15", "9:30", "9:45", "10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30", "11:45", "12:00", "12:15", "12:30", "12:45", "13:00", "13:15", "13:30", "13:45", "14:00", "14:15", "14:30", "14:45", "15:00", "15:15", "15:30", "15:45", "16:00", "16:15 ", "16:30 ", "16:45 ", "17:00 "]
 
 
     const calculateTotal = (array) => {
@@ -82,10 +112,13 @@ export const TimeComponent = () => {
         }
     }
 
+    const image = "https://fresha-ag-staging.s3.eu-central-1.amazonaws.com/0a934130-e644-11ec-8fdc-1bab29ade56f-download%20%281%29.jpg";
+    localStorage.setItem("image", image)
+    localStorage.getItem("image", image)
     return (
         <div className="">
             <div className='bg-slate-900 h-36 '>
-                <div className="max-w-7xl mx-auto px-40 sm:px-16 lg:px-32 ">
+                <div className="max-w-7xl mx-auto px-40 sm:px-0 lg:px-32 ">
                     <div className=' p-4'>
                         <div className='flex '>
                             <div className='pr-2'>
@@ -102,7 +135,7 @@ export const TimeComponent = () => {
 
 
             <div className='bg-gray-200 h-screen '>
-                <div className="max-w-7xl mx-auto px-48 sm:px-16 lg:px-32 ">
+                <div className="max-w-7xl mx-auto px-48 sm:px-0 xl:px-0 ">
                     <div className='flex justify-between sticky -inset-96'>
                         <div className=" bg-white  w-4/6 shadow-md  xl:w-full">
                             <Slider className='' focusOnSelect={true}  {...settings}>
@@ -112,9 +145,9 @@ export const TimeComponent = () => {
                                             <div className='flex justify-center'>
                                                 <div onClick={(e) => clickDate(e, i, date)}
                                                     className={`flex justify-center border-solid border-black border-2 rounded-lg hover:bg-gray-300 
-                                                hover:text-black px-3 h-20 w-24 text-center pt-3 font-semibold cursor-pointer lg:w-20
-                                                 md:w-16 md:h-18 md:text-sm sm:w-12 sm:h-20 sm:text-ellipsis  ${selectedCategory ===
-                                                        i
+                                                hover:text-black px-3 h-20 w-24 text-center text-2xl pt-2 font-semibold cursor-pointer lg:w-20
+                                                 md:w-16 md:h-16 md:text-lg sm:w-12 sm:h-16 sm:text-ellipsis  ${selectedCategory ===
+                                                        date
                                                         && "text-white bg-blue-600"
 
                                                         }`}
@@ -143,7 +176,7 @@ export const TimeComponent = () => {
                                                 }`}
                                             >
                                                 <h1>
-                                                    {Arr}
+                                                    {converter(Arr)}
                                                 </h1>
 
                                                 <h1 className="fa-solid fa-angle-right pt-2  px-3"></h1>
@@ -159,8 +192,8 @@ export const TimeComponent = () => {
                             <div className=" bg-white h-96 w-80 shadow-lg rounded-lg sm:mt-5 xl:hidden " >
                                 <div className='  flex justify-center rounded-lg shadow-fuchsia-100   '>
                                     <img
-                                        className=' rounded-lg shadow-md border-4 -mt-12  border-neutral-100  '
-                                        src={img}
+                                        className=' rounded-lg shadow-md border-4 -mt-12 w-20 h-20 border-neutral-100  '
+                                        src={image}
                                     />
                                 </div>
                                 <div className='text-center  pt-3'>
@@ -217,7 +250,7 @@ export const TimeComponent = () => {
                     <div className='flex justify-end '>
                         <Link to='/signupcontinueComponent' >
                             <button
-                                className='bg-slate-900 w-32 h-12 mr-16  rounded-lg sticky 
+                                className='bg-slate-900 w-32 h-12 mr-10  rounded-lg sticky 
                      text-white  font-bold'
                             >
                                 Book
