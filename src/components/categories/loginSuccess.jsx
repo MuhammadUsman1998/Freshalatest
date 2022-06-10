@@ -84,9 +84,7 @@ export const LoginSuccess = () => {
 
     }
 
-    const image = "https://fresha-ag-staging.s3.eu-central-1.amazonaws.com/0a934130-e644-11ec-8fdc-1bab29ade56f-download%20%281%29.jpg";
-    localStorage.setItem("image", image)
-    localStorage.getItem("image", image)
+    const image = localStorage.getItem("image")
 
     return (
 
