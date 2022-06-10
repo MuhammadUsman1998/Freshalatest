@@ -13,14 +13,14 @@ import {
 import jwtInterceptor from "./jwtInterceptor";
 import { SERVER_IP } from "../../config.js/env";
 
-export const userLogin = (login) => async (dispatch) => {
+export const userLogin = (login, branchId) => async (dispatch) => {
     try {
         dispatch({
             type: LOGIN_ADD_REQUEST,
             Accept: "application/json",
         });
         const { data } = await jwtInterceptor.post(
-            `${SERVER_IP}/api/v1/client/login`,
+            `${SERVER_IP}/api/v1/client/login/${branchId}`,
             login
         );
         dispatch({

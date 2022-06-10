@@ -51,12 +51,15 @@ export const LoginContinue = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        const info = JSON.parse(localStorage.getItem("info"))
+
         const obj = {
             contactNumber: inputForm.contactNumber,
             password: inputForm.password,
         }
 
-        dispatch(userLogin(obj));
+        dispatch(userLogin(obj, info[0]?.branchId));
 
     }
 

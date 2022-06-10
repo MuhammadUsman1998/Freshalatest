@@ -67,12 +67,12 @@ export const LoginSuccess = () => {
     }
 
     const user = JSON.parse(localStorage.getItem("user"))
-
+    const info = JSON.parse(localStorage.getItem("info"))
     const handleClick = () => {
         var dateFormat = moment(selectedDate, "MMMM DD dddd").format('YYYY-MM-DD');
         const obj = {
             userId: user.id,
-            branchId: user.branchId,
+            branchId: info[0].branchId,
             createdBy: 'Client',
             orderDate: dateFormat,
             totalOrderPrice: servicePriceSum,

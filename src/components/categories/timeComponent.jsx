@@ -51,6 +51,7 @@ export const TimeComponent = () => {
     }
 
     const info = JSON.parse(localStorage.getItem("info"))
+
     let dateArray = [];
     const services = JSON.parse(localStorage.getItem('selected_services'))
     const total = localStorage.getItem('salonTitle')

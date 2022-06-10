@@ -49,9 +49,10 @@ export const OrderSuccess = ({ IDRoute }) => {
     const handleClick = () => {
         localStorage.clear()
         navigate(`/online-booking/details?branchId=${info[0].branchId}&salonId=${info[0].salonId}`)
+
     }
-    // `/online-booking/details?branchId=${IDRoute?.BranchId
-    //     }&salonId=${IDRoute?.SalonId}`, { replace: true }
+    // /online-booking/details ? branchId = ${ IDRoute?.BranchId }& salonId=${ IDRoute?.SalonId }
+
     return (
         <div>
             <div className='bg-gray-200 ' >
