@@ -6,7 +6,15 @@ import { useNavigate } from 'react-router-dom'
 
 
 export const OrderSuccess = ({ IDRoute }) => {
-    const [arrayOfSelectedServices, setArrayOfSelectedServices] = useState(JSON.parse(localStorage.getItem('selected_services')) || [])
+    const [arrayOfSelectedServices, setArrayOfSelectedServices] = useState(JSON.parse(localStorage.getItem('selected_services')) || []);
+    // const [userFromLocal, setUserFromLocal] = useState(() => {
+    //     const user = localStorage.getItem("user");
+    //     if (user) {
+    //         return localStorage.getItem("user")
+    //     } else {
+    //         return null
+    //     }
+    // })
     const navigate = useNavigate()
     const services = JSON.parse(localStorage.getItem('selected_services'))
     const selectedTime = JSON.parse(localStorage.getItem('selected_time'))
@@ -25,6 +33,9 @@ export const OrderSuccess = ({ IDRoute }) => {
 
 
 
+
+
+
     window.history.pushState(null, null, window.location.href);
     window.onpopstate = function () {
         window.history.go(1);
@@ -37,7 +48,7 @@ export const OrderSuccess = ({ IDRoute }) => {
 
         if (time.length > 1) {
             time = time.slice(1);
-            time[5] = +time[0] < 12 ? "AM" : "PM";
+            time[5] = +time[0] < 12 ? " AM" : " PM";
             time[0] = +time[0] % 12 || 12;
         }
 
@@ -47,7 +58,11 @@ export const OrderSuccess = ({ IDRoute }) => {
     const info = JSON.parse(localStorage.getItem("info"))
 
     const handleClick = () => {
-        localStorage.clear()
+        var myUser = localStorage.getItem('user');
+        var token = localStorage.getItem('accessToken');
+        localStorage.clear();
+        localStorage.setItem('user', myUser);
+        localStorage.setItem('accessToken', token)
         navigate(`/online-booking/details?branchId=${info[0].branchId}&salonId=${info[0].salonId}`)
 
     }
@@ -71,20 +86,20 @@ export const OrderSuccess = ({ IDRoute }) => {
                         <div className='border-solid border-2 border-black rounded-sm'>
                             <div className=' p-3 flex justify-between font-bold'>
                                 <h1>Time</h1>
-                                <h1>Service</h1>
+                                <h1>Service(s)</h1>
                                 <h1>Price</h1>
                             </div>
                         </div>
-                        <h1 className='mt-4 font-semibold ml-3'>  {tConvert24hour(selectedTime?.startTime)}</h1>
+                        <h1 className='mt-4 font-semibold ml-3 '>  {tConvert24hour(selectedTime?.startTime)}</h1>
                         <div className='-mt-5'>
                             {
                                 services?.map((serviceData) => {
                                     return (
                                         <div className="flex justify-between mt-1 font-semibold ml-5" >
                                             <div></div>
-                                            <h1 className='inline ml-8'> {serviceData.serviceTitle}</h1>
-                                            <div className='mr-3'>
-                                                <h1 className='' >{serviceData?.price}Rs</h1>
+                                            <h1 className='inline '> {serviceData.serviceTitle}</h1>
+                                            <div className=''>
+                                                <h1 className='mr-1' >{serviceData?.price} Rs</h1>
                                             </div>
                                         </div>
                                     )
@@ -99,7 +114,7 @@ export const OrderSuccess = ({ IDRoute }) => {
                         </div>
                         <div className=' flex justify-between px-1 py-1 font-bold'>
                             <h1>Total Payment</h1>
-                            <h1 className=' '>{calculateTotal(arrayOfSelectedServices)}Rs</h1>
+                            <h1 className=''>{calculateTotal(arrayOfSelectedServices)} Rs</h1>
                         </div>
                     </div>
                 </div>

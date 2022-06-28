@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { orderCreation } from '../../redux/Actions/userActions';
 import checked from "../../assets/images/check.png"
 import moment from 'moment';
+import { useEffect } from 'react';
 
 export const LoginSuccess = () => {
 
@@ -83,6 +84,8 @@ export const LoginSuccess = () => {
         dispatch(orderCreation(obj))
 
     }
+
+
 
     const image = localStorage.getItem("image")
 

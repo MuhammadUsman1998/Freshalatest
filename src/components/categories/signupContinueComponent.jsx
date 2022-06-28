@@ -16,7 +16,9 @@ export const SignUpContinueComponent = () => {
         fullName: "",
         email: "",
         contactNumber: "",
-        password: ""
+        password: "",
+        gender: "",
+
     });
     const [disabledButton, setDisabledButton] = useState(true);
 
@@ -26,6 +28,7 @@ export const SignUpContinueComponent = () => {
     const SignupError = user?.SignUp?.error
     const SignupSuccess = user?.SignUp?.success
     useEffect(() => {
+
         if (SignupSuccess) {
             navigate("/loginContinue")
         }
@@ -59,9 +62,11 @@ export const SignUpContinueComponent = () => {
             contactNumber: inputForm.contactNumber,
             email: inputForm.email,
             password: inputForm.password,
+            gender: inputForm.gender,
             salonId: userData[0].salonId,
             branchId: userData[0].branchId,
         }
+        // console.log({ obj });
         dispatch(userSignUp(obj));
     }
 
@@ -84,6 +89,10 @@ export const SignUpContinueComponent = () => {
 
 
     const image = localStorage.getItem("image")
+
+
+
+
 
     return (
         <div>
@@ -186,6 +195,19 @@ export const SignUpContinueComponent = () => {
 
                                 <br></br>
                             </form>
+                            <div>
+                                <label htmlFor="Gender" id='gender' className="block text-sm font-medium text-gray-700">
+                                    Gender
+                                </label>
+
+                                <input type="radio" id="Male" name="fav_language" value="M" onChange={(e) => setInputForm({ ...inputForm, gender: e.target.value })} />
+                                <label className='ml-2' for="Male"> Male</label>
+                                <br></br>
+                                <input type="radio" id="Female" name="fav_language" value="F" onChange={(e) => setInputForm({ ...inputForm, gender: e.target.value })} />
+                                <label className='ml-2' for="Female"> Female</label>
+                            </div>
+
+
                             <label>
                                 <div className="flex mt-3 cursor-pointer" >
                                     <input className="mr-1 mt-1" type="checkbox" />

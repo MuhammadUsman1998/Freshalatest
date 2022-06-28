@@ -80,6 +80,10 @@ export const LoginContinue = () => {
         }
     }
 
+
+
+
+
     const image = localStorage.getItem("image")
 
     return (

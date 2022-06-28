@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "flatpickr/dist/themes/material_green.css";
 import 'react-time-picker/dist/TimePicker.css';
 import moment from 'moment';
 import Slider from "react-slick";
+import { useDispatch } from 'react-redux';
+import { OrderSuccess } from './orderSuccess';
+import { orderCreation } from '../../redux/Actions/userActions';
 
 var settings = {
     speed: 500,
@@ -14,7 +17,8 @@ var settings = {
 
 export const TimeComponent = () => {
 
-
+    const dispatch = useDispatch()
+    const navigate = useNavigate();
 
     const [time, setTime] = useState(() => {
         const timeFromLocalStorage = JSON.parse(localStorage.getItem('selected_time'))
@@ -35,6 +39,8 @@ export const TimeComponent = () => {
     const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedTime, setSelectedTime] = useState(false)
 
+
+
     useEffect(() => {
         localStorage.setItem('selected_date', JSON.stringify(myDate))
         if (myDate) {
@@ -50,7 +56,6 @@ export const TimeComponent = () => {
 
     }
 
-    const info = JSON.parse(localStorage.getItem("info"))
 
     let dateArray = [];
     const services = JSON.parse(localStorage.getItem('selected_services'))
@@ -113,8 +118,68 @@ export const TimeComponent = () => {
         }
     }
 
-    // const image = "https://fresha-ag-staging.s3.eu-central-1.amazonaws.com/0a934130-e644-11ec-8fdc-1bab29ade56f-download%20%281%29.jpg";
-    // localStorage.setItem("image", image)
+
+
+    const user = JSON.parse(localStorage.getItem("user"))
+    const info = JSON.parse(localStorage.getItem("info"))
+    const selectedDate = JSON.parse(localStorage.getItem('selected_date'))
+
+
+    const endTimeCalculate = (startTime, endTime) => {
+        const Initial = startTime;
+        const durationInMinutes = endTime?.toString();
+
+        const TotalTime = moment(Initial, "HH:mm")
+            .add(durationInMinutes, "minutes")
+            .format("HH:mm");
+
+        return TotalTime;
+    };
+
+    Object.assign(services[0], time);
+    let AllServices = [];
+    var servicePriceSum = 0;
+    services.forEach((item, index) => {
+        let obj = {};
+        if (item?.startTime) {
+            obj["startTime"] = time;
+            obj["duration"] = item?.duration;
+        }
+        else {
+            var calculateStartTime = endTimeCalculate(
+                time,
+                AllServices[index - 1]?.duration
+            );
+            obj["startTime"] = calculateStartTime;
+        }
+        obj["serviceId"] = item?._id;
+        obj["duration"] = item?.duration;
+        obj["totalPrice"] = item?.price;
+        obj["actualPrice"] = item?.price;
+        servicePriceSum += parseInt(item?.price);
+        AllServices.push(obj);
+    });
+
+    const handleCreateOrder = () => {
+        var dateFormat = moment(selectedDate, "MMMM DD dddd").format('YYYY-MM-DD');
+        const obj = {
+            userId: user.id,
+            branchId: info[0].branchId,
+            createdBy: 'Client',
+            orderDate: dateFormat,
+            totalOrderPrice: servicePriceSum,
+            actualOrderPrice: servicePriceSum,
+            orderJob: AllServices
+        }
+
+        dispatch(orderCreation(obj))
+
+
+        navigate('/orderSuccess')
+
+    }
+
+
     const image = localStorage.getItem("image")
     return (
         <div className="">
@@ -164,7 +229,7 @@ export const TimeComponent = () => {
                                 <img src="https://img.icons8.com/ios/50/000000/time--v1.png" />
                             </div>
                             <div className='text-center font-bold p-3 '>
-                                <h1>You can Book Your Time When Jocelyn is Available</h1>
+                                <h1>You can book time as per your availability</h1>
                             </div>
                             <div className='w-full h-96 xl:w-full  overflow-y-auto '>
 
@@ -247,17 +312,44 @@ export const TimeComponent = () => {
 
             {
                 selectedTime &&
-                <div className=' bg-white py-2 mt-4  sticky bottom-0'>
-                    <div className='flex justify-end '>
-                        <Link to='/signupcontinueComponent' >
-                            <button
-                                className='bg-slate-900 w-32 h-12 mr-10  rounded-lg sticky 
-                     text-white  font-bold'
-                            >
-                                Book
-                            </button>
-                        </Link>
-                    </div>
+                <div className=' bg-white py-2 mt-4 flex justify-end  sticky bottom-0'>
+
+                    {
+                        user ? (<button
+                            onClick={handleCreateOrder}
+                            className='bg-slate-900 w-32 h-12  mr-10 rounded-lg sticky 
+                                        text-white  font-bold'
+                        >
+                            Book
+                        </button>) : (
+                            <div className='flex justify-end '>
+                                <Link to='/signupcontinueComponent'>
+                                    <button
+                                        className='bg-slate-900 w-32 h-12 mr-10 rounded-lg sticky 
+                                        text-white  font-bold'
+                                    >
+                                        Book
+                                    </button>
+                                </Link>
+                            </div>
+                        )
+                    }
+                    {/* {
+                        user ? dispatch(handleCreateOrder()) : (
+                            <div className='flex justify-end '>
+                                <Link to='/signupcontinueComponent' >
+                                    <button
+                                        className='bg-slate-900 w-32 h-12 mr-10  rounded-lg sticky 
+                                        text-white  font-bold'
+                                    >
+                                        Book
+                                    </button>
+                                </Link>
+                            </div>
+                        )
+                    } */}
+
+
                 </div>
             }
 

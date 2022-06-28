@@ -90,8 +90,6 @@ export const orderCreation = (order) => async (dispatch) => {
             payload: data,
         });
 
-
-        localStorage.setItem("user", JSON.stringify(data.data));
     } catch (error) {
         dispatch({
             type: ORDER_ADD_FAIL,
