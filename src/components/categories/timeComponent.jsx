@@ -119,10 +119,11 @@ export const TimeComponent = () => {
     }
 
 
-
     const user = JSON.parse(localStorage.getItem("user"))
     const info = JSON.parse(localStorage.getItem("info"))
     const selectedDate = JSON.parse(localStorage.getItem('selected_date'))
+    console.log("user", user);
+
 
 
     const endTimeCalculate = (startTime, endTime) => {
@@ -160,6 +161,11 @@ export const TimeComponent = () => {
         AllServices.push(obj);
     });
 
+
+    // var myUser = localStorage.getItem('user');
+    // localStorage.setItem('user', myUser);
+
+
     const handleCreateOrder = () => {
         var dateFormat = moment(selectedDate, "MMMM DD dddd").format('YYYY-MM-DD');
         const obj = {
@@ -184,7 +190,7 @@ export const TimeComponent = () => {
     return (
         <div className="">
             <div className='bg-slate-900 h-36 '>
-                <div className="max-w-7xl mx-auto px-40 sm:px-0 lg:px-32 ">
+                <div className="max-w-7xl mx-auto px-40 sm:px-0 lg:px-0 ">
                     <div className=' p-4'>
                         <div className='flex '>
                             <div className='pr-2'>
@@ -201,9 +207,9 @@ export const TimeComponent = () => {
 
 
             <div className='bg-gray-200 h-screen '>
-                <div className="max-w-7xl mx-auto px-48 sm:px-0 xl:px-0 ">
+                <div className="max-w-7xl mx-auto px-48 sm:px-0 lg:px-0 ">
                     <div className='flex justify-between sticky -inset-96'>
-                        <div className=" bg-white  w-4/6 shadow-md  xl:w-full">
+                        <div className=" bg-white  w-4/6 shadow-md  lg:w-full">
                             <Slider className='' focusOnSelect={true}  {...settings}>
                                 {
                                     dateArray?.map((date, i) => {
@@ -211,8 +217,8 @@ export const TimeComponent = () => {
                                             <div className='flex justify-center'>
                                                 <div onClick={(e) => clickDate(e, i, date)}
                                                     className={`flex justify-center border-solid border-black border-2 rounded-lg hover:bg-gray-300 
-                                                hover:text-black px-3 h-20 w-24 text-center text-2xl pt-2 font-semibold cursor-pointer lg:w-20
-                                                 md:w-16 md:h-16 md:text-lg sm:w-12 sm:h-16 sm:text-ellipsis  ${selectedCategory ===
+                                                hover:text-black px-3 h-20 w-24 text-center text-2xl pt-2 font-semibold cursor-pointer xl:w-14 xl:h-16 xl:text-lg
+                                                 md:w-16 md:h-16 md:text-lg sm:w-12   ${selectedCategory ===
                                                         date
                                                         && "text-white bg-blue-600"
 
@@ -255,7 +261,7 @@ export const TimeComponent = () => {
 
 
                         <div className=' flex ml-4 '>
-                            <div className=" bg-white h-96 w-80 shadow-lg rounded-lg sm:mt-5 xl:hidden " >
+                            <div className=" bg-white h-96 w-80 shadow-lg rounded-lg sm:mt-5 lg:hidden " >
                                 <div className='  flex justify-center rounded-lg shadow-fuchsia-100   '>
                                     <img
                                         className=' rounded-lg shadow-md border-4 -mt-12 w-20 h-20 border-neutral-100  '
@@ -282,10 +288,10 @@ export const TimeComponent = () => {
 
                                                         <div className="flex justify-between px-4 py-3 ">
                                                             <h1> {serviceData.serviceTitle}</h1>
-                                                            <h1> {serviceData.price}Rs</h1>
+                                                            <h1> {serviceData.price} Rs</h1>
                                                         </div>
                                                         <div className="text-gray-500 px-4">
-                                                            <h1> {serviceData.duration}Min</h1>
+                                                            <h1> {serviceData.duration} Min</h1>
                                                         </div>
                                                         <hr className='mt-3'></hr>
 
@@ -299,7 +305,7 @@ export const TimeComponent = () => {
 
                                     <div className='flex justify-between px-4 py-3 font-bold'>
                                         <h1 className=''>Total</h1>
-                                        <p>{calculateTotal(services)}Rs</p>
+                                        <p>{calculateTotal(services)} Rs</p>
                                     </div>
                                 </div>
                             </div>
@@ -315,13 +321,14 @@ export const TimeComponent = () => {
                 <div className=' bg-white py-2 mt-4 flex justify-end  sticky bottom-0'>
 
                     {
-                        user ? (<button
-                            onClick={handleCreateOrder}
-                            className='bg-slate-900 w-32 h-12  mr-10 rounded-lg sticky 
+                        user &&
+                            user?.salonId === info[0]?.salonId ? (<button
+                                onClick={handleCreateOrder}
+                                className='bg-slate-900 w-32 h-12  mr-10 rounded-lg sticky 
                                         text-white  font-bold'
-                        >
-                            Book
-                        </button>) : (
+                            >
+                                Book
+                            </button>) : (
                             <div className='flex justify-end '>
                                 <Link to='/signupcontinueComponent'>
                                     <button

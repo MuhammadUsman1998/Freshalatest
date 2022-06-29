@@ -111,9 +111,9 @@ export const SignUpContinueComponent = () => {
             </div>
 
             <div className='bg-gray-200'>
-                <div className="max-w-7xl mx-auto px-44 sm:px-0 md:px-0 lg:px-0 ">
+                <div className="max-w-7xl mx-auto px-44 sm:px-0 lg:px-0 ">
                     <div className=" flex">
-                        <div className="bg-white py-8 px-4 shadow-md rounded-lg  w-3/4 xl:w-full ">
+                        <div className="bg-white py-8 px-4 shadow-md rounded-lg  w-4/5 xl:w-full ">
                             <form className="space-y-4 grid grid-cols-2 gap-y-6 gap-x-6 sm:grid-cols-2" action="#"
                             >
                                 <div>
@@ -280,10 +280,10 @@ export const SignUpContinueComponent = () => {
                                                     <div className="">
                                                         <div className="flex justify-between px-4 py-3 ">
                                                             <h1> {serviceData.serviceTitle}</h1>
-                                                            <h1> {serviceData.price}Rs</h1>
+                                                            <h1> {serviceData.price} Rs</h1>
                                                         </div>
                                                         <div className="text-gray-500 px-4">
-                                                            <h1> {serviceData.duration}Min</h1>
+                                                            <h1> {serviceData.duration} Min</h1>
                                                         </div>
                                                         <hr className='mt-3'></hr>
                                                     </div>
@@ -295,7 +295,7 @@ export const SignUpContinueComponent = () => {
                                     }
                                     <div className=' flex justify-between px-4 py-3 font-bold'>
                                         <h1>Total</h1>
-                                        <h1 className=' '>{calculateTotal(services)}Rs</h1>
+                                        <h1 className=' '>{calculateTotal(services)} Rs</h1>
                                     </div>
                                 </div>
                             </div>

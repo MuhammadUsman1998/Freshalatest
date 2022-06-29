@@ -86,7 +86,7 @@ export const OrderSuccess = ({ IDRoute }) => {
                         <div className='border-solid border-2 border-black rounded-sm'>
                             <div className=' p-3 flex justify-between font-bold'>
                                 <h1>Time</h1>
-                                <h1>Service(s)</h1>
+                                {services?.length > 1 ? (<h1>Services</h1>) : "Service"}
                                 <h1>Price</h1>
                             </div>
                         </div>
@@ -95,7 +95,7 @@ export const OrderSuccess = ({ IDRoute }) => {
                             {
                                 services?.map((serviceData) => {
                                     return (
-                                        <div className="flex justify-between mt-1 font-semibold ml-5" >
+                                        <div className="flex justify-between  font-semibold ml-5" >
                                             <div></div>
                                             <h1 className='inline '> {serviceData.serviceTitle}</h1>
                                             <div className=''>

@@ -132,10 +132,10 @@ export const OnlineBookingDetail = ({ IdSet }) => {
 
                     <div className='bg-gray-200'>
                         <div className="sticky top-36">
-                            <div className='max-w-7xl mx-auto px-44 sm:px-0 lg:px-0 '>
+                            <div className='max-w-7xl mx-auto px-44 lg:px:32 sm:px-0 lg:px-0 '>
                                 <div className='bg-white w-2/3  shadow-lg rounded-lg text-black  lg:w-full '>
                                     <Slider className='py-4 px-1 text-center' focusOnSelect={true} slidesToShow={service_data?.length <= 2 ? 2 : 3}
-                                        slidesToScroll={service_data?.length <= 2 ? 2 : 3}  {...settings}>
+                                        slidesToScroll={service_data?.length <= 1 ? 2 : 3}  {...settings}>
 
                                         {service_data?.map((cat1, index) => {
 
@@ -165,7 +165,7 @@ export const OnlineBookingDetail = ({ IdSet }) => {
 
 
 
-                        <div className=" float-right -mt-24 w-1/5 mr-52  sticky top-32">
+                        <div className=" float-right -mt-24 w-1/4 mr-40  sticky top-32">
                             <div className="bg-white  shadow-lg rounded-lg text-black lg:hidden xl:ml-20 xl:w-full  ">
                                 <div className='flex justify-center rounded-lg shadow-fuchsia-100   '>
                                     <img
@@ -185,10 +185,10 @@ export const OnlineBookingDetail = ({ IdSet }) => {
                                                     <div className="flex justify-between p-4 ">
 
                                                         <h1> {serviceData.serviceTitle}</h1>
-                                                        <h1> {serviceData.price}Rs</h1>
+                                                        <h1> {serviceData.price} Rs</h1>
                                                     </div>
                                                     <div className="text-gray-500 pl-6 ">
-                                                        <h1> {serviceData.duration}Min</h1>
+                                                        <h1> {serviceData.duration} Min</h1>
                                                     </div>
                                                     <hr className="mt-2"></hr>
 
@@ -199,7 +199,7 @@ export const OnlineBookingDetail = ({ IdSet }) => {
                                     }
                                     <div className='flex justify-between p-4 font-bold '>
                                         <h1>Total </h1>
-                                        <h1>{calculateTotal(arrayOfSelectedServices)}Rs</h1>
+                                        <h1>{calculateTotal(arrayOfSelectedServices)} Rs</h1>
                                     </div>
                                 </div>
                             </div>
@@ -207,7 +207,7 @@ export const OnlineBookingDetail = ({ IdSet }) => {
 
 
 
-                        <div className='max-w-7xl mx-auto px-44 sm:px-0 lg:px-0 '>
+                        <div className='max-w-7xl mx-auto px-44  sm:px-0 lg:px-0 '>
                             <div>
                                 {service_data?.map((item) => (
                                     <div className=' lg:flex flex-wrap mt-6' >
@@ -220,7 +220,7 @@ export const OnlineBookingDetail = ({ IdSet }) => {
                                                     </h1>
                                                 </div>
                                                 <div className="mt-3 lg:w-full w-2/3 ">
-                                                    <div className=' bg-white p-7 rounded-lg mb-12'>
+                                                    <div className=' bg-white  p-7 rounded-lg mb-12'>
                                                         <div
                                                             className='sm:w-full cursor-pointer divide-y-2 divide-slate-200' >
                                                             {
@@ -247,13 +247,13 @@ export const OnlineBookingDetail = ({ IdSet }) => {
                                                                                 </p>
                                                                             </div>
                                                                             <p className='pl-12 text-gray-400'>
-                                                                                {service?.duration}min
+                                                                                {service?.duration} Min
                                                                             </p>
                                                                         </label>
                                                                         {/* <hr className='my-3 w-full '></hr> */}
                                                                         <div className='flex justify-end lg:flex flex-wrap'>
                                                                             <p className='-mt-12 font-medium '>
-                                                                                {service?.price}Rs
+                                                                                {service?.price} Rs
                                                                             </p>
                                                                         </div>
                                                                     </div>

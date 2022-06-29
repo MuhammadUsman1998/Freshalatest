@@ -153,10 +153,10 @@ export const LoginSuccess = () => {
 
                                                         <div className="flex justify-between px-4 py-3 ">
                                                             <h1> {serviceData.serviceTitle}</h1>
-                                                            <h1> {serviceData.price}Rs</h1>
+                                                            <h1> {serviceData.price} Rs</h1>
                                                         </div>
                                                         <div className="text-gray-500 px-4">
-                                                            <h1> {serviceData.duration}Min</h1>
+                                                            <h1> {serviceData.duration} Min</h1>
                                                         </div>
                                                         <hr className='mt-3'></hr>
 
@@ -169,7 +169,7 @@ export const LoginSuccess = () => {
                                     }
                                     <div className=' flex justify-between px-4 py-3 font-bold'>
                                         <h1>Total</h1>
-                                        <h1 className=' '>{calculateTotal(services)}Rs</h1>
+                                        <h1 className=' '>{calculateTotal(services)} Rs</h1>
                                     </div>
                                 </div>
                             </div>
