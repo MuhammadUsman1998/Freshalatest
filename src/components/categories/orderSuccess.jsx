@@ -71,8 +71,8 @@ export const OrderSuccess = ({ IDRoute }) => {
     return (
         <div>
             <div className='bg-gray-200 ' >
-                <div className="max-w-7xl mx-auto px-96 py-10 sm:px-0  lg:py-0 lg:px-0">
-                    <div className='bg-white p-6 shadow-md rounded-md w-full  xl:w-full'>
+                <div className="max-w-7xl mx-auto  py-10 sm:px-0  lg:py-0 lg:px-0 flex justify-center">
+                    <div className='bg-white p-6 shadow-md rounded-md w-1/2   xl:w-full'>
                         <div className=" sm:mx-auto sm:w-full sm:max-w-md  ">
                             <div className="  rounded-lg sm:px-10  mt-3">
                                 <div className='flex justify-center h-28 '>
@@ -90,14 +90,14 @@ export const OrderSuccess = ({ IDRoute }) => {
                                 <h1>Price</h1>
                             </div>
                         </div>
-                        <h1 className='mt-4 font-semibold ml-3 '>  {tConvert24hour(selectedTime?.startTime)}</h1>
+                        <h1 className='mt-4 font-semibold ml-1 '>  {tConvert24hour(selectedTime?.startTime)}</h1>
                         <div className='-mt-5'>
                             {
                                 services?.map((serviceData) => {
                                     return (
                                         <div className="flex justify-between  font-semibold ml-5" >
                                             <div></div>
-                                            <h1 className='inline '> {serviceData.serviceTitle}</h1>
+                                            <h1 className='inline '> {serviceData?.serviceTitle}</h1>
                                             <div className=''>
                                                 <h1 className='mr-1' >{serviceData?.price} Rs</h1>
                                             </div>
@@ -121,13 +121,13 @@ export const OrderSuccess = ({ IDRoute }) => {
 
             </div>
 
-            <div className=' bg-white py-2 mt-80 sticky bottom-0'>
+            <div className=' bg-white py-2 mt-96 sticky bottom-0 '>
                 <div className='flex justify-end '>
 
                     <button
                         onClick={handleClick}
                         className='bg-slate-900 w-60 h-12 mr-10  rounded-lg 
-                                text-white  font-bold'
+                                text-white  font-bold sticky'
                     >
                         Add Another Appointment
                     </button>
