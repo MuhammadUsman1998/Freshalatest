@@ -7,6 +7,7 @@ import Slider from "react-slick";
 import { useDispatch, useSelector } from "react-redux";
 import { orderCreation } from '../../redux/Actions/userActions';
 var settings = {
+    infinite: false,
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 5,
@@ -62,16 +63,17 @@ export const TimeComponent = () => {
     }
 
 
-    let dateArray = [];
     const services = JSON.parse(localStorage.getItem('selected_services'))
     const total = localStorage.getItem('salonTitle')
     const myTotal = localStorage.getItem('branchLocation')
 
 
+    let dateArray = [];
     var a = moment();
     var b = moment(a).add(2, 'month').format('MM:DD:YYYY');
     while (a.format('MM:DD:YYYY') < b) {
-        dateArray.push(a.format("MMMM DD "))
+        dateArray.push(a.format("MMM DD"))
+        // dateArray.push(a.format()?.split("").splice(0, 2).join(""))
         a.add(1, 'day');
     }
 
@@ -202,11 +204,13 @@ export const TimeComponent = () => {
                             <Slider className='' focusOnSelect={true}  {...settings}>
                                 {
                                     dateArray?.map((date, i) => {
+                                        console.log("date", date)
+
                                         return (
                                             <div className='flex justify-center'>
                                                 <div onClick={(e) => clickDate(e, i, date)}
                                                     className={`flex justify-center border-solid border-black border-2 rounded-lg hover:bg-gray-300 
-                                                hover:text-black px-3 h-20 w-24 text-center text-2xl pt-2 font-semibold cursor-pointer xl:w-14 xl:h-16 xl:text-lg
+                                                hover:text-black px-3 h-20 w-20 text-center text-2xl pt-2 font-semibold cursor-pointer xl:w-16 xl:h-16 xl:text-xl lg:w-20
                                                  md:w-16 md:h-16 md:text-lg sm:w-12   ${selectedCategory ===
                                                         date
                                                         && "text-white bg-blue-600"
@@ -315,7 +319,7 @@ export const TimeComponent = () => {
 
             {
                 selectedTime &&
-                <div className=' bg-white py-2 mt-4 flex justify-end  sticky bottom-0'>
+                <div className=' bg-white py-2 mt-4 flex justify-end sticky bottom-0'>
 
                     {
                         user &&
@@ -326,7 +330,13 @@ export const TimeComponent = () => {
                             >
                                 Book
                             </button>) : (
+
                             <div className='flex justify-end '>
+
+                                {/* <div className="font-bold px-4 ">
+                                    <h1>{arrayOfSelectedServices?.length + " " + "Services"}</h1>
+                                    <h1>{calculateTotal(arrayOfSelectedServices)} Rs</h1>
+                                </div> */}
                                 <Link to='/signupcontinueComponent'>
                                     <button
                                         className='bg-slate-900 w-32 h-12 mr-10 rounded-lg sticky 

@@ -89,8 +89,6 @@ export const OnlineBookingDetail = ({ IdSet }) => {
     const branchLocation = service_info?.Services?.data[0]?.branchLocation;
     localStorage.setItem("branchLocation", branchLocation);
 
-    const image = service_info?.Services?.data[0].image;
-    localStorage.setItem("image", image)
 
 
     const calculateTotal = (array) => {
@@ -104,6 +102,8 @@ export const OnlineBookingDetail = ({ IdSet }) => {
     const total = localStorage.getItem('salonTitle')
     const myTotal = localStorage.getItem('branchLocation')
 
+    const image = service_info?.Services?.data[0]?.image;
+    localStorage.setItem("image", image)
     localStorage.getItem("image")
 
     return (
@@ -244,7 +244,7 @@ export const OnlineBookingDetail = ({ IdSet }) => {
                                     <hr className='mt-3'></hr>
                                     <div className="overflow-y-scroll h-72">
                                         {
-                                            arrayOfSelectedServices.length === 0 ? (<p className="text-center pt-4 text-gray-400">No Service Selected Yet</p>) : arrayOfSelectedServices.map((serviceData) => {
+                                            arrayOfSelectedServices?.length === 0 ? (<p className="text-center pt-4 text-gray-400">No Service Selected Yet</p>) : arrayOfSelectedServices.map((serviceData) => {
                                                 return (
 
                                                     <div>
@@ -283,8 +283,14 @@ export const OnlineBookingDetail = ({ IdSet }) => {
 
 
                     {arrayOfSelectedServices.length ?
-                        <div className=' bg-white py-2 mt-4  sticky bottom-0'>
-                            <div className='flex justify-end '>
+                        <div className=' bg-white py-2 mt-6  sticky bottom-0'>
+
+                            <div className=" flex justify-between ">
+                                <div className="font-bold px-4 ">
+                                    <h1 className="text-gray-500">{arrayOfSelectedServices?.length + " " + "Services"}</h1>
+                                    <h1>{calculateTotal(arrayOfSelectedServices)} Rs</h1>
+                                </div>
+                                {/* <div className='flex justify-end '> */}
                                 <button
                                     onClick={routeChange}
                                     className='bg-slate-900 w-32 h-12 mr-10  rounded-lg  text-white  font-bold cursor-pointer'
@@ -292,6 +298,7 @@ export const OnlineBookingDetail = ({ IdSet }) => {
                                     Next
                                 </button>
                             </div>
+                            {/* </div> */}
                         </div> : ""}
 
                 </>
