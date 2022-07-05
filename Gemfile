@@ -5,3 +5,4 @@ gem 'capistrano', '3.14.1'
 gem 'capistrano-npm'
 gem 'capistrano-rvm', '0.1.2'
 gem 'capistrano-bundler', '2.0.1'
+gem 'capistrano-nvm', require: false
