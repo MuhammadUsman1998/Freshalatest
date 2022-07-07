@@ -5,13 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userSignUp } from '../../redux/Actions/userActions';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useForm } from 'react-hook-form'
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup'
 import ClipLoader from "react-spinners/ClipLoader";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai"
 import {
     SIGNUP_ADD_RESET
 } from "../../redux/Constants/userConstants";
+import MaskedInput from 'react-text-mask'
 export const SignUpContinueComponent = () => {
 
     const [inputForm, setInputForm] = useState({
@@ -22,6 +21,7 @@ export const SignUpContinueComponent = () => {
         gender: "",
         checkbox: false
     });
+    const [showPassword, setShowPassword] = useState(false);
     const [disabledButton, setDisabledButton] = useState(true);
     const [marketingCheckBox, setMarketingCheckBox] = useState(false)
     const dispatch = useDispatch();
@@ -55,17 +55,11 @@ export const SignUpContinueComponent = () => {
 
 
     const userData = JSON.parse(localStorage.getItem("info"));
-    const validationSchema = yup.object().shape({
-        acceptTerms: yup.bool()
-            .oneOf([true], 'Accept Ts & Cs is required')
-    });
 
-    // functions to build form returned by useForm() hook
-    const { register, handleSubmit, reset, errors } = useForm({
-        resolver: yupResolver(validationSchema)
-    });
 
-    const formSubmit = (e) => {
+
+
+    const handleSubmit = (e) => {
         e.preventDefault();
         const obj = {
             fullName: inputForm.fullName,
@@ -79,9 +73,6 @@ export const SignUpContinueComponent = () => {
 
 
         dispatch(userSignUp(obj));
-
-
-
 
     }
 
@@ -109,7 +100,9 @@ export const SignUpContinueComponent = () => {
 
 
 
-
+    const handleToggle = () => {
+        setShowPassword(!showPassword)
+    }
 
     return (
         <div>
@@ -131,7 +124,7 @@ export const SignUpContinueComponent = () => {
                 <div className="max-w-7xl mx-auto  sm:px-0 lg:px-0 ">
                     <div className=" flex justify-evenly">
                         <div className="bg-white py-8 px-4 shadow-md rounded-lg  w-1/2 lg:w-full ">
-                            <form className="space-y-4 grid grid-cols-2 gap-y-6 gap-x-6 sm:grid-cols-2" action="#" onSubmit={handleSubmit(formSubmit)}
+                            <form className="space-y-4 grid grid-cols-2 gap-y-6 gap-x-6 sm:grid-cols-2" action="#" onSubmit={handleSubmit}
                             >
                                 <div>
                                     <label htmlFor="fullName" className="block text-sm font-medium text-gray-700  mt-3">
@@ -178,12 +171,14 @@ export const SignUpContinueComponent = () => {
                                         Mobile Number
                                     </label>
                                     <div className=''>
-                                        <input
+                                        <MaskedInput
                                             id="depositedAmount"
-                                            maxLength={11}
+                                            // maxLength={11}
                                             pattern="[+-]?\d+(?:[.,]\d+)?"
                                             placeholder="0300 XXXX XXX"
-                                            mask="0300 1234 567"
+                                            // mask="0300 1234 567"
+                                            guide={false}
+                                            mask={['(', /[0-9]/, /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
                                             required={true}
                                             onChange={(e) => setInputForm({ ...inputForm, contactNumber: e.target.value })}
                                             value={inputForm.contactNumber}
@@ -198,15 +193,22 @@ export const SignUpContinueComponent = () => {
                                     </label>
                                     <div className=" ">
                                         <input
+                                            type={showPassword ? "text" : "password"}
                                             id="password"
                                             name="password"
-                                            type="password"
                                             required={true}
                                             value={inputForm.password}
                                             onChange={(e) => setInputForm({ ...inputForm, password: e.target.value })}
                                             placeholder='Enter Password'
-                                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none
+                                             focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+
                                         />
+
+                                    </div>
+                                    <div className='text-2xl flex justify-end -mt-8 mr-6' onClick={handleToggle}>
+                                        {!showPassword ? <AiFillEyeInvisible /> :
+                                            <AiFillEye />}
                                     </div>
                                 </div>
 
@@ -242,7 +244,7 @@ export const SignUpContinueComponent = () => {
                                 <button
                                     disabled={handleFormDisabled() || user?.loading}
                                     style={{ cursor: handleFormDisabled() ? "not-allowed" : "pointer" }}
-                                    type="submit" onClick={formSubmit}
+                                    type="submit" onClick={handleSubmit}
                                     className=" mt-2 w-full flex justify-center items-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm
                              font-medium text-white bg-slate-900 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                 >
@@ -271,7 +273,6 @@ export const SignUpContinueComponent = () => {
                             </div>
                         </div>
 
-                        {/* <div className=' ml-4'> */}
                         <div className="bg-white w-1/4 h-1/4 shadow-lg rounded-lg text-black lg:hidden ">
                             <div className='flex justify-center rounded-lg shadow-fuchsia-100   '>
                                 {image ? <img
@@ -287,11 +288,9 @@ export const SignUpContinueComponent = () => {
                                 </svg>
                                 }
                             </div>
-                            {/* <div className='text-center font-bold pt-3'> */}
                             <h1 className='text-center font-bold pt-2'>{salonName}</h1>
                             <p className='pt-3 text-center text-gray-400'>  {salonLocation}</p>
                             <hr className='mt-3'></hr>
-                            {/* </div> */}
 
 
                             <div className="overflow-y-scroll h-72">
@@ -329,12 +328,21 @@ export const SignUpContinueComponent = () => {
                         </div>
                     </div>
                 </div>
-                {/* </div> */}
 
 
                 <div className=' bg-white py-2 mt-60 sticky bottom-0'>
-                    <div className='flex justify-end '>
 
+                    <div className='flex justify-between '>
+                        <div className='flex px-6 3xl:invisible 2xl:invisible xl:invisible lg:visible'>
+                            <div className='font-bold px-4'>
+                                <h1 className="text-gray-500">{services?.length + " "}{services?.length == 1 ? "Service" : "Services"}</h1>
+                                <h1>{calculateTotal(services)} Rs</h1>
+                            </div>
+                            <div className='font-bold'>
+                                <h1 className="text-gray-500">{selectedDate}</h1>
+                                <h1>{BeginTime?.startTime}</h1>
+                            </div>
+                        </div>
                         <button
                             style={{ cursor: disabledButton ? "not-allowed" : "pointer" }}
                             disabled={disabledButton}

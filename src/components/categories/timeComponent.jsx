@@ -96,7 +96,7 @@ export const TimeComponent = () => {
     }
 
 
-    let timeArray = ["09:00", "09:15", "09:30", "09:45", "10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30", "11:45", "12:00", "12:15", "12:30", "12:45", "13:00", "13:15", "13:30", "13:45", "14:00", "14:15", "14:30", "14:45", "15:00", "15:15", "15:30", "15:45", "16:00", "16:15 ", "16:30 ", "16:45 ", "17:00 "]
+    let timeArray = ["09:00", "09:15", "09:30", "09:45", "10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30", "11:45", "12:00", "12:15", "12:30", "12:45", "13:00", "13:15", "13:30", "13:45", "14:00", "14:15", "14:30", "14:45", "15:00", "15:15", "15:30", "15:45", "16:00", "16:15", "16:30", "16:45", "17:00"]
 
 
     const calculateTotal = (array) => {
@@ -319,8 +319,17 @@ export const TimeComponent = () => {
 
             {
                 selectedTime &&
-                <div className=' bg-white py-2 mt-4 flex justify-end sticky bottom-0'>
-
+                <div className=' bg-white py-2 mt-4 flex justify-between sticky bottom-0'>
+                    <div className='flex px-6 3xl:invisible 2xl:invisible xl:invisible lg:visible'>
+                        <div className="font-bold  px-4 ">
+                            <h1 className="text-gray-500">{arrayOfSelectedServices?.length + " "}{arrayOfSelectedServices?.length == 1 ? "Service" : "Services"}</h1>
+                            <h1>{calculateTotal(arrayOfSelectedServices)} Rs</h1>
+                        </div>
+                        <div className="font-bold">
+                            <h1 className="text-gray-500">{selectedDate}</h1>
+                            <h1>{time}</h1>
+                        </div>
+                    </div>
                     {
                         user &&
                             user?.salonId === info[0]?.salonId ? (<button
@@ -331,12 +340,7 @@ export const TimeComponent = () => {
                                 Book
                             </button>) : (
 
-                            <div className='flex justify-end '>
-
-                                {/* <div className="font-bold px-4 ">
-                                    <h1>{arrayOfSelectedServices?.length + " " + "Services"}</h1>
-                                    <h1>{calculateTotal(arrayOfSelectedServices)} Rs</h1>
-                                </div> */}
+                            <div className='flex  '>
                                 <Link to='/signupcontinueComponent'>
                                     <button
                                         className='bg-slate-900 w-32 h-12 mr-10 rounded-lg sticky 
@@ -348,21 +352,6 @@ export const TimeComponent = () => {
                             </div>
                         )
                     }
-                    {/* {
-                        user ? dispatch(handleCreateOrder()) : (
-                            <div className='flex justify-end '>
-                                <Link to='/signupcontinueComponent' >
-                                    <button
-                                        className='bg-slate-900 w-32 h-12 mr-10  rounded-lg sticky 
-                                        text-white  font-bold'
-                                    >
-                                        Book
-                                    </button>
-                                </Link>
-                            </div>
-                        )
-                    } */}
-
 
                 </div>
             }

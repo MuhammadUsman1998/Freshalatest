@@ -8,12 +8,13 @@ import {
     LOGIN_ADD_RESET
 } from "../../redux/Constants/userConstants";
 import ClipLoader from "react-spinners/ClipLoader";
-
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai"
 export const LoginContinue = () => {
     const [inputForm, setInputForm] = useState({
         contactNumber: "",
         password: ""
     });
+    const [showPassword, setShowPassword] = useState(false);
     const [disabledButton, setDisabledButton] = useState(true);
 
     const dispatch = useDispatch();
@@ -86,6 +87,11 @@ export const LoginContinue = () => {
 
     localStorage.getItem("image")
 
+
+
+    const handleToggle = () => {
+        setShowPassword(!showPassword)
+    }
     return (
 
         <div>
@@ -132,25 +138,29 @@ export const LoginContinue = () => {
                                 </div>
 
                                 <div>
-                                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                                    <label htmlFor="password" className="block text-sm font-medium text-gray-700 ">
                                         Password
                                     </label>
-                                    <div className="mt-1">
+                                    <div className="mt-1 ">
                                         <input
+                                            type={showPassword ? "text" : "password"}
                                             id="password"
                                             name="password"
-                                            type="password"
                                             value={inputForm.password}
                                             onChange={(e) => setInputForm({ ...inputForm, password: e.target.value })}
                                             placeholder='Enter Password'
                                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         />
                                     </div>
+                                    <div className='text-2xl flex justify-end -mt-8 mr-6' onClick={handleToggle}>
+                                        {!showPassword ? <AiFillEyeInvisible /> :
+                                            <AiFillEye />}
+                                    </div>
                                 </div>
 
                                 <div className="flex items-center justify-between">
                                     <div className="text-sm">
-                                        <Link to="/loginreset" href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                                        <Link to="" href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
                                             Forgot your password?
                                         </Link>
                                     </div>
@@ -246,7 +256,16 @@ export const LoginContinue = () => {
 
 
             <div className=' bg-white py-2  sticky bottom-0 '>
-                <div className='flex justify-end '>
+                <div className='flex justify-between '>
+                    <div className='flex px-6 3xl:invisible 2xl:invisible xl:invisible lg:visible'>
+                        <div className='font-bold px-4'>
+                            <h1 className="text-gray-500">{services?.length + " "}{services?.length == 1 ? "Service" : "Services"}</h1>
+                            <h1>{calculateTotal(services)} Rs</h1>
+                        </div>
+                        <div className='font-bold'>
+                            <h1 className="text-gray-500">{selectedDate}</h1>
+                            <h1>{beginTime?.startTime}</h1>                        </div>
+                    </div>
                     <button
                         style={{ cursor: disabledButton ? "not-allowed" : "pointer" }}
                         disabled={disabledButton}

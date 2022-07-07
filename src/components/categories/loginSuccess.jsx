@@ -186,7 +186,18 @@ export const LoginSuccess = () => {
 
 
             <div className=' bg-white py-2 mt-4  sticky bottom-0'>
-                <div className='flex justify-end '>
+                <div className='flex justify-between '>
+                    <div className='flex px-6 3xl:invisible 2xl:invisible xl:invisible lg:visible'>
+                        <div className='font-bold px-4'>
+                            <h1 className="text-gray-500">{services?.length + " "}{services?.length == 1 ? "Service" : "Services"}</h1>
+                            <h1>{calculateTotal(services)} Rs</h1>
+                        </div>
+                        <div className='font-bold'>
+                            <h1 className="text-gray-500">{selectedDate}</h1>
+                            <h1>{BeginTime?.startTime}</h1>
+
+                        </div>
+                    </div>
                     <Link to='/orderSuccess' >
 
                         <button

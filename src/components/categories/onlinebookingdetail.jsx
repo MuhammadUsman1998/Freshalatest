@@ -195,7 +195,7 @@ export const OnlineBookingDetail = ({ IdSet }) => {
                                                                                             checked={arrayOfSelectedServices.some(e => e._id === service?._id) ? true : false}
                                                                                         />
 
-                                                                                        <p className='text-xl font-bold pl-3'>
+                                                                                        <p className='text-xl sm:text-sm sm:font-bold font-bold pl-3'>
                                                                                             {service?.serviceTitle}
 
                                                                                         </p>
@@ -205,7 +205,7 @@ export const OnlineBookingDetail = ({ IdSet }) => {
                                                                                     </p>
                                                                                 </label>
                                                                                 <div className='flex justify-end lg:flex flex-wrap'>
-                                                                                    <p className='-mt-12 font-medium '>
+                                                                                    <p className='-mt-14 font-medium '>
                                                                                         {service?.price} Rs
                                                                                     </p>
                                                                                 </div>
@@ -286,8 +286,8 @@ export const OnlineBookingDetail = ({ IdSet }) => {
                         <div className=' bg-white py-2 mt-6  sticky bottom-0'>
 
                             <div className=" flex justify-between ">
-                                <div className="font-bold px-4 ">
-                                    <h1 className="text-gray-500">{arrayOfSelectedServices?.length + " " + "Services"}</h1>
+                                <div className="font-bold px-12 3xl:invisible 2xl:invisible xl:invisible lg:visible">
+                                    <h1 className="text-gray-500">{arrayOfSelectedServices?.length} {arrayOfSelectedServices?.length == 1 ? "Service" : "Services"}</h1>
                                     <h1>{calculateTotal(arrayOfSelectedServices)} Rs</h1>
                                 </div>
                                 {/* <div className='flex justify-end '> */}
