@@ -173,8 +173,8 @@ export const SignUpContinueComponent = () => {
                                     <div className=''>
                                         <MaskedInput
                                             id="depositedAmount"
-                                            // maxLength={11}
-                                            pattern="[+-]?\d+(?:[.,]\d+)?"
+
+                                            // pattern="[+-]?\d+(?:[.,]\d+)?"
                                             placeholder="0300 XXXX XXX"
                                             // mask="0300 1234 567"
                                             guide={false}
