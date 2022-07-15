@@ -204,7 +204,6 @@ export const TimeComponent = () => {
                             <Slider className='' focusOnSelect={true}  {...settings}>
                                 {
                                     dateArray?.map((date, i) => {
-                                        console.log("date", date)
 
                                         return (
                                             <div className='flex justify-center'>
@@ -321,11 +320,11 @@ export const TimeComponent = () => {
                 selectedTime &&
                 <div className=' bg-white py-2 mt-4 flex justify-between sticky bottom-0'>
                     <div className='flex px-6 3xl:invisible 2xl:invisible xl:invisible lg:visible'>
-                        <div className="font-bold  px-4 ">
+                        <div className="font-bold  ">
                             <h1 className="text-gray-500">{arrayOfSelectedServices?.length + " "}{arrayOfSelectedServices?.length == 1 ? "Service" : "Services"}</h1>
                             <h1>{calculateTotal(arrayOfSelectedServices)} Rs</h1>
                         </div>
-                        <div className="font-bold">
+                        <div className="font-bold pl-4">
                             <h1 className="text-gray-500">{selectedDate}</h1>
                             <h1>{time}</h1>
                         </div>

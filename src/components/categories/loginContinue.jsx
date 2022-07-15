@@ -9,6 +9,7 @@ import {
 } from "../../redux/Constants/userConstants";
 import ClipLoader from "react-spinners/ClipLoader";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai"
+import MaskedInput from 'react-text-mask';
 export const LoginContinue = () => {
     const [inputForm, setInputForm] = useState({
         contactNumber: "",
@@ -124,11 +125,13 @@ export const LoginContinue = () => {
                                         Contact Number
                                     </label>
                                     <div className="mt-1">
-                                        <input
+                                        <MaskedInput
                                             id="contactNumber"
                                             name="contactNumber"
                                             type="contactNumber"
-                                            maxLength={11}
+                                            // maxLength={11}
+                                            guide={false}
+                                            mask={[/[0-9]/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, " ", /\d/, /\d/, /\d/, /\d/]}
                                             placeholder="0300 XXXX XXX"
                                             value={inputForm.contactNumber}
                                             onChange={(e) => setInputForm({ ...inputForm, contactNumber: e.target.value })}
@@ -258,11 +261,11 @@ export const LoginContinue = () => {
             <div className=' bg-white py-2  sticky bottom-0 '>
                 <div className='flex justify-between '>
                     <div className='flex px-6 3xl:invisible 2xl:invisible xl:invisible lg:visible'>
-                        <div className='font-bold px-4'>
+                        <div className='font-bold'>
                             <h1 className="text-gray-500">{services?.length + " "}{services?.length == 1 ? "Service" : "Services"}</h1>
                             <h1>{calculateTotal(services)} Rs</h1>
                         </div>
-                        <div className='font-bold'>
+                        <div className='font-bold pl-4'>
                             <h1 className="text-gray-500">{selectedDate}</h1>
                             <h1>{beginTime?.startTime}</h1>                        </div>
                     </div>

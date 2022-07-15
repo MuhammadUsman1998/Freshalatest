@@ -178,7 +178,7 @@ export const SignUpContinueComponent = () => {
                                             placeholder="0300 XXXX XXX"
                                             // mask="0300 1234 567"
                                             guide={false}
-                                            mask={['(', /[0-9]/, /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+                                            mask={[/[0-9]/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, " ", /\d/, /\d/, /\d/, /\d/]}
                                             required={true}
                                             onChange={(e) => setInputForm({ ...inputForm, contactNumber: e.target.value })}
                                             value={inputForm.contactNumber}
@@ -334,11 +334,11 @@ export const SignUpContinueComponent = () => {
 
                     <div className='flex justify-between '>
                         <div className='flex px-6 3xl:invisible 2xl:invisible xl:invisible lg:visible'>
-                            <div className='font-bold px-4'>
+                            <div className='font-bold '>
                                 <h1 className="text-gray-500">{services?.length + " "}{services?.length == 1 ? "Service" : "Services"}</h1>
                                 <h1>{calculateTotal(services)} Rs</h1>
                             </div>
-                            <div className='font-bold'>
+                            <div className='font-bold pl-4'>
                                 <h1 className="text-gray-500">{selectedDate}</h1>
                                 <h1>{BeginTime?.startTime}</h1>
                             </div>
