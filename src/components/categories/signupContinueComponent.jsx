@@ -171,20 +171,26 @@ export const SignUpContinueComponent = () => {
                                         Mobile Number
                                     </label>
                                     <div className=''>
-                                        <MaskedInput
+                                        <input
+                                            required={true}
+                                            onChange={(e) => setInputForm({ ...inputForm, contactNumber: e.target.value })}
+                                            value={inputForm.contactNumber}
+                                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        />
+                                        {/* <MaskedInput
                                             id="depositedAmount"
                                             // maxLength={11}
-                                            pattern="[+-]?\d+(?:[.,]\d+)?"
+                                            // pattern="[+-]?\d+(?:[.,]\d+)?"
                                             placeholder="0300 XXXX XXX"
                                             // mask="0300 1234 567"
-                                            guide={false}
-                                            mask={['(', /[0-9]/, /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+                                            // guide={false}
+                                            // mask={['(', /[0-9]/, /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
                                             required={true}
                                             onChange={(e) => setInputForm({ ...inputForm, contactNumber: e.target.value })}
                                             value={inputForm.contactNumber}
                                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
 
-                                        />
+                                        /> */}
                                     </div>
                                 </div>
                                 <div>
