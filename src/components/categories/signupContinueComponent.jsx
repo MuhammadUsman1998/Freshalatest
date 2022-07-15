@@ -172,6 +172,7 @@ export const SignUpContinueComponent = () => {
                                     </label>
                                     <div className=''>
                                         <input
+                                            maxLength={11}
                                             required={true}
                                             onChange={(e) => setInputForm({ ...inputForm, contactNumber: e.target.value })}
                                             value={inputForm.contactNumber}
@@ -179,7 +180,7 @@ export const SignUpContinueComponent = () => {
                                         />
                                         {/* <MaskedInput
                                             id="depositedAmount"
-                                            // maxLength={11}
+                                            
                                             // pattern="[+-]?\d+(?:[.,]\d+)?"
                                             placeholder="0300 XXXX XXX"
                                             // mask="0300 1234 567"
