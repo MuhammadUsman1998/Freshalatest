@@ -10,6 +10,7 @@ import {
 import ClipLoader from "react-spinners/ClipLoader";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai"
 import MaskedInput from 'react-text-mask';
+import { LoginResetPage } from '../../pages/auth/loginReset';
 export const LoginContinue = () => {
     const [inputForm, setInputForm] = useState({
         contactNumber: "",
@@ -38,7 +39,7 @@ export const LoginContinue = () => {
 
     useEffect(() => {
         if (LoginSuccess) {
-            navigate("/loginSuccess")
+            navigate("/auth-success")
 
         }
         else if (LoginError) {
@@ -98,12 +99,12 @@ export const LoginContinue = () => {
         <div>
             <ToastContainer />
             <div className='bg-slate-900 h-36'>
-                <div className="max-w-7xl mx-auto px-20 sm:px-0 lg:px-0">
+                <div className="max-w-7xl mx-auto px-14 sm:px-0 lg:px-0">
                     <div className=' p-4'>
                         <div className='flex justify-between '>
                             <div className='flex'>
                                 <div className='pr-0'>
-                                    <Link to="/signupcontinueComponent" className="hover:text-gray-600 text-white fa-solid fa-arrow-left float-left pr-2.5" ></Link>
+                                    <Link to="/auth-signup" className="hover:text-gray-600 text-white fa-solid fa-arrow-left float-left pr-2.5" ></Link>
                                 </div>
                                 <p className='text-white '>Step 3/3 </p>
                             </div>
@@ -155,7 +156,7 @@ export const LoginContinue = () => {
                                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         />
                                     </div>
-                                    <div className='text-2xl flex justify-end -mt-8 mr-6' onClick={handleToggle}>
+                                    <div className='text-2xl float-right -mt-8 mr-6 cursor-pointer ' onClick={handleToggle}>
                                         {!showPassword ? <AiFillEyeInvisible /> :
                                             <AiFillEye />}
                                     </div>
@@ -163,7 +164,7 @@ export const LoginContinue = () => {
 
                                 <div className="flex items-center justify-between">
                                     <div className="text-sm">
-                                        <Link to="" href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                                        <Link to="/auth-resetPassword" href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
                                             Forgot your password?
                                         </Link>
                                     </div>
@@ -194,7 +195,7 @@ export const LoginContinue = () => {
                                         <span className="px-2 bg-white text-gray-500">Don't have a booker account?</span>
                                     </div>
                                 </div>
-                                <Link to="/signupcontinueComponent" className=" cursor-pointer flex justify-center text-blue-400">Sign up now</Link>
+                                <Link to="/auth-signup" className=" cursor-pointer flex justify-center text-blue-400">Sign up now</Link>
 
                             </div>
                         </div>
@@ -279,6 +280,7 @@ export const LoginContinue = () => {
                     </button>
                 </div>
             </div>
+
         </div>
     )
 }

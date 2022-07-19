@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { orderCreation } from '../../redux/Actions/userActions';
 import checked from "../../assets/images/check.png"
 import moment from 'moment';
-import { useEffect } from 'react';
 export const LoginSuccess = () => {
 
     const dispatch = useDispatch()
@@ -32,6 +31,12 @@ export const LoginSuccess = () => {
 
         return TotalTime;
     };
+
+    // let obj=[];
+    // obj.forEach((item,index)=>{
+
+    // })
+
 
 
     Object.assign(services[0], JSON.parse(selectedTime));
@@ -68,8 +73,10 @@ export const LoginSuccess = () => {
 
     const user = JSON.parse(localStorage.getItem("user"))
     const info = JSON.parse(localStorage.getItem("info"))
+    localStorage.getItem("orderId")
     const handleClick = () => {
         var dateFormat = moment(selectedDate, "MMMM DD dddd").format('YYYY-MM-DD');
+        console.log(dateFormat);
         const obj = {
             userId: user.id,
             branchId: info[0].branchId,
@@ -79,7 +86,7 @@ export const LoginSuccess = () => {
             actualOrderPrice: servicePriceSum,
             orderJob: AllServices
         }
-
+        console.log({ obj });
         dispatch(orderCreation(obj))
 
     }
@@ -94,12 +101,12 @@ export const LoginSuccess = () => {
 
         <div>
             <div className='bg-slate-900 h-36'>
-                <div className="max-w-7xl mx-auto px-20 sm:px-0 lg:px-8">
+                <div className="max-w-7xl mx-auto px-14 sm:px-0 lg:px-8">
                     <div className=' p-4'>
                         <div className='flex justify-between '>
                             <div className='flex'>
                                 <div className='pl-1'>
-                                    <Link to="/loginContinue" className="hover:text-gray-600 text-white fa-solid fa-arrow-left float-left pr-2" ></Link>
+                                    <Link to="/auth-login" className="hover:text-gray-600 text-white fa-solid fa-arrow-left float-left pr-2" ></Link>
                                 </div>
                                 <p className='text-white '>Step 3/3 </p>
                             </div>
@@ -113,20 +120,17 @@ export const LoginSuccess = () => {
             <div className='bg-gray-200 h-screen'>
                 <div className="max-w-7xl mx-auto  sm:px-0  lg:px-0">
                     <div className=" flex justify-evenly">
-                        {/* <div className=""> */}
                         <div className=" bg-white w-1/2  lg:w-full  py-8 px-0 shadow rounded-lg sm:px-10  ">
                             <div className='flex justify-center  h-28 '>
                                 <img className='rounded-full border-5 border-solid border-gray-200 p-3' src={checked} />
                             </div>
-                            <div className='text-center py-20 sm:py-12 '>
+                            <div className='py-14 sm:py-12 pl-3 '>
 
-                                {userProfileInfo && <h1 className='font-bold text-3xl'>Logged in as {userProfileInfo?.fullName} </h1>}
+                                {userProfileInfo && <h1 className=' text-lg'><b>Logged in user: </b> {userProfileInfo?.fullName} <br></br> <b>Email: </b>{userProfileInfo?.email} <br></br> <b>ContactNumber: </b>{userProfileInfo?.contactNumber} </h1>}
 
                             </div>
                         </div>
-                        {/* </div > */}
 
-                        {/* <div className='ml-4'> */}
                         <div className="bg-white w-1/4 h-1/4 shadow-lg rounded-lg text-black lg:hidden ">
                             <div className='flex justify-center rounded-lg shadow-fuchsia-100   '>
                                 {image ? <img
@@ -179,7 +183,6 @@ export const LoginSuccess = () => {
                                 </div>
                             </div>
                         </div>
-                        {/* </div> */}
                     </div>
                 </div>
             </div>
@@ -198,7 +201,7 @@ export const LoginSuccess = () => {
 
                         </div>
                     </div>
-                    <Link to='/orderSuccess' >
+                    <Link to='/receipt' >
 
                         <button
                             onClick={handleClick}

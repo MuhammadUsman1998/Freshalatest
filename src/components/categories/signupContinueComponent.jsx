@@ -32,7 +32,7 @@ export const SignUpContinueComponent = () => {
     useEffect(() => {
 
         if (SignupSuccess) {
-            navigate("/loginContinue")
+            navigate("/auth-login")
         }
         else if (SignupError) {
             toast(user?.SignUp?.message)
@@ -107,11 +107,11 @@ export const SignUpContinueComponent = () => {
     return (
         <div>
             <div className='bg-slate-900 h-36 '>
-                <div className="max-w-7xl mx-auto px-20 sm:px-0 lg:px-0">
+                <div className="max-w-7xl mx-auto px-16 sm:px-0 lg:px-0">
                     <div className=' p-4 '>
                         <div className='flex'>
                             <div className='pr-0'>
-                                <Link to="/timeComponent" className="hover:text-gray-600 text-white fa-solid fa-arrow-left float-left pr-2" ></Link>
+                                <Link to="/time" className="hover:text-gray-600 text-white fa-solid fa-arrow-left float-left pr-2" ></Link>
                             </div>
                             <p className='text-white sm:pr-4 '>Step 3/3 </p>
                         </div>
@@ -123,11 +123,11 @@ export const SignUpContinueComponent = () => {
             <div className='bg-gray-200'>
                 <div className="max-w-7xl mx-auto  sm:px-0 lg:px-0 ">
                     <div className=" flex justify-evenly">
-                        <div className="bg-white py-8 px-4 shadow-md rounded-lg  w-1/2 lg:w-full ">
-                            <form className="space-y-4 grid grid-cols-2 gap-y-6 gap-x-6 sm:grid-cols-2" action="#" onSubmit={handleSubmit}
+                        <div className="bg-white py-8 px-4 shadow-md rounded-lg w-1/2 lg:w-full ">
+                            <form className=" grid grid-cols-2 gap-y-6 gap-x-6 sm:grid-cols-2" action="#" onSubmit={handleSubmit}
                             >
                                 <div>
-                                    <label htmlFor="fullName" className="block text-sm font-medium text-gray-700  mt-3">
+                                    <label htmlFor="fullName" className="block text-sm font-medium text-gray-700  ">
                                         Full Name
                                     </label>
                                     <div className=" ">
@@ -206,37 +206,36 @@ export const SignUpContinueComponent = () => {
                                         />
 
                                     </div>
-                                    <div className='text-2xl flex justify-end -mt-8 mr-6' onClick={handleToggle}>
+                                    <div className='text-2xl float-right -mt-8 mr-6 ' onClick={handleToggle}>
                                         {!showPassword ? <AiFillEyeInvisible /> :
                                             <AiFillEye />}
                                     </div>
                                 </div>
 
-                                <br></br>
                             </form>
-                            <div >
+                            <div className='mt-2' >
                                 <label htmlFor="Gender" id='gender' className="block text-sm font-medium text-gray-700">
                                     Gender
                                 </label>
-
                                 <input type="radio" id="Male" name="fav_language" value="M" onChange={(e) => setInputForm({ ...inputForm, gender: e.target.value })} />
                                 <label className='ml-2 cursor-pointer' for="Male"> Male</label>
-                                <br></br>
-                                <input type="radio" id="Female" name="fav_language" value="F" onChange={(e) => setInputForm({ ...inputForm, gender: e.target.value })} />
-                                <label className='ml-2 cursor-pointer' for="Female"> Female</label>
+                                <div className='-mt-3'>
+                                    <input type="radio" id="Female" name="fav_language" value="F" onChange={(e) => setInputForm({ ...inputForm, gender: e.target.value })} />
+                                    <label className='ml-2 cursor-pointer' for="Female"> Female</label>
+                                </div>
                             </div>
 
                             <div>
                                 <label>
-                                    <div className="flex mt-3 cursor-pointer" >
+                                    <div className="flex  cursor-pointer" >
                                         <input type="checkbox" className="mr-1 mt-1" id='checkbox' value="checkbox" defaultChecked={inputForm.checkbox} onChange={(e) => setInputForm({ ...inputForm, checkbox: e.target.checked })} required="required" />
-                                        <p> I agree to the Privacy Policy, Terms of Use and Terms of Service</p>
+                                        <p > I agree to the Privacy Policy, Terms of Use and Terms of Service</p>
                                     </div>
                                 </label>
                             </div>
                             <label>
-                                <div className="flex mt-3 cursor-pointer" >
-                                    <input className="mr-1 mt-1 inline-flex" type="checkbox" id='checkbox' value="checkbox" defaultChecked={marketingCheckBox} onChange={(e) => setMarketingCheckBox(e.target.checked)} />
+                                <div className="flex -mt-2 cursor-pointer" >
+                                    <input className="mr-1 mt-1  inline-flex" type="checkbox" id='checkbox' value="checkbox" defaultChecked={marketingCheckBox} onChange={(e) => setMarketingCheckBox(e.target.checked)} />
                                     <p>I agree to receive marketing notifications with offers and news</p>
                                 </div>
                             </label>
@@ -269,7 +268,7 @@ export const SignUpContinueComponent = () => {
                                         <span className="px-2 bg-white text-gray-500">Already have a booker account?</span>
                                     </div>
                                 </div >
-                                <Link to="/loginContinue" className="flex justify-center text-blue">Sign in now</Link>
+                                <Link to="/auth-login" className="flex justify-center text-blue">Sign in now</Link>
                             </div>
                         </div>
 
@@ -330,7 +329,7 @@ export const SignUpContinueComponent = () => {
                 </div>
 
 
-                <div className=' bg-white py-2 mt-60 sticky bottom-0'>
+                <div className=' bg-white py-2 mt-72 sticky bottom-0'>
 
                     <div className='flex justify-between '>
                         <div className='flex px-6 3xl:invisible 2xl:invisible xl:invisible lg:visible'>

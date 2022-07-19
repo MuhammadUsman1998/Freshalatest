@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import checked from "../../assets/images/check.png"
 import { useNavigate } from 'react-router-dom'
-
-
+import { useSelector } from "react-redux";
+import moment from 'moment';
+import ClipLoader from "react-spinners/ClipLoader";
+import { orderCreation } from '../../redux/Actions/userActions';
 
 
 export const OrderSuccess = ({ IDRoute }) => {
@@ -18,6 +20,7 @@ export const OrderSuccess = ({ IDRoute }) => {
     const navigate = useNavigate()
     const services = JSON.parse(localStorage.getItem('selected_services'))
     const selectedTime = JSON.parse(localStorage.getItem('selected_time'))
+    const selectedDate = JSON.parse(localStorage.getItem('selected_date'))
     localStorage.getItem('salonTitle')
     localStorage.getItem('branchLocation')
     localStorage.getItem('selected_date')
@@ -56,7 +59,7 @@ export const OrderSuccess = ({ IDRoute }) => {
     };
 
     const info = JSON.parse(localStorage.getItem("info"))
-
+    const userProfileInfo = JSON.parse(localStorage.getItem("user"))
     const handleClick = () => {
         var myUser = localStorage.getItem('user');
         var token = localStorage.getItem('accessToken');
@@ -66,76 +69,99 @@ export const OrderSuccess = ({ IDRoute }) => {
         navigate(`/online-booking/details?branchId=${info[0].branchId}&salonId=${info[0].salonId}`)
 
     }
+    var dateFormat = moment(selectedDate, "MMMM DD dddd").format('YYYY-MM-DD');
+    const orderId = JSON.parse(localStorage.getItem("orderId"))
+    const orderCreation = useSelector((state) => state.orderCreation)
+    const { loading } = orderCreation;
     // /online-booking/details ? branchId = ${ IDRoute?.BranchId }& salonId=${ IDRoute?.SalonId }
 
     return (
         <div>
-            <div className='bg-gray-200 ' >
-                <div className="max-w-7xl mx-auto  py-10 sm:px-0  lg:py-0 lg:px-0 flex justify-center">
-                    <div className='bg-white p-6 shadow-md rounded-md w-1/2   xl:w-full'>
-                        <div className=" sm:mx-auto sm:w-full sm:max-w-md  ">
-                            <div className="  rounded-lg sm:px-10  mt-3">
-                                <div className='flex justify-center h-28 '>
-                                    <img className='rounded-full border-5 border-solid border-gray-200 p-3 sm:rounded-full' src={checked} />
-                                </div>
-                                <div className='text-center py-10'>
-                                    <h1 className='font-bold text-2xl '>APPOINTMENT SUCCESSFULL</h1>
-                                </div>
-                            </div>
-                        </div >
-                        <div className='border-solid border-2 border-black rounded-sm'>
-                            <div className=' p-3 flex justify-between font-bold'>
-                                <h1>Time</h1>
-                                {services?.length > 1 ? (<h1>Services</h1>) : "Service"}
-                                <h1>Price</h1>
-                            </div>
-                        </div>
-                        <h1 className='mt-4 font-semibold ml-1 '>  {tConvert24hour(selectedTime?.startTime)}</h1>
-                        <div className='-mt-5'>
-                            {
-                                services?.map((serviceData) => {
-                                    return (
-                                        <div className="flex justify-between  font-semibold ml-5" >
-                                            <div></div>
-                                            <h1 className='inline '> {serviceData?.serviceTitle}</h1>
-                                            <div className=''>
-                                                <h1 className='mr-1' >{serviceData?.price} Rs</h1>
-                                            </div>
+            {loading ? (
+                <div className='flex justify-center mt-56 '>
+                    <ClipLoader loading={loading} size={40} />
+                </div>
+            ) : (
+                <>
+                    <div className='bg-gray-200 ' >
+                        <div className="max-w-7xl mx-auto  py-10 sm:px-0  lg:py-0 lg:px-0 flex justify-center">
+
+                            <div className='bg-white p-6 shadow-md rounded-md w-2/3   xl:w-full'>
+                                <div className=" sm:mx-auto sm:w-full sm:max-w-md  ">
+                                    <div className="  rounded-lg sm:px-10  ">
+                                        <div className='flex justify-center h-28 '>
+                                            <img className='rounded-full border-5 border-solid border-gray-200 p-3 sm:rounded-full' src={checked} />
                                         </div>
-                                    )
-                                })
-                            }
-                        </div>
+                                        <div className='text-center py-8'>
+                                            <h1 className='font-bold text-2xl '>APPOINTMENT SUCCESSFULL</h1>
+                                        </div>
+                                    </div>
+                                    <div className=' text-lg '>
+                                        {userProfileInfo && <h1><b>Name: </b> {userProfileInfo?.fullName}</h1>}
+                                        {orderId && <h1><b>Order Id:# </b> {orderId}</h1>}
+                                        {userProfileInfo && <h1><b>Email: </b> {userProfileInfo?.email}</h1>}
+                                        {userProfileInfo && <h1><b>ContactNumber: </b> {userProfileInfo?.contactNumber}</h1>}
+                                    </div>
+                                </div >
+                                <div className='border-solid border-2 border-black rounded-sm mt-3'>
+                                    <div className=' p-3 flex justify-between font-bold'>
+                                        <h1>Date&Time</h1>
+                                        {services?.length > 1 ? (<h1>Services</h1>) : "Service"}
+                                        <h1>Price</h1>
+                                    </div>
+                                </div>
+                                <div className='flex sm:text-xs mt-4 font-semibold '>
+                                    <h1 className=' '>{dateFormat}</h1>
+                                    <h1 className=' ml-2'>  {tConvert24hour(selectedTime?.startTime)}</h1>
+                                </div>
+                                <div className='-mt-5 '>
+                                    {
+                                        services?.map((serviceData) => {
+                                            return (
+                                                <div className="flex justify-between sm:text-xs sm:mt-1.5 font-semibold ml-32" >
+                                                    <div></div>
+                                                    <h1 className='inline sm:truncate '> {serviceData?.serviceTitle}</h1>
+                                                    <div className=''>
+                                                        <h1 className='ml-3 ' >{serviceData?.price} Rs</h1>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>
 
 
-                        <hr className='mt-4 w-full'></hr>
-                        <div className='font-bold px-1'>
-                            <h1 className='pt-3 text-gray-500'>Payment Details</h1>
+                                <hr className='mt-4 w-full'></hr>
+                                <div className='font-bold px-1'>
+                                    <h1 className='pt-3 text-gray-500'>Payment Details</h1>
+                                </div>
+                                <div className=' flex justify-between px-1 py-1 font-bold'>
+                                    <h1>Total Payment</h1>
+                                    <h1 className=''>{calculateTotal(arrayOfSelectedServices)} Rs</h1>
+                                </div>
+
+
+                            </div>
+
                         </div>
-                        <div className=' flex justify-between px-1 py-1 font-bold'>
-                            <h1>Total Payment</h1>
-                            <h1 className=''>{calculateTotal(arrayOfSelectedServices)} Rs</h1>
+
+                    </div>
+                    <div className=' bg-white py-2 mt-96 sticky bottom-0 '>
+                        <div className='flex justify-end '>
+
+                            <button
+                                onClick={handleClick}
+                                className='bg-slate-900 w-60 h-12 mr-10  rounded-lg 
+                                text-white  font-bold sticky'
+                            >
+                                Add Another Appointment
+                            </button>
+
                         </div>
                     </div>
-                </div>
-
-            </div>
-
-            <div className=' bg-white py-2 mt-96 sticky bottom-0 '>
-                <div className='flex justify-end '>
-
-                    <button
-                        onClick={handleClick}
-                        className='bg-slate-900 w-60 h-12 mr-10  rounded-lg 
-                                text-white  font-bold sticky'
-                    >
-                        Add Another Appointment
-                    </button>
-
-                </div>
-            </div>
+                </>
+            )}
         </div>
-
 
     )
 }

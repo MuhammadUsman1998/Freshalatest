@@ -19,13 +19,13 @@ export const MainRoutes = () => {
       <Route path="/login" element={<LoginPage />} />
       <Route exact path="/signUpForm" element={<SignFormPage />} />
       <Route exact path="/loginform" element={<LoginFormPage />} />
-      <Route exact path="/loginreset" element={<LoginResetPage />} />
+      <Route exact path="/auth-resetPassword" element={<LoginResetPage />} />
       <Route exact path="/staffComponent" element={<StaffComponent />} />
-      <Route exact path="/timeComponent" element={<TimeComponent />} />
-      <Route exact path="/signupcontinueComponent" element={<SignUpContinueComponent />} />
-      <Route exact path="/loginContinue" element={<LoginContinue />} />
-      <Route exact path="/orderSuccess" element={<OrderSuccess IDRoute={ID} />} />
-      <Route exact path="/loginSuccess" element={<LoginSuccess />} />
+      <Route exact path="/time" element={<TimeComponent />} />
+      <Route exact path="/auth-signup" element={<SignUpContinueComponent />} />
+      <Route exact path="/auth-login" element={<LoginContinue />} />
+      <Route exact path="/receipt" element={<OrderSuccess IDRoute={ID} />} />
+      <Route exact path="/auth-success" element={<LoginSuccess />} />
 
     </Routes>
   );

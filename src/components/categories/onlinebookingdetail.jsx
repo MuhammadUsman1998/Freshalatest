@@ -55,7 +55,7 @@ export const OnlineBookingDetail = ({ IdSet }) => {
 
     const routeChange = () => {
         IdSet({ BranchId: branchId, SalonId: salonId })
-        let path = "/timeComponent";
+        let path = "/time";
         navigate(path);
     }
 
@@ -124,8 +124,8 @@ export const OnlineBookingDetail = ({ IdSet }) => {
             </div>
 
             {loading ? (
-                <div className='flex justify-center mt-32 '>
-                    <ClipLoader color='gray' loading={loading} size={70} />
+                <div className='flex justify-center mt-56 '>
+                    <ClipLoader loading={loading} size={40} />
                 </div>
             ) : (
                 <>
@@ -148,7 +148,7 @@ export const OnlineBookingDetail = ({ IdSet }) => {
                                                             className={`truncate cursor-pointer hover:no-underline hover:text-black sm:text-sm sm:truncate sm:px-1  md:truncate md:px-4 
                                                         ${selectedCategory ===
                                                                     cat1?._id
-                                                                    ? "text-white bg-gray-900 px-10 py-2 rounded-full truncate"
+                                                                    ? "text-white bg-gray-900 px-6 py-2 rounded-full truncate"
                                                                     : "text-black"
 
                                                                 }`}
@@ -195,7 +195,7 @@ export const OnlineBookingDetail = ({ IdSet }) => {
                                                                                             checked={arrayOfSelectedServices.some(e => e._id === service?._id) ? true : false}
                                                                                         />
 
-                                                                                        <p className='text-xl sm:text-sm sm:font-bold font-bold pl-3'>
+                                                                                        <p className='text-lg  font-bold pl-3'>
                                                                                             {service?.serviceTitle}
 
                                                                                         </p>

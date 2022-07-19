@@ -6,9 +6,24 @@ import moment from 'moment';
 import Slider from "react-slick";
 import { useDispatch, useSelector } from "react-redux";
 import { orderCreation } from '../../redux/Actions/userActions';
+
+
+function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+        <div
+            className={className}
+            style={{ ...style, backgroundColor: "gray", borderRadius: "50%" }}
+            onClick={onClick}
+        />
+    );
+}
+
 var settings = {
     infinite: false,
     speed: 500,
+    nextArrow: <SamplePrevArrow />,
+    prevArrow: <SamplePrevArrow />,
     slidesToShow: 5,
     slidesToScroll: 5,
 };
@@ -170,7 +185,7 @@ export const TimeComponent = () => {
         dispatch(orderCreation(obj))
 
 
-        navigate('/orderSuccess')
+        navigate('/receipt')
 
     }
     const service_info = useSelector((state) => state.getService);
@@ -181,7 +196,7 @@ export const TimeComponent = () => {
     return (
         <div className="">
             <div className='bg-slate-900 h-36 '>
-                <div className="max-w-7xl mx-auto px-20 sm:px-0 lg:px-0 ">
+                <div className="max-w-7xl mx-auto px-16 sm:px-0 lg:px-0 ">
                     <div className=' p-4'>
                         <div className='flex '>
                             <div className='pr-2'>
@@ -201,14 +216,14 @@ export const TimeComponent = () => {
                 <div className="max-w-7xl mx-auto  sm:px-0 lg:px-0 ">
                     <div className='flex justify-evenly sticky '>
                         <div className=" bg-white  w-1/2  shadow-md  lg:w-full">
-                            <Slider className='' focusOnSelect={true}  {...settings}>
+                            <Slider className=''   {...settings}>
                                 {
                                     dateArray?.map((date, i) => {
 
                                         return (
                                             <div className='flex justify-center'>
                                                 <div onClick={(e) => clickDate(e, i, date)}
-                                                    className={`flex justify-center border-solid border-black border-2 rounded-lg hover:bg-gray-300 
+                                                    className={`flex justify-center border-solid border-black border-2 rounded-lg  ml-3
                                                 hover:text-black px-3 h-20 w-20 text-center text-2xl pt-2 font-semibold cursor-pointer xl:w-16 xl:h-16 xl:text-xl lg:w-20
                                                  md:w-16 md:h-16 md:text-lg sm:w-12   ${selectedCategory ===
                                                         date
@@ -340,7 +355,7 @@ export const TimeComponent = () => {
                             </button>) : (
 
                             <div className='flex  '>
-                                <Link to='/signupcontinueComponent'>
+                                <Link to='/auth-signup'>
                                     <button
                                         className='bg-slate-900 w-32 h-12 mr-10 rounded-lg sticky 
                                         text-white  font-bold'
