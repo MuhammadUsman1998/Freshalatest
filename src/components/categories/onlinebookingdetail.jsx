@@ -106,6 +106,10 @@ export const OnlineBookingDetail = ({ IdSet }) => {
     localStorage.setItem("image", image)
     localStorage.getItem("image")
 
+    const branch = service_info?.Services?.data[0]?.branchCode
+    localStorage.setItem("branchCode", branch)
+    const branchCode = localStorage.getItem("branchCode")
+
     return (
         <>
             <div className='bg-slate-900 h-36 text-white sticky top-0'>
@@ -195,16 +199,16 @@ export const OnlineBookingDetail = ({ IdSet }) => {
                                                                                             checked={arrayOfSelectedServices.some(e => e._id === service?._id) ? true : false}
                                                                                         />
 
-                                                                                        <p className='text-lg  font-bold pl-3'>
+                                                                                        <p className='text-lg  font-bold pl-3 sm:text-sm'>
                                                                                             {service?.serviceTitle}
 
                                                                                         </p>
                                                                                     </div>
-                                                                                    <p className='text-gray-400 pl-10'>
+                                                                                    <p className='text-gray-400 pl-10 sm:text-sm'>
                                                                                         {service?.duration} Min
                                                                                     </p>
                                                                                 </label>
-                                                                                <div className='flex justify-end lg:flex flex-wrap'>
+                                                                                <div className='flex justify-end lg:flex flex-wrap sm:text-sm'>
                                                                                     <p className='-mt-14 font-medium '>
                                                                                         {service?.price} Rs
                                                                                     </p>
@@ -241,6 +245,7 @@ export const OnlineBookingDetail = ({ IdSet }) => {
                                     </div>
                                     <h1 className='text-center font-bold pt-2'>{total}</h1>
                                     <p className='pt-3 text-center text-gray-400'> {myTotal}</p>
+                                    <p className="text-center text-gray-400">{branchCode}</p>
                                     <hr className='mt-3'></hr>
                                     <div className="overflow-y-scroll h-72">
                                         {
@@ -248,10 +253,10 @@ export const OnlineBookingDetail = ({ IdSet }) => {
                                                 return (
 
                                                     <div>
-                                                        <div className="flex justify-between p-4 ">
+                                                        <div className="flex justify-between pl-4 pt-2 ">
 
                                                             <h1> {serviceData.serviceTitle}</h1>
-                                                            <h1> {serviceData.price} Rs</h1>
+                                                            <h1 className="pr-2"> {serviceData.price} Rs</h1>
                                                         </div>
                                                         <div className="text-gray-500 pl-6 ">
                                                             <h1> {serviceData.duration} Min</h1>

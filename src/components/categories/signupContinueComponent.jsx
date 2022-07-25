@@ -24,6 +24,8 @@ export const SignUpContinueComponent = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [disabledButton, setDisabledButton] = useState(true);
     const [marketingCheckBox, setMarketingCheckBox] = useState(false)
+    const [errorMessage, setErrorMessage] = useState("")
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = useSelector(state => state?.userSignUp)
@@ -93,12 +95,13 @@ export const SignUpContinueComponent = () => {
     }
     Object.assign(services[0], JSON.parse(selectedTime));
 
-    const service_info = useSelector((state) => state.getService);
-    const image = service_info?.Services?.data[0].image;
-    localStorage.setItem("image", image)
-    localStorage.getItem("image")
+    // const service_info = useSelector((state) => state.getService);
+    // const image = service_info?.Services?.data[0].image;
+    // localStorage.setItem("image", image)
+    const image = localStorage.getItem("image")
 
 
+    const branchCode = localStorage.getItem("branchCode")
 
     const handleToggle = () => {
         setShowPassword(!showPassword)
@@ -185,6 +188,7 @@ export const SignUpContinueComponent = () => {
                                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
 
                                         />
+
                                     </div>
                                 </div>
                                 <div>
@@ -227,16 +231,16 @@ export const SignUpContinueComponent = () => {
 
                             <div>
                                 <label>
-                                    <div className="flex  cursor-pointer" >
-                                        <input type="checkbox" className="mr-1 mt-1" id='checkbox' value="checkbox" defaultChecked={inputForm.checkbox} onChange={(e) => setInputForm({ ...inputForm, checkbox: e.target.checked })} required="required" />
-                                        <p > I agree to the Privacy Policy, Terms of Use and Terms of Service</p>
+                                    <div className="flex sm:-mt-6 cursor-pointer" >
+                                        <input type="checkbox" className="mr-1 mt-1 " id='checkbox' value="checkbox" defaultChecked={inputForm.checkbox} onChange={(e) => setInputForm({ ...inputForm, checkbox: e.target.checked })} required="required" />
+                                        <p className='sm:pt-6'> I agree to the Privacy Policy, Terms of Use and Terms of Service</p>
                                     </div>
                                 </label>
                             </div>
                             <label>
-                                <div className="flex -mt-2 cursor-pointer" >
+                                <div className="flex -mt-2 sm:-mt-8 cursor-pointer" >
                                     <input className="mr-1 mt-1  inline-flex" type="checkbox" id='checkbox' value="checkbox" defaultChecked={marketingCheckBox} onChange={(e) => setMarketingCheckBox(e.target.checked)} />
-                                    <p>I agree to receive marketing notifications with offers and news</p>
+                                    <p className='sm:pt-6'>I agree to receive marketing notifications with offers and news</p>
                                 </div>
                             </label>
                             <div>
@@ -289,11 +293,12 @@ export const SignUpContinueComponent = () => {
                             </div>
                             <h1 className='text-center font-bold pt-2'>{salonName}</h1>
                             <p className='pt-3 text-center text-gray-400'>  {salonLocation}</p>
+                            <p className='text-center text-gray-400'>{branchCode}</p>
                             <hr className='mt-3'></hr>
 
 
                             <div className="overflow-y-scroll h-72">
-                                <div className='px-4 py-4 font-bold flex justify-between'>
+                                <div className='px-4 pt-2 font-bold flex justify-between'>
                                     <h1>{selectedDate}</h1>
                                     <h1> {BeginTime?.startTime}</h1>
                                 </div>
@@ -304,10 +309,10 @@ export const SignUpContinueComponent = () => {
                                         return (
 
                                             <div>
-                                                <div className="flex justify-between p-4 ">
+                                                <div className="flex justify-between pl-4 pt-2 ">
 
                                                     <h1> {serviceData.serviceTitle}</h1>
-                                                    <h1> {serviceData.price} Rs</h1>
+                                                    <h1 className='pr-2'> {serviceData.price} Rs</h1>
                                                 </div>
                                                 <div className="text-gray-500 pl-6 ">
                                                     <h1> {serviceData.duration} Min</h1>

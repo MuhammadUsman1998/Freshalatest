@@ -89,7 +89,9 @@ export const orderCreation = (order) => async (dispatch) => {
             type: ORDER_ADD_SUCCESS,
             payload: data,
         });
-        localStorage.setItem("orderId", JSON.stringify(data?.data?.orderId));
+        localStorage.setItem("orderCode", JSON.stringify(data?.data?.orderCode));
+        // localStorage.setItem("branchCode", JSON.stringify(data?.data?.branchCode))
+
 
     } catch (error) {
         dispatch({

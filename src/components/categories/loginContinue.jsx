@@ -67,6 +67,7 @@ export const LoginContinue = () => {
 
     const handleFormDisabled = () => {
         if (!inputForm.contactNumber || !inputForm.password) {
+
             return true
         } else {
             return false
@@ -82,14 +83,11 @@ export const LoginContinue = () => {
         }
     }
 
-    const service_info = useSelector((state) => state.getService);
 
-    const image = service_info?.Services?.data[0].image;
-    localStorage.setItem("image", image)
-
-    localStorage.getItem("image")
+    const image = localStorage.getItem("image")
 
 
+    const branchCode = localStorage.getItem("branchCode")
 
     const handleToggle = () => {
         setShowPassword(!showPassword)
@@ -218,9 +216,10 @@ export const LoginContinue = () => {
                             </div>
                             <h1 className='text-center font-bold pt-2'>{salonName}</h1>
                             <p className='pt-3 text-center text-gray-400'>  {salonLocation}</p>
+                            <p className='text-center text-gray-400'>{branchCode}</p>
                             <hr className='mt-3'></hr>
                             <div className="overflow-y-scroll h-72">
-                                <div className='px-4 py-4 font-bold flex justify-between'>
+                                <div className='px-4 pt-2 font-bold flex justify-between'>
                                     <h1>{selectedDate}</h1>
                                     <h1> {beginTime?.startTime}</h1>
                                 </div>
@@ -232,10 +231,10 @@ export const LoginContinue = () => {
                                         return (
 
                                             <div>
-                                                <div className="flex justify-between p-4 ">
+                                                <div className="flex justify-between pl-4 pt-2 ">
 
                                                     <h1> {serviceData.serviceTitle}</h1>
-                                                    <h1> {serviceData.price} Rs</h1>
+                                                    <h1 className='pr-2'> {serviceData.price} Rs</h1>
                                                 </div>
                                                 <div className="text-gray-500 pl-6 ">
                                                     <h1> {serviceData.duration} Min</h1>

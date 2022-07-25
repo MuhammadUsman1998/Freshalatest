@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import checked from "../../assets/images/check.png"
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from "react-redux";
@@ -21,8 +21,6 @@ export const OrderSuccess = ({ IDRoute }) => {
     const services = JSON.parse(localStorage.getItem('selected_services'))
     const selectedTime = JSON.parse(localStorage.getItem('selected_time'))
     const selectedDate = JSON.parse(localStorage.getItem('selected_date'))
-    localStorage.getItem('salonTitle')
-    localStorage.getItem('branchLocation')
     localStorage.getItem('selected_date')
 
     const calculateTotal = (array) => {
@@ -60,6 +58,9 @@ export const OrderSuccess = ({ IDRoute }) => {
 
     const info = JSON.parse(localStorage.getItem("info"))
     const userProfileInfo = JSON.parse(localStorage.getItem("user"))
+
+
+
     const handleClick = () => {
         var myUser = localStorage.getItem('user');
         var token = localStorage.getItem('accessToken');
@@ -70,10 +71,21 @@ export const OrderSuccess = ({ IDRoute }) => {
 
     }
     var dateFormat = moment(selectedDate, "MMMM DD dddd").format('YYYY-MM-DD');
-    const orderId = JSON.parse(localStorage.getItem("orderId"))
+    const orderCode = JSON.parse(localStorage.getItem("orderCode"))
+
+    const shortcode = orderCode
+
+
+
     const orderCreation = useSelector((state) => state.orderCreation)
     const { loading } = orderCreation;
     // /online-booking/details ? branchId = ${ IDRoute?.BranchId }& salonId=${ IDRoute?.SalonId }
+
+    const total = localStorage.getItem('salonTitle')
+    const myTotal = localStorage.getItem('branchLocation')
+
+
+    const branch = localStorage.getItem("branchCode")
 
     return (
         <div>
@@ -84,7 +96,7 @@ export const OrderSuccess = ({ IDRoute }) => {
             ) : (
                 <>
                     <div className='bg-gray-200 ' >
-                        <div className="max-w-7xl mx-auto  py-10 sm:px-0  lg:py-0 lg:px-0 flex justify-center">
+                        <div className="max-w-7xl mx-auto sm:px-0 lg:py-0 lg:px-0 flex justify-center">
 
                             <div className='bg-white p-6 shadow-md rounded-md w-2/3   xl:w-full'>
                                 <div className=" sm:mx-auto sm:w-full sm:max-w-md  ">
@@ -96,16 +108,27 @@ export const OrderSuccess = ({ IDRoute }) => {
                                             <h1 className='font-bold text-2xl '>APPOINTMENT SUCCESSFULL</h1>
                                         </div>
                                     </div>
-                                    <div className=' text-lg '>
-                                        {userProfileInfo && <h1><b>Name: </b> {userProfileInfo?.fullName}</h1>}
-                                        {orderId && <h1><b>Order Id:# </b> {orderId}</h1>}
-                                        {userProfileInfo && <h1><b>Email: </b> {userProfileInfo?.email}</h1>}
-                                        {userProfileInfo && <h1><b>ContactNumber: </b> {userProfileInfo?.contactNumber}</h1>}
+
+                                    <div className="flex justify-between sm:flex sm:flex-col ">
+                                        <div className=' text-lg '>
+                                            {userProfileInfo && <h1><b>Name: </b> {userProfileInfo?.fullName}</h1>}
+                                            {shortcode && <h1><b>Order Id:# </b> {shortcode}</h1>}
+                                            {userProfileInfo && <h1><b>Email: </b> {userProfileInfo?.email}</h1>}
+                                            {userProfileInfo && <h1><b>ContactNumber: </b> {userProfileInfo?.contactNumber}</h1>}
+                                        </div>
+                                        <div className=' text-lg sm:pt-5'>
+                                            {<h1><b>Salon </b> {total}</h1>}
+                                            {<h1><b>Location: </b> {myTotal}</h1>}
+                                            {<h1><b>BranchCode: </b> {branch}</h1>}
+                                        </div>
                                     </div>
+
+
+
                                 </div >
                                 <div className='border-solid border-2 border-black rounded-sm mt-3'>
                                     <div className=' p-3 flex justify-between font-bold'>
-                                        <h1>Date&Time</h1>
+                                        <h1>Time</h1>
                                         {services?.length > 1 ? (<h1>Services</h1>) : "Service"}
                                         <h1>Price</h1>
                                     </div>
@@ -118,7 +141,7 @@ export const OrderSuccess = ({ IDRoute }) => {
                                     {
                                         services?.map((serviceData) => {
                                             return (
-                                                <div className="flex justify-between sm:text-xs sm:mt-1.5 font-semibold ml-32" >
+                                                <div className="flex justify-between sm:text-xs sm:mt-1.5 font-semibold ml-20" >
                                                     <div></div>
                                                     <h1 className='inline sm:truncate '> {serviceData?.serviceTitle}</h1>
                                                     <div className=''>
