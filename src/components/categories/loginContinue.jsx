@@ -8,12 +8,15 @@ import {
     LOGIN_ADD_RESET
 } from "../../redux/Constants/userConstants";
 import ClipLoader from "react-spinners/ClipLoader";
-
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai"
+import MaskedInput from 'react-text-mask';
+import { LoginResetPage } from '../../pages/auth/loginReset';
 export const LoginContinue = () => {
     const [inputForm, setInputForm] = useState({
         contactNumber: "",
         password: ""
     });
+    const [showPassword, setShowPassword] = useState(false);
     const [disabledButton, setDisabledButton] = useState(true);
 
     const dispatch = useDispatch();
@@ -36,7 +39,7 @@ export const LoginContinue = () => {
 
     useEffect(() => {
         if (LoginSuccess) {
-            navigate("/loginSuccess")
+            navigate("/auth-success")
 
         }
         else if (LoginError) {
@@ -64,6 +67,7 @@ export const LoginContinue = () => {
 
     const handleFormDisabled = () => {
         if (!inputForm.contactNumber || !inputForm.password) {
+
             return true
         } else {
             return false
@@ -79,24 +83,26 @@ export const LoginContinue = () => {
         }
     }
 
-    const service_info = useSelector((state) => state.getService);
 
-    const image = service_info?.Services?.data[0].image;
-    localStorage.setItem("image", image)
+    const image = localStorage.getItem("image")
 
-    localStorage.getItem("image")
 
+    const branchCode = localStorage.getItem("branchCode")
+
+    const handleToggle = () => {
+        setShowPassword(!showPassword)
+    }
     return (
 
         <div>
             <ToastContainer />
             <div className='bg-slate-900 h-36'>
-                <div className="max-w-7xl mx-auto px-20 sm:px-0 lg:px-0">
+                <div className="max-w-7xl mx-auto px-14 sm:px-0 lg:px-0">
                     <div className=' p-4'>
                         <div className='flex justify-between '>
                             <div className='flex'>
                                 <div className='pr-0'>
-                                    <Link to="/signupcontinueComponent" className="hover:text-gray-600 text-white fa-solid fa-arrow-left float-left pr-2.5" ></Link>
+                                    <Link to="/auth-signup" className="hover:text-gray-600 text-white fa-solid fa-arrow-left float-left pr-2.5" ></Link>
                                 </div>
                                 <p className='text-white '>Step 3/3 </p>
                             </div>
@@ -118,11 +124,13 @@ export const LoginContinue = () => {
                                         Contact Number
                                     </label>
                                     <div className="mt-1">
-                                        <input
+                                        <MaskedInput
                                             id="contactNumber"
                                             name="contactNumber"
                                             type="contactNumber"
-                                            maxLength={11}
+                                            // maxLength={11}
+                                            guide={false}
+                                            mask={[/[0-9]/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, " ", /\d/, /\d/, /\d/, /\d/]}
                                             placeholder="0300 XXXX XXX"
                                             value={inputForm.contactNumber}
                                             onChange={(e) => setInputForm({ ...inputForm, contactNumber: e.target.value })}
@@ -132,25 +140,29 @@ export const LoginContinue = () => {
                                 </div>
 
                                 <div>
-                                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                                    <label htmlFor="password" className="block text-sm font-medium text-gray-700 ">
                                         Password
                                     </label>
-                                    <div className="mt-1">
+                                    <div className="mt-1 ">
                                         <input
+                                            type={showPassword ? "text" : "password"}
                                             id="password"
                                             name="password"
-                                            type="password"
                                             value={inputForm.password}
                                             onChange={(e) => setInputForm({ ...inputForm, password: e.target.value })}
                                             placeholder='Enter Password'
                                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         />
                                     </div>
+                                    <div className='text-2xl float-right -mt-8 mr-6 cursor-pointer ' onClick={handleToggle}>
+                                        {!showPassword ? <AiFillEyeInvisible /> :
+                                            <AiFillEye />}
+                                    </div>
                                 </div>
 
                                 <div className="flex items-center justify-between">
                                     <div className="text-sm">
-                                        <Link to="/loginreset" href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                                        <Link to="/auth-resetPassword" href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
                                             Forgot your password?
                                         </Link>
                                     </div>
@@ -181,7 +193,7 @@ export const LoginContinue = () => {
                                         <span className="px-2 bg-white text-gray-500">Don't have a booker account?</span>
                                     </div>
                                 </div>
-                                <Link to="/signupcontinueComponent" className=" cursor-pointer flex justify-center text-blue-400">Sign up now</Link>
+                                <Link to="/auth-signup" className=" cursor-pointer flex justify-center text-blue-400">Sign up now</Link>
 
                             </div>
                         </div>
@@ -204,9 +216,10 @@ export const LoginContinue = () => {
                             </div>
                             <h1 className='text-center font-bold pt-2'>{salonName}</h1>
                             <p className='pt-3 text-center text-gray-400'>  {salonLocation}</p>
+                            <p className='text-center text-gray-400'>{branchCode}</p>
                             <hr className='mt-3'></hr>
                             <div className="overflow-y-scroll h-72">
-                                <div className='px-4 py-4 font-bold flex justify-between'>
+                                <div className='px-4 pt-2 font-bold flex justify-between'>
                                     <h1>{selectedDate}</h1>
                                     <h1> {beginTime?.startTime}</h1>
                                 </div>
@@ -218,10 +231,10 @@ export const LoginContinue = () => {
                                         return (
 
                                             <div>
-                                                <div className="flex justify-between p-4 ">
+                                                <div className="flex justify-between pl-4 pt-2 ">
 
                                                     <h1> {serviceData.serviceTitle}</h1>
-                                                    <h1> {serviceData.price} Rs</h1>
+                                                    <h1 className='pr-2'> {serviceData.price} Rs</h1>
                                                 </div>
                                                 <div className="text-gray-500 pl-6 ">
                                                     <h1> {serviceData.duration} Min</h1>
@@ -246,7 +259,16 @@ export const LoginContinue = () => {
 
 
             <div className=' bg-white py-2  sticky bottom-0 '>
-                <div className='flex justify-end '>
+                <div className='flex justify-between '>
+                    <div className='flex px-6 3xl:invisible 2xl:invisible xl:invisible lg:visible'>
+                        <div className='font-bold'>
+                            <h1 className="text-gray-500">{services?.length + " "}{services?.length == 1 ? "Service" : "Services"}</h1>
+                            <h1>{calculateTotal(services)} Rs</h1>
+                        </div>
+                        <div className='font-bold pl-4'>
+                            <h1 className="text-gray-500">{selectedDate}</h1>
+                            <h1>{beginTime?.startTime}</h1>                        </div>
+                    </div>
                     <button
                         style={{ cursor: disabledButton ? "not-allowed" : "pointer" }}
                         disabled={disabledButton}
@@ -257,6 +279,7 @@ export const LoginContinue = () => {
                     </button>
                 </div>
             </div>
+
         </div>
     )
 }

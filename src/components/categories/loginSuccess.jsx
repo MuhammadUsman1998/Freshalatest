@@ -2,10 +2,17 @@ import React from 'react'
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { orderCreation } from '../../redux/Actions/userActions';
-import checked from "../../assets/images/check.png"
+import success from "../../assets/icons/success-svgrepo-com.svg"
 import moment from 'moment';
-import { useEffect } from 'react';
+import SweetAlert from 'sweetalert-react';
+import Swal from 'sweetalert2';
+import { icons } from 'react-icons';
+import withReactContent from 'sweetalert2-react-content'
+import { FcCheckmark } from "react-icons/fc";
+const MySwal = withReactContent(Swal)
 export const LoginSuccess = () => {
+
+
 
     const dispatch = useDispatch()
 
@@ -21,7 +28,6 @@ export const LoginSuccess = () => {
 
     const selectedDate = JSON.parse(localStorage.getItem('selected_date'))
 
-
     const endTimeCalculate = (startTime, endTime) => {
         const Initial = startTime;
         const durationInMinutes = endTime?.toString();
@@ -32,6 +38,12 @@ export const LoginSuccess = () => {
 
         return TotalTime;
     };
+
+    // let obj=[];
+    // obj.forEach((item,index)=>{
+
+    // })
+
 
 
     Object.assign(services[0], JSON.parse(selectedTime));
@@ -68,8 +80,10 @@ export const LoginSuccess = () => {
 
     const user = JSON.parse(localStorage.getItem("user"))
     const info = JSON.parse(localStorage.getItem("info"))
+    localStorage.getItem("orderCode")
     const handleClick = () => {
         var dateFormat = moment(selectedDate, "MMMM DD dddd").format('YYYY-MM-DD');
+        console.log(dateFormat);
         const obj = {
             userId: user.id,
             branchId: info[0].branchId,
@@ -79,27 +93,71 @@ export const LoginSuccess = () => {
             actualOrderPrice: servicePriceSum,
             orderJob: AllServices
         }
-
+        console.log({ obj });
         dispatch(orderCreation(obj))
 
     }
 
-    const service_info = useSelector((state) => state.getService);
-    const image = service_info?.Services?.data[0].image;
-    localStorage.setItem("image", image)
+    // const service_info = useSelector((state) => state.getService);
+    // const image = service_info?.Services?.data[0].image;
+    // localStorage.setItem("image", image)
+    const image = localStorage.getItem("image")
 
-    localStorage.getItem("image")
+
+
+    const branchCode = localStorage.getItem("branchCode")
+    // MySwal.fire({
+    //     icon: 'success',
+    //     // allowOutsideClick: false,
+    //     // showConfirmButton: false,
+    //     html: (
+    //         <>
+    //             <div className='pt-3 sm:py-12 pl-3 '>
+
+    //                 {userProfileInfo && <h1 className=' text-lg'><b>Logged in user: </b> {userProfileInfo?.fullName} <br></br> <b>Email: </b>{userProfileInfo?.email} <br></br> <b>ContactNumber: </b>{userProfileInfo?.contactNumber} </h1>}
+    //             </div>
+    //             <div className=' bg-white py-2 '>
+    //                 <div className='flex justify-between '>
+    //                     <div className='flex px-6 3xl:invisible 2xl:invisible xl:invisible lg:visible'>
+    //                         <div className='font-bold '>
+    //                             <h1 className="text-gray-500">{services?.length + " "}{services?.length == 1 ? "Service" : "Services"}</h1>
+    //                             <h1>{calculateTotal(services)} Rs</h1>
+    //                         </div>
+    //                         <div className='font-bold pl-4'>
+    //                             <h1 className="text-gray-500">{selectedDate}</h1>
+    //                             <h1>{BeginTime?.startTime}</h1>
+
+    //                         </div>
+    //                     </div>
+    //                     {/* <Link to='/receipt' >
+
+    //                     <button
+    //                         onClick={handleClick}
+    //                         className='bg-slate-900 w-32 h-12 mr-10  rounded-lg sticky 
+    //                  text-white  font-bold '
+    //                     >
+    //                         Book
+    //                     </button>
+    //                 </Link> */}
+    //                 </div>
+    //             </div>
+    //         </>
+    //     )
+    // })
+
+
+
+
 
     return (
-
         <div>
             <div className='bg-slate-900 h-36'>
-                <div className="max-w-7xl mx-auto px-20 sm:px-0 lg:px-8">
+                <div className="max-w-7xl mx-auto px-14 sm:px-0 lg:px-8">
                     <div className=' p-4'>
                         <div className='flex justify-between '>
                             <div className='flex'>
                                 <div className='pl-1'>
-                                    <Link to="/loginContinue" className="hover:text-gray-600 text-white fa-solid fa-arrow-left float-left pr-2" ></Link>
+                                    <Link to="/auth-login" className="hover:text-gray-600 text-white fa-solid fa-arrow-left float-left pr-2" ></Link>
                                 </div>
                                 <p className='text-white '>Step 3/3 </p>
                             </div>
@@ -113,22 +171,23 @@ export const LoginSuccess = () => {
             <div className='bg-gray-200 h-screen'>
                 <div className="max-w-7xl mx-auto  sm:px-0  lg:px-0">
                     <div className=" flex justify-evenly">
-                        {/* <div className=""> */}
-                        <div className=" bg-white w-1/2  lg:w-full  py-8 px-0 shadow rounded-lg sm:px-10  ">
-                            <div className='flex justify-center  h-28 '>
-                                <img className='rounded-full border-5 border-solid border-gray-200 p-3' src={checked} />
-                            </div>
-                            <div className='text-center py-20 sm:py-12 '>
+                        <div className=" bg-white w-1/2 h-1/3 lg:w-full  py-8 px-0 shadow rounded-lg sm:px-10  ">
+                            {/* <div className='flex justify-center  h-28 '> */}
 
-                                {userProfileInfo && <h1 className='font-bold text-3xl'>Logged in as {userProfileInfo?.fullName} </h1>}
+                            {/* <FcCheckmark className='App-logo  -mt-10' /> */}
+                            {/* rounded-full border-5 border-solid border-gray-200 p-3 */}
+                            {/* <img className='' src={success} /> */}
+                            {/* </div> */}
+                            <div className=' sm:py-12 pl-3 '>
+
+                                {userProfileInfo && <h1 className=' text-lg'><b>Logged in as : </b> {userProfileInfo?.fullName} <br></br> <b>Email : </b>{userProfileInfo?.email} <br></br> <b>ContactNumber : </b>{userProfileInfo?.contactNumber} </h1>}
 
                             </div>
                         </div>
-                        {/* </div > */}
 
-                        {/* <div className='ml-4'> */}
-                        <div className="bg-white w-1/4 h-1/4 shadow-lg rounded-lg text-black lg:hidden ">
-                            <div className='flex justify-center rounded-lg shadow-fuchsia-100   '>
+                        <div className="bg-white w-1/4 h-1/5 shadow-lg rounded-lg text-black lg:hidden ">
+                            <div className='flex justify-center rounded-lg shadow-fuchsia-100'>
+
                                 {image ? <img
                                     className=' rounded-lg shadow-md border-4 -mt-12 w-20 h-20  border-neutral-100 '
                                     src={image}
@@ -144,9 +203,10 @@ export const LoginSuccess = () => {
                             </div>
                             <h1 className='text-center font-bold pt-2'>{salonName}</h1>
                             <p className='pt-3 text-center text-gray-400'>  {salonLocation}</p>
+                            <p className='text-center text-gray-400' >{branchCode}</p>
                             <hr className='mt-3'></hr>
                             <div className="overflow-y-scroll h-72">
-                                <div className='px-4 py-4 font-bold flex justify-between'>
+                                <div className='px-4 pt-2 font-bold flex justify-between'>
                                     <h1>{selectedDate}</h1>
                                     <h1> {BeginTime?.startTime}</h1>
                                 </div>
@@ -158,10 +218,10 @@ export const LoginSuccess = () => {
                                         return (
 
                                             <div>
-                                                <div className="flex justify-between p-4 ">
+                                                <div className="flex justify-between pl-4 pt-2 ">
 
                                                     <h1> {serviceData.serviceTitle}</h1>
-                                                    <h1> {serviceData.price} Rs</h1>
+                                                    <h1 className='pr-2'> {serviceData.price} Rs</h1>
                                                 </div>
                                                 <div className="text-gray-500 pl-6 ">
                                                     <h1> {serviceData.duration} Min</h1>
@@ -179,15 +239,25 @@ export const LoginSuccess = () => {
                                 </div>
                             </div>
                         </div>
-                        {/* </div> */}
                     </div>
                 </div>
             </div>
 
 
             <div className=' bg-white py-2 mt-4  sticky bottom-0'>
-                <div className='flex justify-end '>
-                    <Link to='/orderSuccess' >
+                <div className='flex justify-between '>
+                    <div className='flex px-6 3xl:invisible 2xl:invisible xl:invisible lg:visible'>
+                        <div className='font-bold '>
+                            <h1 className="text-gray-500">{services?.length + " "}{services?.length == 1 ? "Service" : "Services"}</h1>
+                            <h1>{calculateTotal(services)} Rs</h1>
+                        </div>
+                        <div className='font-bold pl-4'>
+                            <h1 className="text-gray-500">{selectedDate}</h1>
+                            <h1>{BeginTime?.startTime}</h1>
+
+                        </div>
+                    </div>
+                    <Link to='/receipt' >
 
                         <button
                             onClick={handleClick}

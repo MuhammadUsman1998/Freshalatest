@@ -5,13 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userSignUp } from '../../redux/Actions/userActions';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useForm } from 'react-hook-form'
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup'
 import ClipLoader from "react-spinners/ClipLoader";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai"
 import {
     SIGNUP_ADD_RESET
 } from "../../redux/Constants/userConstants";
+import MaskedInput from 'react-text-mask'
 export const SignUpContinueComponent = () => {
 
     const [inputForm, setInputForm] = useState({
@@ -22,8 +21,11 @@ export const SignUpContinueComponent = () => {
         gender: "",
         checkbox: false
     });
+    const [showPassword, setShowPassword] = useState(false);
     const [disabledButton, setDisabledButton] = useState(true);
     const [marketingCheckBox, setMarketingCheckBox] = useState(false)
+    const [errorMessage, setErrorMessage] = useState("")
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = useSelector(state => state?.userSignUp)
@@ -32,7 +34,7 @@ export const SignUpContinueComponent = () => {
     useEffect(() => {
 
         if (SignupSuccess) {
-            navigate("/loginContinue")
+            navigate("/auth-login")
         }
         else if (SignupError) {
             toast(user?.SignUp?.message)
@@ -55,17 +57,11 @@ export const SignUpContinueComponent = () => {
 
 
     const userData = JSON.parse(localStorage.getItem("info"));
-    const validationSchema = yup.object().shape({
-        acceptTerms: yup.bool()
-            .oneOf([true], 'Accept Ts & Cs is required')
-    });
 
-    // functions to build form returned by useForm() hook
-    const { register, handleSubmit, reset, errors } = useForm({
-        resolver: yupResolver(validationSchema)
-    });
 
-    const formSubmit = (e) => {
+
+
+    const handleSubmit = (e) => {
         e.preventDefault();
         const obj = {
             fullName: inputForm.fullName,
@@ -79,9 +75,6 @@ export const SignUpContinueComponent = () => {
 
 
         dispatch(userSignUp(obj));
-
-
-
 
     }
 
@@ -102,23 +95,26 @@ export const SignUpContinueComponent = () => {
     }
     Object.assign(services[0], JSON.parse(selectedTime));
 
-    const service_info = useSelector((state) => state.getService);
-    const image = service_info?.Services?.data[0].image;
-    localStorage.setItem("image", image)
-    localStorage.getItem("image")
+    // const service_info = useSelector((state) => state.getService);
+    // const image = service_info?.Services?.data[0].image;
+    // localStorage.setItem("image", image)
+    const image = localStorage.getItem("image")
 
 
+    const branchCode = localStorage.getItem("branchCode")
 
-
+    const handleToggle = () => {
+        setShowPassword(!showPassword)
+    }
 
     return (
         <div>
             <div className='bg-slate-900 h-36 '>
-                <div className="max-w-7xl mx-auto px-20 sm:px-0 lg:px-0">
+                <div className="max-w-7xl mx-auto px-16 sm:px-0 lg:px-0">
                     <div className=' p-4 '>
                         <div className='flex'>
                             <div className='pr-0'>
-                                <Link to="/timeComponent" className="hover:text-gray-600 text-white fa-solid fa-arrow-left float-left pr-2" ></Link>
+                                <Link to="/time" className="hover:text-gray-600 text-white fa-solid fa-arrow-left float-left pr-2" ></Link>
                             </div>
                             <p className='text-white sm:pr-4 '>Step 3/3 </p>
                         </div>
@@ -130,11 +126,11 @@ export const SignUpContinueComponent = () => {
             <div className='bg-gray-200'>
                 <div className="max-w-7xl mx-auto  sm:px-0 lg:px-0 ">
                     <div className=" flex justify-evenly">
-                        <div className="bg-white py-8 px-4 shadow-md rounded-lg  w-1/2 lg:w-full ">
-                            <form className="space-y-4 grid grid-cols-2 gap-y-6 gap-x-6 sm:grid-cols-2" action="#" onSubmit={handleSubmit(formSubmit)}
+                        <div className="bg-white py-8 px-4 shadow-md rounded-lg w-1/2 lg:w-full ">
+                            <form className=" grid grid-cols-2 gap-y-6 gap-x-6 sm:grid-cols-2" action="#" onSubmit={handleSubmit}
                             >
                                 <div>
-                                    <label htmlFor="fullName" className="block text-sm font-medium text-gray-700  mt-3">
+                                    <label htmlFor="fullName" className="block text-sm font-medium text-gray-700  ">
                                         Full Name
                                     </label>
                                     <div className=" ">
@@ -178,18 +174,21 @@ export const SignUpContinueComponent = () => {
                                         Mobile Number
                                     </label>
                                     <div className=''>
-                                        <input
+                                        <MaskedInput
                                             id="depositedAmount"
-                                            maxLength={11}
-                                            pattern="[+-]?\d+(?:[.,]\d+)?"
+
+                                            // pattern="[+-]?\d+(?:[.,]\d+)?"
                                             placeholder="0300 XXXX XXX"
-                                            mask="0300 1234 567"
+                                            // mask="0300 1234 567"
+                                            guide={false}
+                                            mask={[/[0-9]/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, " ", /\d/, /\d/, /\d/, /\d/]}
                                             required={true}
                                             onChange={(e) => setInputForm({ ...inputForm, contactNumber: e.target.value })}
                                             value={inputForm.contactNumber}
                                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
 
                                         />
+
                                     </div>
                                 </div>
                                 <div>
@@ -198,51 +197,57 @@ export const SignUpContinueComponent = () => {
                                     </label>
                                     <div className=" ">
                                         <input
+                                            type={showPassword ? "text" : "password"}
                                             id="password"
                                             name="password"
-                                            type="password"
                                             required={true}
                                             value={inputForm.password}
                                             onChange={(e) => setInputForm({ ...inputForm, password: e.target.value })}
                                             placeholder='Enter Password'
-                                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none
+                                             focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+
                                         />
+
+                                    </div>
+                                    <div className='text-2xl float-right -mt-8 mr-6 ' onClick={handleToggle}>
+                                        {!showPassword ? <AiFillEyeInvisible /> :
+                                            <AiFillEye />}
                                     </div>
                                 </div>
 
-                                <br></br>
                             </form>
-                            <div >
+                            <div className='mt-2' >
                                 <label htmlFor="Gender" id='gender' className="block text-sm font-medium text-gray-700">
                                     Gender
                                 </label>
-
                                 <input type="radio" id="Male" name="fav_language" value="M" onChange={(e) => setInputForm({ ...inputForm, gender: e.target.value })} />
                                 <label className='ml-2 cursor-pointer' for="Male"> Male</label>
-                                <br></br>
-                                <input type="radio" id="Female" name="fav_language" value="F" onChange={(e) => setInputForm({ ...inputForm, gender: e.target.value })} />
-                                <label className='ml-2 cursor-pointer' for="Female"> Female</label>
+                                <div className='-mt-3'>
+                                    <input type="radio" id="Female" name="fav_language" value="F" onChange={(e) => setInputForm({ ...inputForm, gender: e.target.value })} />
+                                    <label className='ml-2 cursor-pointer' for="Female"> Female</label>
+                                </div>
                             </div>
 
                             <div>
                                 <label>
-                                    <div className="flex mt-3 cursor-pointer" >
-                                        <input type="checkbox" className="mr-1 mt-1" id='checkbox' value="checkbox" defaultChecked={inputForm.checkbox} onChange={(e) => setInputForm({ ...inputForm, checkbox: e.target.checked })} required="required" />
-                                        <p> I agree to the Privacy Policy, Terms of Use and Terms of Service</p>
+                                    <div className="flex sm:-mt-6 cursor-pointer" >
+                                        <input type="checkbox" className="mr-1 mt-1 " id='checkbox' value="checkbox" defaultChecked={inputForm.checkbox} onChange={(e) => setInputForm({ ...inputForm, checkbox: e.target.checked })} required="required" />
+                                        <p className='sm:pt-6'> I agree to the Privacy Policy, Terms of Use and Terms of Service</p>
                                     </div>
                                 </label>
                             </div>
                             <label>
-                                <div className="flex mt-3 cursor-pointer" >
-                                    <input className="mr-1 mt-1 inline-flex" type="checkbox" id='checkbox' value="checkbox" defaultChecked={marketingCheckBox} onChange={(e) => setMarketingCheckBox(e.target.checked)} />
-                                    <p>I agree to receive marketing notifications with offers and news</p>
+                                <div className="flex -mt-2 sm:-mt-8 cursor-pointer" >
+                                    <input className="mr-1 mt-1  inline-flex" type="checkbox" id='checkbox' value="checkbox" defaultChecked={marketingCheckBox} onChange={(e) => setMarketingCheckBox(e.target.checked)} />
+                                    <p className='sm:pt-6'>I agree to receive marketing notifications with offers and news</p>
                                 </div>
                             </label>
                             <div>
                                 <button
                                     disabled={handleFormDisabled() || user?.loading}
                                     style={{ cursor: handleFormDisabled() ? "not-allowed" : "pointer" }}
-                                    type="submit" onClick={formSubmit}
+                                    type="submit" onClick={handleSubmit}
                                     className=" mt-2 w-full flex justify-center items-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm
                              font-medium text-white bg-slate-900 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                 >
@@ -267,11 +272,10 @@ export const SignUpContinueComponent = () => {
                                         <span className="px-2 bg-white text-gray-500">Already have a booker account?</span>
                                     </div>
                                 </div >
-                                <Link to="/loginContinue" className="flex justify-center text-blue">Sign in now</Link>
+                                <Link to="/auth-login" className="flex justify-center text-blue">Sign in now</Link>
                             </div>
                         </div>
 
-                        {/* <div className=' ml-4'> */}
                         <div className="bg-white w-1/4 h-1/4 shadow-lg rounded-lg text-black lg:hidden ">
                             <div className='flex justify-center rounded-lg shadow-fuchsia-100   '>
                                 {image ? <img
@@ -287,15 +291,14 @@ export const SignUpContinueComponent = () => {
                                 </svg>
                                 }
                             </div>
-                            {/* <div className='text-center font-bold pt-3'> */}
                             <h1 className='text-center font-bold pt-2'>{salonName}</h1>
                             <p className='pt-3 text-center text-gray-400'>  {salonLocation}</p>
+                            <p className='text-center text-gray-400'>{branchCode}</p>
                             <hr className='mt-3'></hr>
-                            {/* </div> */}
 
 
                             <div className="overflow-y-scroll h-72">
-                                <div className='px-4 py-4 font-bold flex justify-between'>
+                                <div className='px-4 pt-2 font-bold flex justify-between'>
                                     <h1>{selectedDate}</h1>
                                     <h1> {BeginTime?.startTime}</h1>
                                 </div>
@@ -306,10 +309,10 @@ export const SignUpContinueComponent = () => {
                                         return (
 
                                             <div>
-                                                <div className="flex justify-between p-4 ">
+                                                <div className="flex justify-between pl-4 pt-2 ">
 
                                                     <h1> {serviceData.serviceTitle}</h1>
-                                                    <h1> {serviceData.price} Rs</h1>
+                                                    <h1 className='pr-2'> {serviceData.price} Rs</h1>
                                                 </div>
                                                 <div className="text-gray-500 pl-6 ">
                                                     <h1> {serviceData.duration} Min</h1>
@@ -329,12 +332,21 @@ export const SignUpContinueComponent = () => {
                         </div>
                     </div>
                 </div>
-                {/* </div> */}
 
 
-                <div className=' bg-white py-2 mt-60 sticky bottom-0'>
-                    <div className='flex justify-end '>
+                <div className=' bg-white py-2 mt-72 sticky bottom-0'>
 
+                    <div className='flex justify-between '>
+                        <div className='flex px-6 3xl:invisible 2xl:invisible xl:invisible lg:visible'>
+                            <div className='font-bold '>
+                                <h1 className="text-gray-500">{services?.length + " "}{services?.length == 1 ? "Service" : "Services"}</h1>
+                                <h1>{calculateTotal(services)} Rs</h1>
+                            </div>
+                            <div className='font-bold pl-4'>
+                                <h1 className="text-gray-500">{selectedDate}</h1>
+                                <h1>{BeginTime?.startTime}</h1>
+                            </div>
+                        </div>
                         <button
                             style={{ cursor: disabledButton ? "not-allowed" : "pointer" }}
                             disabled={disabledButton}

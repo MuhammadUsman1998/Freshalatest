@@ -23,11 +23,11 @@ export const getService = (branchId, salonId) => async (dispatch) => {
 
         const url = `${SERVER_IP}/api/v1/online-booking/details?branchId=${branchId}&salonId=${salonId}`
         const { data } = await jwtInterceptor.get(url);
-
         dispatch({
             type: SERVICE_GET_SUCCESS,
             payload: data,
         });
+        localStorage.setItem("branchCode", JSON.stringify(data?.data?.branchCode))
     } catch (error) {
         dispatch({
             type: SERVICE_GET_FAIL,

@@ -6,9 +6,24 @@ import moment from 'moment';
 import Slider from "react-slick";
 import { useDispatch, useSelector } from "react-redux";
 import { orderCreation } from '../../redux/Actions/userActions';
+
+
+function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+        <div
+            className={className}
+            style={{ ...style, backgroundColor: "gray", borderRadius: "50%" }}
+            onClick={onClick}
+        />
+    );
+}
+
 var settings = {
     infinite: false,
     speed: 500,
+    nextArrow: <SamplePrevArrow />,
+    prevArrow: <SamplePrevArrow />,
     slidesToShow: 5,
     slidesToScroll: 5,
 };
@@ -96,7 +111,7 @@ export const TimeComponent = () => {
     }
 
 
-    let timeArray = ["09:00", "09:15", "09:30", "09:45", "10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30", "11:45", "12:00", "12:15", "12:30", "12:45", "13:00", "13:15", "13:30", "13:45", "14:00", "14:15", "14:30", "14:45", "15:00", "15:15", "15:30", "15:45", "16:00", "16:15 ", "16:30 ", "16:45 ", "17:00 "]
+    let timeArray = ["09:00", "09:15", "09:30", "09:45", "10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30", "11:45", "12:00", "12:15", "12:30", "12:45", "13:00", "13:15", "13:30", "13:45", "14:00", "14:15", "14:30", "14:45", "15:00", "15:15", "15:30", "15:45", "16:00", "16:15", "16:30", "16:45", "17:00"]
 
 
     const calculateTotal = (array) => {
@@ -170,18 +185,19 @@ export const TimeComponent = () => {
         dispatch(orderCreation(obj))
 
 
-        navigate('/orderSuccess')
+        navigate('/receipt')
 
     }
     const service_info = useSelector((state) => state.getService);
-    const image = service_info?.Services?.data[0].image;
-    localStorage.setItem("image", image)
 
-    localStorage.getItem("image")
+    const image = localStorage.getItem("image")
+
+    const branchCode = localStorage.getItem("branchCode")
+
     return (
         <div className="">
             <div className='bg-slate-900 h-36 '>
-                <div className="max-w-7xl mx-auto px-20 sm:px-0 lg:px-0 ">
+                <div className="max-w-7xl mx-auto px-16 sm:px-0 lg:px-0 ">
                     <div className=' p-4'>
                         <div className='flex '>
                             <div className='pr-2'>
@@ -201,15 +217,14 @@ export const TimeComponent = () => {
                 <div className="max-w-7xl mx-auto  sm:px-0 lg:px-0 ">
                     <div className='flex justify-evenly sticky '>
                         <div className=" bg-white  w-1/2  shadow-md  lg:w-full">
-                            <Slider className='' focusOnSelect={true}  {...settings}>
+                            <Slider className=''   {...settings}>
                                 {
                                     dateArray?.map((date, i) => {
-                                        console.log("date", date)
 
                                         return (
                                             <div className='flex justify-center'>
                                                 <div onClick={(e) => clickDate(e, i, date)}
-                                                    className={`flex justify-center border-solid border-black border-2 rounded-lg hover:bg-gray-300 
+                                                    className={`flex justify-center border-solid border-black border-2 rounded-lg  ml-3
                                                 hover:text-black px-3 h-20 w-20 text-center text-2xl pt-2 font-semibold cursor-pointer xl:w-16 xl:h-16 xl:text-xl lg:w-20
                                                  md:w-16 md:h-16 md:text-lg sm:w-12   ${selectedCategory ===
                                                         date
@@ -270,6 +285,7 @@ export const TimeComponent = () => {
                             </div>
                             <h1 className='text-center font-bold pt-2'>{total}</h1>
                             <p className='pt-3 text-center text-gray-400'> {myTotal}</p>
+                            <p className='text-center text-gray-400'>{branchCode}</p>
                             <hr className='mt-3'></hr>
                             {/* <div className='flex justify-between  p-4'>
                             <h1 className=''>{myDate}</h1>
@@ -279,7 +295,7 @@ export const TimeComponent = () => {
                             {/* <hr className='mt-3'></hr> */}
 
                             <div className="overflow-y-scroll h-72">
-                                <div className='font-bold  flex justify-between px-4 py-4 '>
+                                <div className='font-bold  flex justify-between px-4 pt-2 '>
                                     <h1>{myDate}</h1>
                                     <h1>{time}</h1>
                                 </div>
@@ -290,10 +306,10 @@ export const TimeComponent = () => {
                                         return (
 
                                             <div>
-                                                <div className="flex justify-between p-4 ">
+                                                <div className="flex justify-between pl-4 pt-2">
 
                                                     <h1> {serviceData.serviceTitle}</h1>
-                                                    <h1> {serviceData.price} Rs</h1>
+                                                    <h1 className='pr-2'> {serviceData.price} Rs</h1>
                                                 </div>
                                                 <div className="text-gray-500 pl-6 ">
                                                     <h1> {serviceData.duration} Min</h1>
@@ -319,8 +335,17 @@ export const TimeComponent = () => {
 
             {
                 selectedTime &&
-                <div className=' bg-white py-2 mt-4 flex justify-end sticky bottom-0'>
-
+                <div className=' bg-white py-2 mt-4 flex justify-between sticky bottom-0'>
+                    <div className='flex px-6 3xl:invisible 2xl:invisible xl:invisible lg:visible'>
+                        <div className="font-bold  ">
+                            <h1 className="text-gray-500">{arrayOfSelectedServices?.length + " "}{arrayOfSelectedServices?.length == 1 ? "Service" : "Services"}</h1>
+                            <h1>{calculateTotal(arrayOfSelectedServices)} Rs</h1>
+                        </div>
+                        <div className="font-bold pl-4">
+                            <h1 className="text-gray-500">{selectedDate}</h1>
+                            <h1>{time}</h1>
+                        </div>
+                    </div>
                     {
                         user &&
                             user?.salonId === info[0]?.salonId ? (<button
@@ -331,13 +356,8 @@ export const TimeComponent = () => {
                                 Book
                             </button>) : (
 
-                            <div className='flex justify-end '>
-
-                                {/* <div className="font-bold px-4 ">
-                                    <h1>{arrayOfSelectedServices?.length + " " + "Services"}</h1>
-                                    <h1>{calculateTotal(arrayOfSelectedServices)} Rs</h1>
-                                </div> */}
-                                <Link to='/signupcontinueComponent'>
+                            <div className='flex  '>
+                                <Link to='/auth-signup'>
                                     <button
                                         className='bg-slate-900 w-32 h-12 mr-10 rounded-lg sticky 
                                         text-white  font-bold'
@@ -348,21 +368,6 @@ export const TimeComponent = () => {
                             </div>
                         )
                     }
-                    {/* {
-                        user ? dispatch(handleCreateOrder()) : (
-                            <div className='flex justify-end '>
-                                <Link to='/signupcontinueComponent' >
-                                    <button
-                                        className='bg-slate-900 w-32 h-12 mr-10  rounded-lg sticky 
-                                        text-white  font-bold'
-                                    >
-                                        Book
-                                    </button>
-                                </Link>
-                            </div>
-                        )
-                    } */}
-
 
                 </div>
             }

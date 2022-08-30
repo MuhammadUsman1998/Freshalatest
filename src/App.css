@@ -1,0 +1,5 @@
+@media (prefers-reduced-motion: no-preference) {
+  .successLogo {
+    animation: successLogo-spin infinite 20s linear;
+  }
+}
