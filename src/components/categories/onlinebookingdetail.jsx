@@ -53,6 +53,7 @@ export const OnlineBookingDetail = ({ IdSet }) => {
 
 
 
+
     const routeChange = () => {
         IdSet({ BranchId: branchId, SalonId: salonId })
         let path = "/time";
@@ -142,27 +143,30 @@ export const OnlineBookingDetail = ({ IdSet }) => {
                                         <Slider className='py-4 px-1 text-center' focusOnSelect={true} slidesToShow={service_data?.length <= 1 ? 1 : service_data?.length <= 2 ? 2 : 3}
                                             slidesToScroll={service_data?.length <= 1 ? 2 : 3}  {...settings}>
 
-                                            {service_data?.map((cat1, index) => {
+                                            {service_info?.Services?.data[0]?.categories.length > 0 ?
+                                                <div>
+                                                    {service_data?.map((cat1, index) => {
 
-                                                return (
-                                                    <div className='  py-2 rounded-full '>
-                                                        <a href={`#${cat1?._id}`}
-                                                            key={index}
-                                                            onClick={(_id) => selectColor(cat1?._id)}
-                                                            className={`truncate cursor-pointer hover:no-underline hover:text-black sm:text-sm sm:truncate sm:px-1  md:truncate md:px-4 
+                                                        return (
+                                                            <div className='  py-2 rounded-full '>
+                                                                <a href={`#${cat1?._id}`}
+                                                                    key={index}
+                                                                    onClick={(_id) => selectColor(cat1?._id)}
+                                                                    className={`truncate cursor-pointer hover:no-underline hover:text-black sm:text-sm sm:truncate sm:px-1  md:truncate md:px-4 
                                                         ${selectedCategory ===
-                                                                    cat1?._id
-                                                                    ? "text-white bg-gray-900 px-6 py-2 rounded-full truncate"
-                                                                    : "text-black"
+                                                                            cat1?._id
+                                                                            ? "text-white bg-gray-900 px-6 py-2 rounded-full truncate"
+                                                                            : "text-black"
 
-                                                                }`}
-                                                        >
-                                                            {cat1?.categoryTitle}
-                                                        </a>
-                                                    </div>
+                                                                        }`}
+                                                                >
+                                                                    {cat1?.categoryTitle}
+                                                                </a>
+                                                            </div>
 
-                                                );
-                                            })}
+                                                        );
+                                                    })}
+                                                </div> : <div>No Categories Available</div>}
                                         </Slider>
                                     </div>
 
